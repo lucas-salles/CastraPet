@@ -1,0 +1,29 @@
+.input {
+  margin-bottom: 1rem;
+}
+
+.input input {
+  border: 1px solid var(--color-grey-light);
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background: var(--color-grey-light);
+  transition: 0.2s;
+}
+
+.input input:hover,
+.input input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: white;
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
+.input label {
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+  padding-bottom: 0.5rem;
+}

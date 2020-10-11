@@ -1,0 +1,27 @@
+.login {
+  max-width: 60rem;
+  margin: 12rem auto 20rem auto;
+}
+
+.login h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 4rem;
+}
+
+.login form {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.login form button {
+  max-width: 20rem;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+@media (max-width: 70rem) {
+  .login form {
+    padding: 0 1rem;
+  }
+}
