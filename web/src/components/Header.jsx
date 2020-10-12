@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 import "./Header.css";
 
-import logoPrefeitura from "../../assets/logo-header.svg";
+import logoPrefeitura from "../assets/logo-header.svg";
 
 const Header = ({ titulo }) => {
   return (
-    <header className="header">
+    <header id="header">
       <div className="container">
         <Link to="/">
           <img src={logoPrefeitura} alt="Prefeitura" />

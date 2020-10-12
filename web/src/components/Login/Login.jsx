@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Button from "../Forms/Button";
 import Input from "../Forms/Input";
-import Header from "../Header/Header";
+import Header from "../Header";
 
 import "./Login.css";
 
@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <>
       <Header titulo="Login" />
-      <div className="login">
+      <div id="login">
         <h2>Acesso</h2>
         <form onSubmit={handleSubmit}>
           <Input

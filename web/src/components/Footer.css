@@ -1,42 +1,46 @@
-.footer {
+#footer {
   background: var(--color-primary);
   color: #fff;
 }
 
-.footer .logo-contato {
+#footer .logo-contato {
   display: flex;
   align-items: center;
   margin-top: 1rem;
 }
 
-.footer .contato {
+#footer .logo-contato img {
+  width: 6rem;
+}
+
+#footer .contato {
   margin-left: 6rem;
   font-weight: 300;
   font-size: 1.2rem;
 }
 
-.footer .nome-prefeitura {
+#footer .nome-prefeitura {
   text-align: center;
   font-weight: bold;
   font-size: 1.4rem;
   padding-bottom: 1rem;
 }
 
-@media (max-width: 70rem) {
-  .footer .logo-contato {
+@media (max-width: 1120px) {
+  #footer .logo-contato {
     justify-content: center;
   }
 
-  .footer .logo-contato img {
+  #footer .logo-contato img {
     display: none;
   }
 
-  .footer .contato {
+  #footer .contato {
     margin-left: 0;
     font-size: 1rem;
   }
 
-  .footer .nome-prefeitura {
+  #footer .nome-prefeitura {
     padding: 2rem 0 1rem 0;
   }
 }
