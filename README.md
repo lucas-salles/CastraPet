@@ -8,6 +8,7 @@
 
 ## Back
 
+- cd server
 - npm install
 - npx sequelize-cli db:create
 - npx sequelize-cli db:migrate
