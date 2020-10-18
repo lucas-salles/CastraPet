@@ -1,0 +1,10 @@
+#page-user-register {
+  max-width: 60rem;
+  margin: 12rem auto 16rem auto;
+}
+
+#page-user-register h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 4rem;
+}

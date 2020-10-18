@@ -1,0 +1,28 @@
+#form-register {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+#form-register .input-block {
+  display: flex;
+}
+
+#form-register .input-block #input {
+  width: 50%;
+}
+
+#form-register .input-block #input:last-child {
+  margin-left: 2rem;
+}
+
+#form-register button {
+  max-width: 20rem;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+@media (max-width: 1120px) {
+  #form-register {
+    padding: 0 1rem;
+  }
+}

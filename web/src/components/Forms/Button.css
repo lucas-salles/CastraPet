@@ -1,4 +1,4 @@
-.button {
+#button {
   font-size: 1rem;
   font-family: var(--type-first);
   cursor: pointer;
@@ -12,13 +12,13 @@
   transition: 0.1s;
 }
 
-.button:hover,
-.button:focus {
+#button:hover,
+#button:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
 
-.button:disabled {
+#button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

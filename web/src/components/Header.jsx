@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./Header.css";
+import "./header.css";
 
-import logoPrefeitura from "../assets/logo-header.svg";
+import logoPrefeitura from "../images/logo-header.svg";
 
 const Header = ({ titulo }) => {
   return (

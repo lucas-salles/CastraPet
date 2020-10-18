@@ -1,13 +1,16 @@
 import React from "react";
-import Header from "../Header";
+import Header from "../../components/Header";
 
-import "./Home.css";
+import "./home.css";
 
 const Home = () => {
   return (
     <>
       <Header titulo="Página Inicial" />
-      Home
+
+      <div id="page-home">
+        <h1>Home</h1>
+      </div>
     </>
   );
 };

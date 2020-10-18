@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import Button from "../Forms/Button";
-import Input from "../Forms/Input";
-import Header from "../Header";
+import Button from "../../components/Forms/Button";
+import Input from "../../components/Forms/Input";
+import Header from "../../components/Header";
 
-import "./Login.css";
+import "./login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,16 +17,19 @@ const Login = () => {
   return (
     <>
       <Header titulo="Login" />
-      <div id="login">
+
+      <div id="page-login">
         <h2>Acesso</h2>
+
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"
-            type="text"
+            type="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
           <Input
             label="Senha"
             type="password"
@@ -34,6 +37,7 @@ const Login = () => {
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
           />
+
           {email && senha ? (
             <Button>Entrar</Button>
           ) : (

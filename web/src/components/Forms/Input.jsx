@@ -1,10 +1,10 @@
 import React from "react";
 
-import "./Input.css";
+import "./input.css";
 
 const Input = ({ label, type, name, value, onChange, onBlur }) => {
   return (
-    <div className="input">
+    <div id="input">
       <label htmlFor={name}>{label}</label>
       <input
         id={name}

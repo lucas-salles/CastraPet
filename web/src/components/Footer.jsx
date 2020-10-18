@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./Footer.css";
+import "./footer.css";
 
-import logoPrefeitura from "../assets/logo-prefeitura.svg";
+import logoPrefeitura from "../images/logo-prefeitura.svg";
 
 const Footer = () => {
   return (
