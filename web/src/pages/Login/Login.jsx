@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
@@ -44,6 +45,12 @@ const Login = () => {
             <Button disabled>Entrar</Button>
           )}
         </form>
+
+        <div className="register">
+          <h3>Cadastre-se</h3>
+          <p>Ainda não possui conta? Cadastre-se.</p>
+          <Link to="/register">Cadastro</Link>
+        </div>
       </div>
     </>
   );

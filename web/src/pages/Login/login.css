@@ -1,6 +1,6 @@
 #page-login {
   max-width: 60rem;
-  margin: 12rem auto 16rem auto;
+  margin: 12rem auto 12rem auto;
 }
 
 #page-login h2 {
@@ -20,8 +20,42 @@
   margin-top: 6rem;
 }
 
+#page-login .register {
+  max-width: 40rem;
+  margin: 8rem auto 0 auto;
+}
+
+#page-login .register h3 {
+  font-size: 1.8rem;
+}
+
+#page-login .register p {
+  margin: 1rem 0 2rem 0;
+}
+
+#page-login .register a {
+  font-size: 1rem;
+  font-family: var(--type-first);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background: var(--color-primary);
+  color: #fff;
+  min-width: 8rem;
+  padding: 0.8rem 4rem;
+  box-sizing: border-box;
+  transition: 0.1s;
+}
+
+#page-login .register a:hover,
+#page-login .register a:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
 @media (max-width: 1120px) {
-  #page-login form {
+  #page-login form,
+  #page-login .register {
     padding: 0 1rem;
   }
 }
