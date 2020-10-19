@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      bairrro: {
+      bairro: {
         type: Sequelize.STRING,
         allowNull: false
       },
