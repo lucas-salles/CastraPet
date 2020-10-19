@@ -1,39 +1,39 @@
-#page-user-update {
+#page-user-register {
   max-width: 60rem;
   margin: 12rem auto 16rem auto;
 }
 
-#page-user-update h2 {
+#page-user-register h2 {
   text-align: center;
   font-size: 2.4rem;
   margin-bottom: 4rem;
 }
 
-#page-user-update form {
+#page-user-register form {
   max-width: 40rem;
   margin: 0 auto;
 }
 
-#page-user-update form .input-block {
+#page-user-register form .input-block {
   display: flex;
 }
 
-#page-user-update form .input-block #input {
+#page-user-register form .input-block #input {
   width: 50%;
 }
 
-#page-user-update form .input-block #input:last-child {
+#page-user-register form .input-block #input:last-child {
   margin-left: 2rem;
 }
 
-#page-user-update form button {
+#page-user-register form button {
   max-width: 20rem;
   margin: 0 auto;
   margin-top: 6rem;
 }
 
 @media (max-width: 1120px) {
-  #page-user-update form {
+  #page-user-register form {
     padding: 0 1rem;
   }
 }
