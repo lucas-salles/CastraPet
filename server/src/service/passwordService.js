@@ -1,16 +1,16 @@
 const CryptoJS = require('crypto-js');
 
-const secret_key = process.env.HASH_KEY || 'senha secreta'
+const secret_key = process.env.HASH_KEY || 'secreta'
 
 module.exports = {
 
-  async generateHash(senha) {
+  generateHash(senha) {
     return CryptoJS.HmacMD5(senha, secret_key).toString()
   },
 
-  async compareHash(hash, senha) {
-    var nomeHash = CryptoJS.HmacMD5(nome, secret_key).toString()
-    if (nomeHash === hash) {
+  compareHash(hash, senha) {
+    const senhaToHash = CryptoJS.HmacMD5(senha, secret_key).toString()
+    if (senhaToHash === hash) {
       return true
     } else {
       return false
