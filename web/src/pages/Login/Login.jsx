@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
 
+import { UserContext } from "../../UserContext";
+
 import "./login.css";
 
 const Login = () => {
+  const history = useHistory();
+
+  const { userLogin, loading } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    await userLogin(email, senha);
+
+    history.push("/");
   }
 
   return (
@@ -39,10 +50,10 @@ const Login = () => {
             onChange={(e) => setSenha(e.target.value)}
           />
 
-          {email && senha ? (
-            <Button>Entrar</Button>
+          {loading ? (
+            <Button disabled>Carregando...</Button>
           ) : (
-            <Button disabled>Entrar</Button>
+            <Button>Entrar</Button>
           )}
         </form>
 

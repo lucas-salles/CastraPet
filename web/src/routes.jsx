@@ -12,7 +12,7 @@ const Routes = () => {
         <Route component={Home} path="/" exact />
         <Route component={Login} path="/login" />
         <Route component={UserCreate} path="/register" />
-        <Route component={UserUpdate} path="/users/:id" />
+        <Route component={UserUpdate} path="/users/update/:id" />
       </Switch>
     </BrowserRouter>
   );

@@ -126,13 +126,13 @@ const UserUpdate = () => {
             onChange={onChange}
           />
 
-          <Input
+          {/* <Input
             label="Senha"
             type="password"
             name="senha"
             value={user.senha}
             onChange={onChange}
-          />
+          /> */}
 
           <Button>Atualizar</Button>
         </form>

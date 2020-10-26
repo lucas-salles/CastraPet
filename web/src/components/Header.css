@@ -1,31 +1,55 @@
 #header {
   background: var(--color-primary);
+  color: #fff;
 }
 
 #header .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-#header h1 {
-  color: #fff;
+#header .logo {
+  display: flex;
+  align-items: center;
+}
+
+#header .logo h1 {
   font-size: 2.6rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
-#header img {
+#header .logo img {
   width: 3.4rem;
 }
 
+#header .user {
+  font-size: 1.4rem;
+  display: flex;
+}
+
+#header .user a {
+  color: #fff;
+  margin-right: 1rem;
+}
+
+#header .logout {
+  cursor: pointer;
+}
+
 @media (max-width: 1120px) {
-  #header h1 {
-    color: #fff;
+  #header .logo h1 {
     font-size: 2rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
   }
 
-  #header img {
+  #header .logo img {
     margin-left: 1rem;
-    width: 3rem;
+    width: 2.4rem;
+  }
+
+  #header .user {
+    font-size: 1.2rem;
+    display: flex;
   }
 }
