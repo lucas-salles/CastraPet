@@ -1,5 +1,3 @@
-const sequelize = require("sequelize")
-
 const { Model, DataTypes } = require('sequelize');
 
 class Castracao extends Model {
