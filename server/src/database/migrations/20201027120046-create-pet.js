@@ -9,13 +9,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      tutor: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {model: "users", key: "id"},
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
       nome: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -52,11 +45,12 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      created_ad: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
       updated_at: {
+        type: Sequelize.DATE,
         allowNull: false,
       }
     });
