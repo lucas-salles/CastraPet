@@ -1,0 +1,7 @@
+#radio label {
+  display: block;
+}
+
+#radio input {
+  margin-right: 0.5rem;
+}

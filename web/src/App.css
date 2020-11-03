@@ -7,13 +7,18 @@
 
 body,
 input,
-button {
+button,
+textarea {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-button,
-input {
+button {
   display: block;
+}
+
+button,
+input,
+textarea {
   font-size: 1rem;
 }
 

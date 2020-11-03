@@ -1,0 +1,70 @@
+#page-animal-update {
+  max-width: 60rem;
+  margin: 8rem auto 10rem auto;
+}
+
+#page-animal-update h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 4rem;
+}
+
+#page-animal-update form {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+#page-animal-update form fieldset {
+  border: none;
+  margin-top: 2rem;
+}
+
+#page-animal-update form legend {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+}
+
+#page-animal-update form .double-input-row {
+  display: flex;
+}
+
+#page-animal-update form .double-input-row #input {
+  width: 50%;
+}
+
+#page-animal-update form .double-input-row #input:last-child {
+  margin-left: 2rem;
+}
+
+#page-animal-update form .double-input-row #select {
+  width: 50%;
+}
+
+#page-animal-update form .animal-characteristics {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+#page-animal-update form .animal-characteristic {
+  width: 50%;
+}
+
+#page-animal-update form .animal-characteristic:last-child {
+  margin-left: 2rem;
+}
+
+#page-animal-update form .column-title {
+  margin-bottom: 0.5rem;
+}
+
+#page-animal-update form button {
+  max-width: 20rem;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+@media (max-width: 1120px) {
+  #page-animal-update form {
+    padding: 0 1rem;
+  }
+}

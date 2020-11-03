@@ -51,7 +51,6 @@ const UserUpdate = () => {
       bairro: user.bairro,
       cep: user.cep,
       email: user.email,
-      senha: user.senha,
     });
 
     alert("Dados atualizados com sucesso");
@@ -66,73 +65,70 @@ const UserUpdate = () => {
       <div id="page-user-update">
         <h2>Atualizar Dados</h2>
 
-        <form id="form-register" onSubmit={handleSubmit}>
-          <Input
-            label="Nome"
-            type="text"
-            name="nome"
-            value={user.nome}
-            onChange={onChange}
-          />
-          <div className="input-block">
+        <form onSubmit={handleSubmit}>
+          <fieldset>
+            <legend>Dados do Tutor</legend>
+
             <Input
-              label="CPF ou RG"
+              label="Nome"
               type="text"
-              name="documento"
-              value={user.documento}
+              name="nome"
+              value={user.nome}
               onChange={onChange}
             />
 
-            <Input
-              label="Telefone"
-              type="tel"
-              name="telefone"
-              value={user.telefone}
-              onChange={onChange}
-            />
-          </div>
+            <div className="double-input-row">
+              <Input
+                label="CPF ou RG"
+                type="text"
+                name="documento"
+                value={user.documento}
+                onChange={onChange}
+              />
 
-          <Input
-            label="Endereço"
-            type="text"
-            name="endereco"
-            value={user.endereco}
-            onChange={onChange}
-          />
+              <Input
+                label="Telefone"
+                type="tel"
+                name="telefone"
+                value={user.telefone}
+                onChange={onChange}
+              />
+            </div>
 
-          <div className="input-block">
             <Input
-              label="Bairro"
+              label="Endereço"
               type="text"
-              name="bairro"
-              value={user.bairro}
+              name="endereco"
+              value={user.endereco}
               onChange={onChange}
             />
+
+            <div className="double-input-row">
+              <Input
+                label="Bairro"
+                type="text"
+                name="bairro"
+                value={user.bairro}
+                onChange={onChange}
+              />
+
+              <Input
+                label="CEP"
+                type="text"
+                name="cep"
+                value={user.cep}
+                onChange={onChange}
+              />
+            </div>
 
             <Input
-              label="CEP"
-              type="text"
-              name="cep"
-              value={user.cep}
+              label="Email"
+              type="email"
+              name="email"
+              value={user.email}
               onChange={onChange}
             />
-          </div>
-
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={onChange}
-          />
-
-          {/* <Input
-            label="Senha"
-            type="password"
-            name="senha"
-            value={user.senha}
-            onChange={onChange}
-          /> */}
+          </fieldset>
 
           <Button>Atualizar</Button>
         </form>

@@ -1,6 +1,6 @@
 #page-user-update {
   max-width: 60rem;
-  margin: 12rem auto 16rem auto;
+  margin: 8rem auto 10rem auto;
 }
 
 #page-user-update h2 {
@@ -14,15 +14,25 @@
   margin: 0 auto;
 }
 
-#page-user-update form .input-block {
+#page-user-update form fieldset {
+  border: none;
+  margin-top: 2rem;
+}
+
+#page-user-update form legend {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+}
+
+#page-user-update form .double-input-row {
   display: flex;
 }
 
-#page-user-update form .input-block #input {
+#page-user-update form .double-input-row #input {
   width: 50%;
 }
 
-#page-user-update form .input-block #input:last-child {
+#page-user-update form .double-input-row #input:last-child {
   margin-left: 2rem;
 }
 

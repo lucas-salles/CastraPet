@@ -38,7 +38,7 @@ const Register = () => {
 
     alert("Cadastro realizado com sucesso");
 
-    history.push("/");
+    history.push("/login");
   }
 
   return (
@@ -48,73 +48,78 @@ const Register = () => {
       <div id="page-user-register">
         <h2>Cadastro</h2>
 
-        <form id="form-register" onSubmit={handleSubmit}>
-          <Input
-            label="Nome"
-            type="text"
-            name="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-          <div className="input-block">
+        <form onSubmit={handleSubmit}>
+          <fieldset>
+            <legend>Dados do Tutor</legend>
+
             <Input
-              label="CPF ou RG"
+              label="Nome"
               type="text"
-              name="documento"
-              value={documento}
-              onChange={(e) => setDocumento(e.target.value)}
+              name="nome"
+              value={nome}
+              onChange={({ target }) => setNome(target.value)}
             />
 
-            <Input
-              label="Telefone"
-              type="tel"
-              name="telefone"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-            />
-          </div>
+            <div className="double-input-row">
+              <Input
+                label="CPF ou RG"
+                type="text"
+                name="documento"
+                value={documento}
+                onChange={({ target }) => setDocumento(target.value)}
+              />
 
-          <Input
-            label="Endereço"
-            type="text"
-            name="endereco"
-            value={endereco}
-            onChange={(e) => setEndereco(e.target.value)}
-          />
+              <Input
+                label="Telefone"
+                type="tel"
+                name="telefone"
+                value={telefone}
+                onChange={({ target }) => setTelefone(target.value)}
+              />
+            </div>
 
-          <div className="input-block">
             <Input
-              label="Bairro"
+              label="Endereço"
               type="text"
-              name="bairro"
-              value={bairro}
-              onChange={(e) => setBairro(e.target.value)}
+              name="endereco"
+              value={endereco}
+              onChange={({ target }) => setEndereco(target.value)}
+            />
+
+            <div className="double-input-row">
+              <Input
+                label="Bairro"
+                type="text"
+                name="bairro"
+                value={bairro}
+                onChange={({ target }) => setBairro(target.value)}
+              />
+
+              <Input
+                label="CEP"
+                type="text"
+                name="cep"
+                value={cep}
+                onChange={({ target }) => setCep(target.value)}
+              />
+            </div>
+
+            <Input
+              label="Email"
+              type="email"
+              name="email"
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
             />
 
             <Input
-              label="CEP"
-              type="text"
-              name="cep"
-              value={cep}
-              onChange={(e) => setCep(e.target.value)}
+              label="Senha"
+              type="password"
+              name="senha"
+              value={senha}
+              onChange={({ target }) => setSenha(target.value)}
             />
-          </div>
-
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <Input
-            label="Senha"
-            type="password"
-            name="senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
+          </fieldset>
 
           <Button>Cadastrar</Button>
         </form>

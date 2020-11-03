@@ -1,0 +1,7 @@
+#checkbox label {
+  display: block;
+}
+
+#checkbox input {
+  margin-right: 0.5rem;
+}

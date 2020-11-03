@@ -2,7 +2,7 @@ import React from "react";
 
 import "./input.css";
 
-const Input = ({ label, type, name, value, onChange, onBlur }) => {
+const Input = ({ label, type, name, value, onChange, ...props }) => {
   return (
     <div id="input">
       <label htmlFor={name}>{label}</label>
@@ -12,7 +12,7 @@ const Input = ({ label, type, name, value, onChange, onBlur }) => {
         type={type}
         value={value}
         onChange={onChange}
-        onBlur={onBlur}
+        {...props}
       />
     </div>
   );

@@ -20,7 +20,7 @@ const Header = ({ titulo }) => {
           <h1>{titulo}</h1>
         </div>
 
-        {user && (
+        {user ? (
           <div className="user">
             <p>
               <Link to={`users/update/${user.id}`}>{user.nome}</Link>
@@ -29,6 +29,10 @@ const Header = ({ titulo }) => {
             <div className="logout" onClick={userLogout}>
               Sair
             </div>
+          </div>
+        ) : (
+          <div className="user">
+            <Link to="/login">Login</Link>
           </div>
         )}
       </div>
