@@ -1,18 +1,19 @@
-const expres = require("express");
-const PetController = require("../controllers/PetController");
-
+const express = require("express");
 const routes = express.Router();
 
+const PetController = require("../controllers/PetController");
+
 //POST
-routes.post("/pets", PetController.store);
+routes.post("/", PetController.store);
 
 //GET
-routes.get("/pets/:id",PetController.find)
-routes.get("/pets/", PetController.index);
+routes.get("/:id",PetController.find)
+routes.get("/", PetController.index);
 
 //PUT
-routes.put("/pets/:di", PetController.update);
+routes.put("/:id", PetController.update);
 
 //DELETE
-routes.delete("/pets/id". PetController.delete)
+routes.delete("/:id", PetController.delete)
+
 module.exports = routes;

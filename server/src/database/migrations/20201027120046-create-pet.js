@@ -25,11 +25,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      corPelagem: {
+      cor_pelagem: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      porteFisico: {
+      porte_fisico: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -37,13 +37,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      estadoSaude: {
+      estado_saude: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       idade: {
         type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      usuario_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       created_at: {
         type: Sequelize.DATE,

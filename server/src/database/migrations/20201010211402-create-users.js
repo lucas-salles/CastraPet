@@ -14,18 +14,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      bairro: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      telefone: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      cep: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       documento: {
         type: Sequelize.STRING,
         allowNull: false
@@ -41,6 +29,22 @@ module.exports = {
       },
       senha: {
         type: Sequelize.TEXT,
+        allowNull: false
+      },
+      telefone: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      cep: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      endereco: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      bairro: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       created_at: {

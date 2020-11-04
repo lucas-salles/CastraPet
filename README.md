@@ -8,8 +8,27 @@
 
 ## Back
 
-- cd server
-- npm install
-- npx sequelize-cli db:create
-- npx sequelize-cli db:migrate
-- npm run dev
+#### Acessar Pasta do Servidor:
+~~~
+cd server
+~~~
+#### Instalar dependências:
+~~~
+npm install
+~~~
+#### Criar banco de dados:
+~~~
+sequelize-cli db:create
+~~~
+#### Criar tabelas do banco:
+~~~
+sequelize-cli db:migrate
+~~~
+#### Povoar as tabelas com dados
+~~~
+sequelize-cli db:seed:all
+~~~
+#### Subir aplicação no modo desenvolvimento:
+~~~
+npm run dev
+~~~

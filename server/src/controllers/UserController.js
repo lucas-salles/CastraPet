@@ -14,7 +14,9 @@ module.exports = {
 
     try {
       await User.create(new_user).then(user => {
-        res.status(201).json({ success: true, user })
+        const { senha, ...user_response } = user.dataValues;
+
+        res.status(201).json({ success: true, user: user_response })
       }).catch((error) => {
         if(error.name === 'SequelizeUniqueConstraintError'){
           res.status(400).json({
@@ -42,6 +44,9 @@ module.exports = {
       await User.findAll({ 
         attributes: { 
           exclude: [ 'senha' ]
+        },
+        include: {
+          association: 'pets'
         }
       }).then(users => {
         res.status(200).json({ success: true, users })
@@ -64,14 +69,14 @@ module.exports = {
     const { id } = req.params
 
     try {
-      await User.findOne({ 
-        where: { id }, 
+      await User.findByPk( id, { 
         attributes: { 
           exclude: [ 'senha' ]
-        }
+        },
+        include: { association: 'pets' }
       }).then(user => {
         res.status(200).json({ success: true, user })
-      }).catch(() => {
+      }).catch((err) => {
         res.status(400).json({
             success: false,
             message: 'Ocorreu um erro enquanto os dados eram recuperados.'
@@ -93,11 +98,10 @@ module.exports = {
 
     try {
       await User.update(user_update, { where: { id } }).then(rows_count => {
-        User.findOne({ 
-          where: { id }, 
+        User.findByPk(id, { 
           attributes: { 
-            exclude: [ 'senha' ]
-          }
+            exclude: [ 'senha' ] 
+          } 
         }).then(user => {
           res.status(200).json({ success: true, user })
         }).catch(() => {
@@ -125,13 +129,14 @@ module.exports = {
     const { id } = req.params
 
     try {
-      await User.findOne({ where: { id } }).then(user => {
+      await User.findByPk(id).then(user => {
         user.destroy().then(user2 => {
           res.status(200).json({
             success: true,
             message: 'Registro removido com sucesso.'
           })
-        }).catch(() => {
+        }).catch((err) => {
+          console.log(err)
           res.status(400).json({
             success: false,
             message: 'Ocorreu um erro enquanto os dados eram removidos.'
