@@ -60,42 +60,46 @@ const Dashboard = () => {
           <p>{user && user.telefone}</p>
         </div>
 
-        <Link to="pets" className="new-pet">
-          Novo Pet
-        </Link>
+        <div className="user-pets">
+          <h2>Pets Cadastrados</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Sexo</th>
-              <th>Cor</th>
-              <th>Porte</th>
-              <th>Idade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pets &&
-              pets.map((pet) => (
-                <tr key={pet.id}>
-                  <td>{pet.nome}</td>
-                  <td>{pet.sexo}</td>
-                  <td>{pet.cor_pelagem}</td>
-                  <td>{pet.porte_fisico}</td>
-                  <td>{pet.idade}</td>
-                  <td className="buttons">
-                    <Link to={`pets/${pet.id}`}>
-                      <Edit />
-                    </Link>
-                    <button onClick={() => handleDelete(pet.id)}>
-                      <Trash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+          <Link to="pets" className="new-pet">
+            Novo Pet
+          </Link>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Espécie</th>
+                <th>Sexo</th>
+                <th>Porte</th>
+                <th>Idade</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pets &&
+                pets.map((pet) => (
+                  <tr key={pet.id}>
+                    <td>{pet.nome}</td>
+                    <td>{pet.especie}</td>
+                    <td>{pet.sexo}</td>
+                    <td>{pet.porte_fisico}</td>
+                    <td>{pet.idade}</td>
+                    <td className="buttons">
+                      <Link to={`pets/${pet.id}`}>
+                        <Edit />
+                      </Link>
+                      <button onClick={() => handleDelete(pet.id)}>
+                        <Trash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

@@ -19,8 +19,9 @@
   margin-left: 1rem;
 }
 
-#header .logo img {
-  width: 3.4rem;
+#header .logo svg {
+  width: 5rem;
+  height: 5rem;
 }
 
 #header .user {
@@ -35,6 +36,23 @@
 
 #header .username {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+#header .username::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 115%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+#header .username svg {
+  margin-right: 0.5rem;
 }
 
 #header .user .user-nav {
@@ -49,6 +67,11 @@
   transition: 0.3s;
   z-index: 100;
   width: 11rem;
+  pointer-events: none;
+}
+
+#header .user .user-nav-active {
+  pointer-events: initial;
 }
 
 #header .user .user-nav svg {
@@ -80,8 +103,9 @@
 
 @media (max-width: 1120px) {
   #header {
-    padding: 0 1rem;
+    padding: 0 2rem 0 1rem;
   }
+
   #header .logo h1 {
     font-size: 2rem;
     margin-left: 1rem;
