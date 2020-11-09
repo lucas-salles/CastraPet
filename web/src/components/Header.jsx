@@ -7,10 +7,10 @@ import { ReactComponent as LogOut } from "../images/log-out.svg";
 
 import { UserContext } from "../UserContext";
 
-import "./header.css";
+import "./Header.css";
 
 const Header = ({ titulo }) => {
-  const { userLogout, user } = useContext(UserContext);
+  const { userLogout, user, login } = useContext(UserContext);
 
   const [navMenu, setNavMenu] = useState(false);
 
@@ -18,14 +18,14 @@ const Header = ({ titulo }) => {
     <header id="header">
       <div className="container">
         <div className="logo">
-          <Link to="/">
+          <Link to={login ? "/dashboard" : "/"}>
             <img src={logoPrefeitura} alt="Prefeitura" />
           </Link>
 
           <h1>{titulo}</h1>
         </div>
 
-        {user ? (
+        {login ? (
           <div className="user">
             <div className="username" onClick={() => setNavMenu(!navMenu)}>
               {user.nome.split(" ")[0]}

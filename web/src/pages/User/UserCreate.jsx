@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState } from "react";
 
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
+import Loading from "../../components/Loading";
+
+import { UserContext } from "../../UserContext";
 
 import api from "../../services/api";
+import history from "../../history";
 
 import "./user-create.css";
 
 const Register = () => {
-  const history = useHistory();
+  const { loading } = useContext(UserContext);
 
   const [nome, setNome] = useState("");
   const [documento, setDocumento] = useState("");
@@ -28,7 +31,7 @@ const Register = () => {
       nome,
       documento,
       telefone,
-      tipo: "tutor",
+      tipo: "RG",
       endereco,
       bairro,
       cep,
@@ -40,6 +43,8 @@ const Register = () => {
 
     history.push("/login");
   }
+
+  if (loading) return <Loading />;
 
   return (
     <>

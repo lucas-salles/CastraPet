@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../../components/Header";
+import Loading from "../../components/Loading";
+
+import { UserContext } from "../../UserContext";
 
 import "./home.css";
 
 const Home = () => {
+  const { loading } = useContext(UserContext);
+
+  if (loading) return <Loading />;
+
   return (
     <>
       <Header titulo="Página Inicial" />

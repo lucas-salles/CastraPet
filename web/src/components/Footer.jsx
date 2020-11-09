@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./footer.css";
+import "./Footer.css";
 
 import logoPrefeitura from "../images/logo-prefeitura.svg";
 

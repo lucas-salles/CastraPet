@@ -23,7 +23,7 @@ const UserStorage = ({ children }) => {
       setUser(usuario);
       window.localStorage.setItem("token", token);
       setLogin(true);
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       setError(err.message);
       setLogin(false);
@@ -37,6 +37,7 @@ const UserStorage = ({ children }) => {
     setError(null);
     setLogin(false);
     window.localStorage.removeItem("token");
+    history.push("/");
   }, []);
 
   useEffect(() => {

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
+import Loading from "../../components/Loading";
+
+import { UserContext } from "../../UserContext";
 
 import api from "../../services/api";
 import history from "../../history";
@@ -11,6 +14,8 @@ import history from "../../history";
 import "./user-update.css";
 
 const UserUpdate = () => {
+  const { loading } = useContext(UserContext);
+
   const { id } = useParams();
 
   const [user, setUser] = useState({
@@ -44,7 +49,7 @@ const UserUpdate = () => {
       nome: user.nome,
       documento: user.documento,
       telefone: user.telefone,
-      tipo: "tutor",
+      tipo: "RG",
       endereco: user.endereco,
       bairro: user.bairro,
       cep: user.cep,
@@ -53,8 +58,10 @@ const UserUpdate = () => {
 
     alert("Dados atualizados com sucesso");
 
-    history.push("/");
+    history.push("/dashboard");
   }
+
+  if (loading) return <Loading />;
 
   return (
     <>

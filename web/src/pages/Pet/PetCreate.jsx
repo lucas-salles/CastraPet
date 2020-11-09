@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Textarea from "../../components/Forms/Textarea";
 import Select from "../../components/Forms/Select";
+import Loading from "../../components/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -15,7 +15,7 @@ import history from "../../history";
 import "./pet-create.css";
 
 const PetCreate = () => {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   const [nome, setNome] = useState("");
   const [corPelagem, setCorPelagem] = useState("");
@@ -45,8 +45,10 @@ const PetCreate = () => {
 
     alert("Animal cadastrado com sucesso");
 
-    history.push("/");
+    history.push("/dashboard");
   }
+
+  if (loading) return <Loading />;
 
   return (
     <>

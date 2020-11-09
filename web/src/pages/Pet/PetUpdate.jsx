@@ -6,6 +6,7 @@ import Input from "../../components/Forms/Input";
 import Select from "../../components/Forms/Select";
 import Textarea from "../../components/Forms/Textarea";
 import Header from "../../components/Header";
+import Loading from "../../components/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -17,7 +18,7 @@ import "./pet-update.css";
 const PetUpdate = () => {
   const { id } = useParams();
 
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   const [animal, setAnimal] = useState({
     nome: "",
@@ -61,8 +62,10 @@ const PetUpdate = () => {
 
     alert("Animal atualizado com sucesso");
 
-    history.push("/");
+    history.push("/dashboard");
   }
+
+  if (loading) return <Loading />;
 
   return (
     <>
