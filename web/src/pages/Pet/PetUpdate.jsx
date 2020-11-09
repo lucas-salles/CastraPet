@@ -30,6 +30,7 @@ const PetUpdate = () => {
     porte_fisico: "",
     comportamento: "",
     estado_saude: "",
+    usuario_id: user.id,
   });
 
   useEffect(() => {
