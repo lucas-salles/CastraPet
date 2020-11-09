@@ -2,9 +2,18 @@
 
 ## Front
 
-- cd web
-- npm install
-- npm start
+#### Acessar Pasta do Front-end:
+~~~
+cd web
+~~~
+#### Instalar dependências:
+~~~
+npm install
+~~~
+#### Executar aplicação:
+~~~
+npm start
+~~~
 
 ## Back
 
