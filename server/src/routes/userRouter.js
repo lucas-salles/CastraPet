@@ -1,11 +1,12 @@
 const express = require("express");
 const routes = express.Router();
-const { autenticacao } = require("../middleware/auth")
+const { autenticacao } = require("../middleware/auth");
 
 const UserController = require("../controllers/UserController");
 
 // POST
 routes.post("/login", autenticacao, UserController.login);
+routes.post("/token-validate", UserController.tokenValidate);
 routes.post("/", UserController.store);
 
 // GET
