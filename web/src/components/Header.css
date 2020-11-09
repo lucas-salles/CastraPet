@@ -24,32 +24,73 @@
 }
 
 #header .user {
-  font-size: 1.4rem;
-  display: flex;
+  position: relative;
+  font-size: 1.2rem;
 }
 
-#header .user a {
+#header .user-login a {
   color: #fff;
-  margin-right: 1rem;
 }
 
-#header .logout {
+#header .username {
   cursor: pointer;
 }
 
+#header .user .user-nav {
+  display: block;
+  position: absolute;
+  top: 25px;
+  right: 0px;
+  padding: 0 1rem;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 0.2rem;
+  transition: 0.3s;
+  z-index: 100;
+  width: 11rem;
+}
+
+#header .user .user-nav svg {
+  width: 1.4rem;
+  margin-right: 0.5rem;
+}
+
+#header .user .user-nav a,
+#header .user .user-nav button {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  background: none;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: #000;
+  transition: 0.1s;
+}
+
+#header .user .user-nav a:hover,
+#header .user .user-nav a:focus,
+#header .user .user-nav button:hover,
+#header .user .user-nav button:focus {
+  color: var(--color-primary);
+}
+
 @media (max-width: 1120px) {
+  #header {
+    padding: 0 1rem;
+  }
   #header .logo h1 {
     font-size: 2rem;
     margin-left: 1rem;
   }
 
   #header .logo img {
-    margin-left: 1rem;
     width: 2.4rem;
   }
 
   #header .user {
-    font-size: 1.2rem;
     display: flex;
   }
 }

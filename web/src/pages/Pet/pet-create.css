@@ -28,26 +28,14 @@
   display: flex;
 }
 
-#page-animal-register form .double-input-row #input {
-  width: 50%;
-}
-
-#page-animal-register form .double-input-row #input:last-child {
-  margin-left: 2rem;
-}
-
-#page-animal-register form .animal-characteristics {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
+#page-animal-register form .double-input-row #input,
 #page-animal-register form .double-input-row #select {
   width: 50%;
 }
 
-#page-animal-register form .column-title {
-  margin-bottom: 0.5rem;
+#page-animal-register form .double-input-row #input:last-child,
+#page-animal-register form .double-input-row #select:last-child {
+  margin-left: 2rem;
 }
 
 #page-animal-register form button {

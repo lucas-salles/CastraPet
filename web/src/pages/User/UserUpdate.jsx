@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 
 import api from "../../services/api";
+import history from "../../history";
 
 import "./user-update.css";
 
-const initialValues = {
-  nome: "",
-  documento: "",
-  telefone: "",
-  tipo: "tutor",
-  endereco: "",
-  bairro: "",
-  cep: "",
-  email: "",
-  senha: "",
-};
-
 const UserUpdate = () => {
   const { id } = useParams();
-  const history = useHistory();
 
-  const [user, setUser] = useState(id ? {} : initialValues);
+  const [user, setUser] = useState({
+    nome: "",
+    documento: "",
+    telefone: "",
+    tipo: "",
+    endereco: "",
+    bairro: "",
+    cep: "",
+    email: "",
+    senha: "",
+  });
 
   useEffect(() => {
     api.get(`users/${id}`).then((response) => {

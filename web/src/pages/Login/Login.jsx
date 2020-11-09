@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
@@ -11,8 +11,6 @@ import { UserContext } from "../../UserContext";
 import "./login.css";
 
 const Login = () => {
-  const history = useHistory();
-
   const { userLogin, loading } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
@@ -22,8 +20,6 @@ const Login = () => {
     event.preventDefault();
 
     await userLogin(email, senha);
-
-    history.push("/");
   }
 
   return (

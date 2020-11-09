@@ -1,7 +1,7 @@
 import React from "react";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
-import AnimalCreate from "./pages/Animal/AnimalCreate";
-import AnimalUpdate from "./pages/Animal/AnimalUpdate";
+import { Route, Switch } from "react-router-dom";
+import PetCreate from "./pages/Pet/PetCreate";
+import PetUpdate from "./pages/Pet/PetUpdate";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import UserCreate from "./pages/User/UserCreate";
@@ -9,16 +9,14 @@ import UserUpdate from "./pages/User/UserUpdate";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route component={Home} path="/" exact />
-        <Route component={Login} path="/login" />
-        <Route component={UserCreate} path="/register" />
-        <Route component={UserUpdate} path="/users/:id" />
-        <Route component={AnimalCreate} path="/animals" exact />
-        <Route component={AnimalUpdate} path="/animals/:id" />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route component={Home} path="/" exact />
+      <Route component={Login} path="/login" />
+      <Route component={UserCreate} path="/register" />
+      <Route component={UserUpdate} path="/users/:id" />
+      <Route component={PetCreate} path="/pets" exact />
+      <Route component={PetUpdate} path="/pets/:id" />
+    </Switch>
   );
 };
 

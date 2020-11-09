@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Textarea from "../../components/Forms/Textarea";
-import Radio from "../../components/Forms/Radio";
-import Checkbox from "../../components/Forms/Checkbox";
 import Select from "../../components/Forms/Select";
 
+import { UserContext } from "../../UserContext";
+
 import api from "../../services/api";
+import history from "../../history";
 
-import "./animal-create.css";
+import "./pet-create.css";
 
-const AnimalCreate = () => {
-  const history = useHistory();
+const PetCreate = () => {
+  const { user } = useContext(UserContext);
 
   const [nome, setNome] = useState("");
   const [corPelagem, setCorPelagem] = useState("");
@@ -24,28 +25,27 @@ const AnimalCreate = () => {
   const [idade, setIdade] = useState("");
   const [porteFisico, setPorteFisico] = useState("");
   const [comportamento, setComportamento] = useState("");
-  const [vacinas, setVacinas] = useState([]);
   const [estadoSaude, setEstadoSaude] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await api.post("animals", {
+    await api.post("pets", {
       nome,
-      corPelagem,
+      cor_pelagem: corPelagem,
       especie,
       raca,
       sexo,
       idade,
-      porteFisico,
+      porte_fisico: porteFisico,
       comportamento,
-      vacinas,
-      estadoSaude,
+      estado_saude: estadoSaude,
+      usuario_id: user.id,
     });
 
     alert("Animal cadastrado com sucesso");
 
-    history.push("/home");
+    history.push("/");
   }
 
   return (
@@ -95,7 +95,7 @@ const AnimalCreate = () => {
 
             <div className="double-input-row">
               <Select
-                options={["Macho", "Fêmea"]}
+                options={["M", "F"]}
                 value={sexo}
                 label="Sexo"
                 name="sexo"
@@ -115,36 +115,22 @@ const AnimalCreate = () => {
           <fieldset>
             <legend>Característica do Animal</legend>
 
-            <div className="animal-characteristics">
-              <div>
-                <div className="column-title">Porte Físico</div>
-                <Radio
-                  options={["Pequeno", "Médio", "Grande"]}
-                  name="porteFisico"
-                  value={porteFisico}
-                  onChange={({ target }) => setPorteFisico(target.value)}
-                />
-              </div>
+            <div className="double-input-row">
+              <Select
+                options={["Pequeno", "Médio", "Grande"]}
+                value={porteFisico}
+                label="Porte Físico"
+                name="porteFisico"
+                onChange={({ target }) => setPorteFisico(target.value)}
+              />
 
-              <div>
-                <div className="column-title">Comportamento</div>
-                <Radio
-                  options={["Dócil", "Agressivo", "Reservado", "Seletivo"]}
-                  name="comportamento"
-                  value={comportamento}
-                  onChange={({ target }) => setComportamento(target.value)}
-                />
-              </div>
-
-              <div>
-                <div className="column-title">Vacinas</div>
-                <Checkbox
-                  options={["Raiva", "Viroses", "Leishmaniose"]}
-                  name="vacinas"
-                  value={vacinas}
-                  setValue={setVacinas}
-                />
-              </div>
+              <Select
+                options={["Dócil", "Agressivo", "Reservado", "Seletivo"]}
+                value={comportamento}
+                label="Comportamento"
+                name="comportamento"
+                onChange={({ target }) => setComportamento(target.value)}
+              />
             </div>
 
             <Textarea
@@ -162,4 +148,4 @@ const AnimalCreate = () => {
   );
 };
 
-export default AnimalCreate;
+export default PetCreate;

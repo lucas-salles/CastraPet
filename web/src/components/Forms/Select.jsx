@@ -13,6 +13,9 @@ const Select = ({ options, value, label, name, onChange, ...props }) => {
         onChange={onChange}
         {...props}
       >
+        <option value="" disabled>
+          Selecione
+        </option>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

@@ -28,33 +28,18 @@
   display: flex;
 }
 
-#page-animal-update form .double-input-row #input {
-  width: 50%;
-}
-
-#page-animal-update form .double-input-row #input:last-child {
-  margin-left: 2rem;
-}
-
+#page-animal-update form .double-input-row #input,
 #page-animal-update form .double-input-row #select {
   width: 50%;
 }
 
-#page-animal-update form .animal-characteristics {
-  display: flex;
-  margin-bottom: 1rem;
-}
-
-#page-animal-update form .animal-characteristic {
-  width: 50%;
+#page-animal-update form .double-input-row #input:last-child,
+#page-animal-update form .double-input-row #select:last-child {
+  margin-left: 2rem;
 }
 
 #page-animal-update form .animal-characteristic:last-child {
   margin-left: 2rem;
-}
-
-#page-animal-update form .column-title {
-  margin-bottom: 0.5rem;
 }
 
 #page-animal-update form button {

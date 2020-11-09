@@ -1,6 +1,7 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 import api from "./services/api";
+import history from "./history";
 
 const UserContext = createContext();
 
@@ -22,6 +23,7 @@ const UserStorage = ({ children }) => {
       setUser(usuario);
       window.localStorage.setItem("token", token);
       setLogin(true);
+      history.push("/");
     } catch (err) {
       setError(err.message);
       setLogin(false);
@@ -36,6 +38,29 @@ const UserStorage = ({ children }) => {
     setLogin(false);
     window.localStorage.removeItem("token");
   }, []);
+
+  useEffect(() => {
+    async function autoLogin() {
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        try {
+          setError(null);
+          setLoading(true);
+          const response = await api.post("/users/token-validate");
+          const user = response.data.user;
+          setUser(user);
+          setLogin(true);
+        } catch (err) {
+          userLogout();
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setLogin(false);
+      }
+    }
+    autoLogin();
+  }, [userLogout]);
 
   return (
     <UserContext.Provider
