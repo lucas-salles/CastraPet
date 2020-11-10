@@ -3,23 +3,23 @@
   color: #fff;
 }
 
-#footer .logo-contato {
+#footer .logo-contact {
   display: flex;
   align-items: center;
   margin-top: 1rem;
 }
 
-#footer .logo-contato img {
+#footer .logo-contact img {
   width: 6rem;
 }
 
-#footer .contato {
+#footer .contact {
   margin-left: 6rem;
   font-weight: 300;
   font-size: 1.2rem;
 }
 
-#footer .nome-prefeitura {
+#footer .county-name {
   text-align: center;
   font-weight: bold;
   font-size: 1.4rem;
@@ -27,20 +27,20 @@
 }
 
 @media (max-width: 1120px) {
-  #footer .logo-contato {
+  #footer .logo-contact {
     justify-content: center;
   }
 
-  #footer .logo-contato img {
+  #footer .logo-contact img {
     display: none;
   }
 
-  #footer .contato {
+  #footer .contact {
     margin-left: 0;
     font-size: 1rem;
   }
 
-  #footer .nome-prefeitura {
+  #footer .county-name {
     padding: 2rem 0 1rem 0;
   }
 }

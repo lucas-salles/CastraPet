@@ -12,7 +12,11 @@
   margin-bottom: 3rem;
 }
 
-#page-dashboard .new-pet {
+#page-dashboard .user-pets h2 {
+  margin-bottom: 2rem;
+}
+
+#page-dashboard .user-pets .new-pet {
   font-size: 1rem;
   font-family: var(--type-first);
   cursor: pointer;
@@ -26,8 +30,8 @@
   transition: 0.1s;
 }
 
-#page-dashboard .new-pet:hover,
-#page-dashboard .new-pet:focus {
+#page-dashboard .user-pets .new-pet:hover,
+#page-dashboard .user-pets .new-pet:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
@@ -57,10 +61,10 @@
   background-color: #f9f9f9;
 }
 
-#page-dashboard table tbody tr:hover {
+/* #page-dashboard table tbody tr:hover {
   background-color: #d3d3d3;
   font-weight: bold;
-}
+} */
 
 #page-dashboard table .buttons {
   width: 6rem;
@@ -88,8 +92,18 @@
   background: #ffc107;
 }
 
+#page-dashboard table .buttons a:hover,
+#page-dashboard table .buttons a:focus {
+  background: #e0a800;
+}
+
 #page-dashboard table .buttons button {
   background: #dc3545;
+}
+
+#page-dashboard table .buttons button:hover,
+#page-dashboard table .buttons button:focus {
+  background: #c82333;
 }
 
 @media (max-width: 1120px) {
