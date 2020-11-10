@@ -7,13 +7,14 @@ const PetController = require("../controllers/PetController");
 routes.post("/", PetController.store);
 
 //GET
-routes.get("/:id",PetController.find)
+routes.get("/:id/vaccinations", PetController.findWithVaccinations);
+routes.get("/:id", PetController.find);
 routes.get("/", PetController.index);
 
 //PUT
 routes.put("/:id", PetController.update);
 
 //DELETE
-routes.delete("/:id", PetController.delete)
+routes.delete("/:id", PetController.delete);
 
 module.exports = routes;

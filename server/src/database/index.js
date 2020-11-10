@@ -3,8 +3,8 @@ const dbConfig = require('../config/database');
 
 const User = require('./models/User'); 
 const Pet = require('./models/Pet');
-const Castracao = require('./models/Castracao');
-const Vacinacao = require('./models/Vacinacao');
+const Castracao = require('./models/Castration');
+const Vacinacao = require('./models/Vaccination');
 
 const connection = new Sequelize(dbConfig);
 
@@ -15,5 +15,6 @@ Vacinacao.init(connection);
 
 Pet.associate(connection.models);
 User.associate(connection.models);
+Vacinacao.associate(connection.models);
 
 module.exports = connection;

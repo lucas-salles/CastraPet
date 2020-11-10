@@ -1,12 +1,11 @@
-const Pet = require('../database/models/Pet');
 const Vaccination = require('../database/models/Vaccination');
 
 module.exports = {
 
   async index(req, res, next) {
     try {
-      await Pet.findAll({ include: { association: 'tutor', exclude: ['senha'] } }).then(pets => {
-        return res.status(200).json({ success: true, pets });
+      await Vaccination.findAll().then(vaccinations => {
+        return res.status(200).json({ success: true, vaccinations });
       }).catch(err => {
         res.status(400).json({
           success: false,
@@ -22,12 +21,11 @@ module.exports = {
   },
 
   async store(req, res, next){
-
-    const { ...new_pet } = req.body;
+    const { ...new_vaccination } = req.body;
 
     try {
-      await Pet.create(new_pet).then(pet => {
-        return res.status(201).json({ success: true, pet });
+      await Vaccination.create(new_vaccination).then(vaccination => {
+        return res.status(201).json({ success: true, vaccination });
       }).catch(err => {
         res.status(400).json({
           success: false,
@@ -46,17 +44,20 @@ module.exports = {
     const { id } = req.params
 
     try {
-      await Pet.findByPk(id, { include: { association: 'tutor', exclude: ['senha'] } }).then(pet => {
-        if(!pet) {
-          return res.status(404).json({ success: false, message: 'O PET não foi encontrado no sistema.' });
+      await Vaccination.findByPk(id).then(vaccination => {
+        if(!vaccination) {
+          res.status(404).json({ 
+            success: false, 
+            message: 'A vacinação não foi encontrada no sistema.' 
+          });
         }
-        res.status(200).json({ success: true, pet });
+        res.status(200).json({ success: true, vaccination });
       }).catch(() => {
         res.status(400).json({
             success: false,
             message: 'Ocorreu um erro enquanto os dados eram recuperados.'
         });
-      })
+      });
     } catch (error) {
       res.status(500).json({
         success: false,
@@ -67,12 +68,12 @@ module.exports = {
 
   async update(req, res, next) {
     const { id } = req.params;
-    const { ...pet_update } = req.body;
+    const { ...vaccination_up } = req.body;
 
     try {
-      await Pet.update(pet_update, { where: { id } } ).then(rows_count => {
-        Pet.findByPk(id).then(pet => {
-          res.status(200).json({ success: true, pet });
+      await Vaccination.update(vaccination_up, { where: { id } } ).then(rows_count => {
+        Vaccination.findByPk(id).then(vaccination => {
+          res.status(200).json({ success: true, vaccination });
         }).catch(erro => {
           res.status(400).json({
             success: false,
@@ -97,8 +98,8 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await Pet.findByPk(id).then(pet => {
-        pet.destroy().then(pet2 => {
+      await Vaccination.findByPk(id).then(vaccination_find => {
+        vaccination_find.destroy().then(vaccination_del => {
           res.status(200).json({
             success: true,
             message: 'Registro removido com sucesso.'
@@ -123,23 +124,22 @@ module.exports = {
     }
   },
 
-  async findWithVaccinations(req, res, next) {
-    const { id } = req.params;
+  async findWithPets(req, res, next) {
+    const { id } = req.params
 
     try {
-      await Pet.findByPk(id, { 
-        include: { 
-          all: true
-        }, 
-        attributes: {
-          exclude: ['senha'] 
-        } 
-      }).then(pet => {
-        res.status(200).json({ success: true, pet });
-      }).catch(err => {
+      await Vaccination.findByPk(id, { include: { association: 'pets' } }).then(vaccination => {
+        if(!vaccination) {
+          res.status(404).json({ 
+            success: false, 
+            message: 'A vacinação não foi encontrada no sistema.' 
+          });
+        }
+        res.status(200).json({ success: true, vaccination });
+      }).catch(() => {
         res.status(400).json({
-          success: false,
-          message: 'Ocorreu um erro enquanto os dados eram recuperados.'
+            success: false,
+            message: 'Ocorreu um erro enquanto os dados eram recuperados.'
         });
       });
     } catch (error) {

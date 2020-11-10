@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', { 
+    return queryInterface.createTable('vaccinations', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -14,34 +14,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      cpf: {
-        type: Sequelize.STRING,
+      data: {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      email: {
+      observacoes: {
         type: Sequelize.STRING,
+        allowNull: true
+      },
+      pet_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
-      },
-      senha: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      telefone: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      cep: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      endereco: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      bairro: {
-        type: Sequelize.STRING,
-        allowNull: false
+        references: { model: 'pets', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       created_at: {
         type: Sequelize.DATE,
@@ -56,7 +42,7 @@ module.exports = {
     });
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('vaccinations');
   }
 };

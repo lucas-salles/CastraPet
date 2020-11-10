@@ -1,13 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Castracao extends Model {
+class Castration extends Model {
   static init(sequelize) {
     super.init({
       data: DataTypes.DATE,
-      periodoCastracao: DataTypes.STRING,
+      periodo_castracao: DataTypes.STRING,
     },{
       sequelize
     });
   }
 }
-module.exports = Castracao;
+module.exports = Castration;

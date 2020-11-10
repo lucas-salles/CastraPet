@@ -13,9 +13,7 @@ module.exports = {
         comportamento: "docil",
         estado_saude: "saudavel",
         idade: 8,
-        usuario_id: 2,
-        created_at: Sequelize.fn("NOW"),
-        updated_at: Sequelize.fn("NOW")
+        usuario_id: 2
       },
       {
         nome: "Lutador",
@@ -27,9 +25,7 @@ module.exports = {
         comportamento: "agressivo",
         estado_saude: "saudavel",
         idade: 22,
-        usuario_id: 3,
-        created_at: Sequelize.fn("NOW"),
-        updated_at: Sequelize.fn("NOW")
+        usuario_id: 3
       },
       {
         nome: "Princesa",
@@ -41,9 +37,7 @@ module.exports = {
         comportamento: "docil",
         estado_saude: "saudavel",
         idade: 14,
-        usuario_id: 1,
-        created_at: Sequelize.fn("NOW"),
-        updated_at: Sequelize.fn("NOW")
+        usuario_id: 1
       },
       {
         nome: "Companheiro",
@@ -55,9 +49,7 @@ module.exports = {
         comportamento: "docil",
         estado_saude: "saudavel",
         idade: 33,
-        usuario_id: 4,
-        created_at: Sequelize.fn("NOW"),
-        updated_at: Sequelize.fn("NOW")
+        usuario_id: 4
       }
     ], {});
   },
