@@ -49,6 +49,7 @@ const UserStorage = ({ children }) => {
           setLoading(true);
           const response = await api.post("/users/token-validate");
           const user = response.data.user;
+          if (!user) throw new Error("Token inválido");
           setUser(user);
           setLogin(true);
         } catch (err) {

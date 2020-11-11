@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as CastraPet } from "../images/castra-pet.svg";
@@ -13,8 +13,6 @@ import "./Header.css";
 const Header = ({ titulo }) => {
   const { userLogout, user, login } = useContext(UserContext);
 
-  const [navMenuActive, setNavMenuActive] = useState(false);
-
   return (
     <header id="header">
       <div className="container">
@@ -28,18 +26,12 @@ const Header = ({ titulo }) => {
 
         {login ? (
           <div className="user">
-            <div
-              className={`username ${navMenuActive && "teste"}`}
-              onClick={() => setNavMenuActive(!navMenuActive)}
-            >
+            <div className="username">
+              <p>{user?.nome.split(" ")[0]}</p>
               <User />
-              {user.nome.split(" ")[0]}
             </div>
 
-            <nav
-              className={`user-nav ${navMenuActive && "user-nav-active"}`}
-              style={navMenuActive ? { display: "block" } : { display: "none" }}
-            >
+            <nav className="user-nav">
               <Link to={`users/${user.id}`}>
                 <Edit />
                 Atualizar Dados

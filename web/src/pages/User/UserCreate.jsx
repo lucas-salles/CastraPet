@@ -16,7 +16,7 @@ const Register = () => {
   const { loading } = useContext(UserContext);
 
   const [nome, setNome] = useState("");
-  const [documento, setDocumento] = useState("");
+  const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");
   const [bairro, setBairro] = useState("");
@@ -29,9 +29,8 @@ const Register = () => {
 
     await api.post("users", {
       nome,
-      documento,
+      cpf,
       telefone,
-      tipo: "RG",
       endereco,
       bairro,
       cep,
@@ -67,11 +66,11 @@ const Register = () => {
 
             <div className="double-input-row">
               <Input
-                label="CPF ou RG"
+                label="CPF"
                 type="text"
-                name="documento"
-                value={documento}
-                onChange={({ target }) => setDocumento(target.value)}
+                name="cpf"
+                value={cpf}
+                onChange={({ target }) => setCpf(target.value)}
               />
 
               <Input

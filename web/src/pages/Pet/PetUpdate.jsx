@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
@@ -14,10 +13,10 @@ import api from "../../services/api";
 import history from "../../history";
 
 import "./pet-update.css";
+import { useParams } from "react-router-dom";
 
 const PetUpdate = () => {
   const { id } = useParams();
-
   const { user, loading } = useContext(UserContext);
 
   const [animal, setAnimal] = useState({
@@ -30,7 +29,6 @@ const PetUpdate = () => {
     porte_fisico: "",
     comportamento: "",
     estado_saude: "",
-    usuario_id: user.id,
   });
 
   useEffect(() => {

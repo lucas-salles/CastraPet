@@ -4,27 +4,30 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 
+import { ReactComponent as Search } from "../../images/search.svg";
+import { ReactComponent as Edit } from "../../images/edit.svg";
+import { ReactComponent as Trash } from "../../images/trash.svg";
+
 import { UserContext } from "../../UserContext";
 
 import api from "../../services/api";
 
-import { ReactComponent as Edit } from "../../images/edit.svg";
-import { ReactComponent as Trash } from "../../images/trash.svg";
-
-import "./dashboard.css";
+import "./user-dashboard.css";
 
 const Dashboard = () => {
-  const { user, login, loading } = useContext(UserContext);
+  const { user: userLogged, login, loading } = useContext(UserContext);
   const [pets, setPets] = useState([]);
+  const [user, setUser] = useState({});
 
   const getPets = useCallback(
     async function getPets() {
       if (login) {
-        const response = await api.get(`users/${user.id}`);
+        const response = await api.get(`users/${userLogged?.id}`);
+        setUser(response.data.user);
         setPets(response.data.user.pets);
       }
     },
-    [login, user]
+    [login, userLogged]
   );
 
   useEffect(() => {
@@ -55,9 +58,9 @@ const Dashboard = () => {
         <h1>Painel do Usuário</h1>
 
         <div className="user-info">
-          <h2>{user && user.nome}</h2>
-          <p>{user && user.email}</p>
-          <p>{user && user.telefone}</p>
+          <h2>{user?.nome}</h2>
+          <p>{user?.email}</p>
+          <p>{user?.telefone}</p>
         </div>
 
         <div className="user-pets">
@@ -88,10 +91,18 @@ const Dashboard = () => {
                     <td>{pet.porte_fisico}</td>
                     <td>{pet.idade}</td>
                     <td className="buttons">
-                      <Link to={`pets/${pet.id}`}>
+                      <Link to={`/pet-detail/${pet.id}`} className="detail">
+                        <Search />
+                      </Link>
+
+                      <Link to={`pets/${pet.id}`} className="edit">
                         <Edit />
                       </Link>
-                      <button onClick={() => handleDelete(pet.id)}>
+
+                      <button
+                        className="delete"
+                        onClick={() => handleDelete(pet.id)}
+                      >
                         <Trash />
                       </button>
                     </td>

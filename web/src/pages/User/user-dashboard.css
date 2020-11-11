@@ -12,6 +12,14 @@
   margin-bottom: 3rem;
 }
 
+#page-dashboard .user-info h2 {
+  margin-bottom: 1rem;
+}
+
+#page-dashboard .user-info p {
+  margin-top: 0.5rem;
+}
+
 #page-dashboard .user-pets h2 {
   margin-bottom: 2rem;
 }
@@ -61,13 +69,13 @@
   background-color: #f9f9f9;
 }
 
-/* #page-dashboard table tbody tr:hover {
+#page-dashboard table tbody tr:hover {
   background-color: #d3d3d3;
   font-weight: bold;
-} */
+}
 
 #page-dashboard table .buttons {
-  width: 6rem;
+  max-width: 8rem;
   padding: 0.5rem 0;
   display: flex;
   align-items: center;
@@ -84,25 +92,34 @@
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  transition: 0.1s;
+  transition: 0.2s;
   cursor: pointer;
 }
 
-#page-dashboard table .buttons a {
+#page-dashboard table .buttons .detail {
+  background: #28a745;
+}
+
+#page-dashboard table .buttons .detail:hover,
+#page-dashboard table .buttons .detail:focus {
+  background: #218838;
+}
+
+#page-dashboard table .buttons .edit {
   background: #ffc107;
 }
 
-#page-dashboard table .buttons a:hover,
-#page-dashboard table .buttons a:focus {
+#page-dashboard table .buttons .edit:hover,
+#page-dashboard table .buttons .edit:focus {
   background: #e0a800;
 }
 
-#page-dashboard table .buttons button {
+#page-dashboard table .buttons .delete {
   background: #dc3545;
 }
 
-#page-dashboard table .buttons button:hover,
-#page-dashboard table .buttons button:focus {
+#page-dashboard table .buttons .delete:hover,
+#page-dashboard table .buttons .delete:focus {
   background: #c82333;
 }
 

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
@@ -14,13 +13,11 @@ import history from "../../history";
 import "./user-update.css";
 
 const UserUpdate = () => {
-  const { loading } = useContext(UserContext);
-
-  const { id } = useParams();
+  const { loading, user: userLogged } = useContext(UserContext);
 
   const [user, setUser] = useState({
     nome: "",
-    documento: "",
+    cpf: "",
     telefone: "",
     tipo: "",
     endereco: "",
@@ -31,10 +28,12 @@ const UserUpdate = () => {
   });
 
   useEffect(() => {
-    api.get(`users/${id}`).then((response) => {
-      setUser(response.data.user);
-    });
-  }, [id]);
+    if (userLogged) {
+      api.get(`users/${userLogged.id}`).then((response) => {
+        setUser(response.data.user);
+      });
+    }
+  }, [userLogged]);
 
   function onChange(event) {
     const { name, value } = event.target;
@@ -45,11 +44,10 @@ const UserUpdate = () => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await api.put(`users/${id}`, {
+    await api.put(`users/${userLogged?.id}`, {
       nome: user.nome,
-      documento: user.documento,
+      cpf: user.cpf,
       telefone: user.telefone,
-      tipo: "RG",
       endereco: user.endereco,
       bairro: user.bairro,
       cep: user.cep,
@@ -84,10 +82,10 @@ const UserUpdate = () => {
 
             <div className="double-input-row">
               <Input
-                label="CPF ou RG"
+                label="CPF"
                 type="text"
-                name="documento"
-                value={user.documento}
+                name="cpf"
+                value={user.cpf}
                 onChange={onChange}
               />
 
