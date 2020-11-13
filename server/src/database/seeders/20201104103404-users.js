@@ -12,7 +12,8 @@ module.exports = {
         telefone: "(83)99999-9999",
         cep: "99.999-99",
         endereco: "Rua de Teste, nº 009",
-        bairro: "Bairro 009"
+        bairro: "Bairro 009",
+        tipo_usuario: "USUARIO"
       },
       {
         id: 2,
@@ -23,7 +24,8 @@ module.exports = {
         telefone: "(83)88888-8888",
         cep: "88.888-88",
         endereco: "Rua de Teste, nº 008",
-        bairro: "Bairro 008"
+        bairro: "Bairro 008",
+        tipo_usuario: "USUARIO"
       },
       {
         id: 3,
@@ -34,7 +36,8 @@ module.exports = {
         telefone: "(83)77777-7777",
         cep: "77.777-77",
         endereco: "Rua de Teste, nº 007",
-        bairro: "Bairro 007"
+        bairro: "Bairro 007",
+        tipo_usuario: "SERVIDOR"
       },
       {
         id: 4,
@@ -45,7 +48,8 @@ module.exports = {
         telefone: "(83)66666-6666",
         cep: "66.666-66",
         endereco: "Rua de Teste, nº 006",
-        bairro: "Bairro 006"
+        bairro: "Bairro 006",
+        tipo_usuario: "USUARIO"
       },
     ], {});
   },

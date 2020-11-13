@@ -11,6 +11,7 @@ class User extends Model {
       cep: DataTypes.STRING,
       endereco: DataTypes.STRING,
       bairro: DataTypes.STRING,
+      tipo_usuario: DataTypes.ENUM('SERVIDOR', 'USUARIO')
     }, {
       sequelize
     });
