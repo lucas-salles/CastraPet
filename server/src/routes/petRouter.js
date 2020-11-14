@@ -8,6 +8,7 @@ const PetController = require("../controllers/PetController");
 routes.post("/", /*role.is_user,*/ PetController.store);
 
 //GET
+routes.get("/vaccinated", /*role.is_user,*/ PetController.findVaccinated);
 routes.get("/:id/vaccinations", /*role.is_user,*/ PetController.findWithVaccinations);
 routes.get("/:id", /*role.is_user,*/ PetController.find);
 routes.get("/", /*role.is_server,*/ PetController.index);

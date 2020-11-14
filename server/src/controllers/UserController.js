@@ -188,6 +188,33 @@ module.exports = {
     }
   },
 
+  async findByCPF(req, res, next) {
+    const { cpf } = req.body;
+
+    try {
+      await User.findOne({ where: { cpf }}).then(user => {
+        if (!user) {
+          res.status(400).json({
+            success: false,
+            message: "Não encontramos nenhum usuário com o CPF informado."
+          })
+        } 
+        res.status(200).json({ success: true, user });
+      }).catch(err => {
+        res.status(400).json({
+          success: false,
+          message: "Ocorreu um erro enquanto os dados eram recuperados."
+        });
+      });
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({
+        success: false,
+        message: "Ocorreu um erro desconhecido com o sistema.",
+      });
+    }
+  },
+
   async tokenValidate(req, res, next) {
     const token = req.headers.authorization;
 

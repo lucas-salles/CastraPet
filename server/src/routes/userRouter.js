@@ -11,6 +11,7 @@ routes.post("/token-validate", UserController.tokenValidate); // ROTA PARA REVIS
 routes.post("/", /*role.is_server,*/ UserController.store);
 
 // GET
+routes.get("/cpf", /*role.is_server,*/ UserController.findByCPF);
 routes.get("/:id", /*role.is_server,*/ UserController.find);
 routes.get("/", /*role.is_server,*/ UserController.index);
 

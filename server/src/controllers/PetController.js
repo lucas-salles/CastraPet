@@ -150,4 +150,42 @@ module.exports = {
     }
   },
 
+  async findVaccinated(req, res, next) {
+    const has = req.query.has === "true";
+    
+    try {
+      await Pet.findAll({ 
+        include: { 
+          association: 'vaccinations' 
+        } 
+      }).then(pets => {
+        var pets_vaccinated = [];
+        var pets_not_vaccinated = [];
+        
+        pets.forEach(pet => {
+          if (pet.vaccinations.length > 0) {
+            pets_vaccinated.push(pet);
+          } else {
+            pets_not_vaccinated.push(pet);
+          }
+        });
+        
+        res.status(200).json({ 
+          success: true, 
+          pets: has ? pets_vaccinated : pets_not_vaccinated 
+        });
+      }).catch(err_find => {
+        res.status(400).json({
+          success: false,
+          message: "Ocorreu um erro enquanto os dados eram recuperados."
+        });
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Ocorreu um erro desconhecido com o sistema.'
+      });
+    }
+  },
+
 };
