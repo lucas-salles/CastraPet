@@ -1,0 +1,48 @@
+#page-vaccination-update {
+  margin: 8rem auto 10rem auto;
+}
+
+#page-vaccination-update h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 4rem;
+}
+
+#page-vaccination-update form {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+#page-vaccination-update form fieldset {
+  border: none;
+  margin-top: 2rem;
+}
+
+#page-vaccination-update form legend {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+}
+
+#page-vaccination-update form .double-input-row {
+  display: flex;
+}
+
+#page-vaccination-update form .double-input-row #input {
+  width: 50%;
+}
+
+#page-vaccination-update form .double-input-row #input:last-child {
+  margin-left: 2rem;
+}
+
+#page-vaccination-update form button {
+  max-width: 20rem;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+@media (max-width: 1120px) {
+  #page-vaccination-update form {
+    padding: 0 1rem;
+  }
+}

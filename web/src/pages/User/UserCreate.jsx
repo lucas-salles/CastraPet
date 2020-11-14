@@ -30,12 +30,13 @@ const Register = () => {
     await api.post("users", {
       nome,
       cpf,
-      telefone,
-      endereco,
-      bairro,
-      cep,
       email,
       senha,
+      telefone,
+      cep,
+      endereco,
+      bairro,
+      tipo_usuario: "USUARIO",
     });
 
     alert("Cadastro realizado com sucesso");

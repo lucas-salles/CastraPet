@@ -24,6 +24,26 @@
   margin-bottom: 2rem;
 }
 
+#page-pet-detail .pet-vaccines .new-vaccine {
+  font-size: 1rem;
+  font-family: var(--type-first);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background: var(--color-primary);
+  color: #fff;
+  min-width: 8rem;
+  padding: 0.8rem 4rem;
+  box-sizing: border-box;
+  transition: 0.1s;
+}
+
+#page-pet-detail .pet-vaccines .new-vaccine:hover,
+#page-pet-detail .pet-vaccines .new-vaccine:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
 #page-pet-detail table {
   margin-top: 2rem;
   width: 100%;
@@ -52,6 +72,46 @@
 #page-pet-detail table tbody tr:hover {
   background-color: #d3d3d3;
   font-weight: bold;
+}
+
+#page-pet-detail table .buttons {
+  max-width: 6rem;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#page-pet-detail table .buttons a,
+#page-pet-detail table .buttons button {
+  color: #000;
+  border-radius: 0.2rem;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+#page-pet-detail table .buttons .edit {
+  background: #ffc107;
+}
+
+#page-pet-detail table .buttons .edit:hover,
+#page-pet-detail table .buttons .edit:focus {
+  background: #e0a800;
+}
+
+#page-pet-detail table .buttons .delete {
+  background: #dc3545;
+}
+
+#page-pet-detail table .buttons .delete:hover,
+#page-pet-detail table .buttons .delete:focus {
+  background: #c82333;
 }
 
 @media (max-width: 1120px) {

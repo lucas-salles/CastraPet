@@ -27,8 +27,9 @@ const Header = ({ titulo }) => {
         {login ? (
           <div className="user">
             <div className="username">
-              <p>{user?.nome.split(" ")[0]}</p>
-              <User />
+              <Link to="/dashboard">
+                {user?.nome.split(" ")[0]} <User />
+              </Link>
             </div>
 
             <nav className="user-nav">

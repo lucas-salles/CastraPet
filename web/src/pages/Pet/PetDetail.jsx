@@ -1,26 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-import api from "../../services/api";
+
+import { ReactComponent as Edit } from "../../images/edit.svg";
+import { ReactComponent as Trash } from "../../images/trash.svg";
+
 import { UserContext } from "../../UserContext";
+
+import api from "../../services/api";
 
 import "./pet-detail.css";
 
 const PetDetail = () => {
   const { id } = useParams();
-  const { loading } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const [pet, setPet] = useState({});
   const [vaccines, setVaccines] = useState([]);
+  const [tutor, setTutor] = useState({});
 
-  useEffect(() => {
-    async function getPet() {
+  const getPetVaccinations = useCallback(
+    async function getPetVaccinations() {
       const response = await api.get(`pets/${id}/vaccinations`);
       setPet(response.data.pet);
       setVaccines(response.data.pet.vaccinations);
+    },
+    [id]
+  );
+
+  useEffect(() => {
+    getPetVaccinations();
+  }, [getPetVaccinations]);
+
+  useEffect(() => {
+    if (pet.usuario_id) {
+      async function getTutor() {
+        const response = await api.get(`users/${pet.usuario_id}`);
+        setTutor(response.data.user);
+      }
+      getTutor();
     }
-    getPet();
-  }, [id]);
+  }, [pet.usuario_id]);
 
   function formatDate(date) {
     let data = new Date(date);
@@ -29,17 +50,31 @@ const PetDetail = () => {
     return dataFormatada;
   }
 
+  async function handleDelete(id) {
+    const confirm = window.confirm(
+      "Essa operação não pode ser desfeita. Você realmente quer excluir?"
+    );
+    if (confirm) {
+      await api.delete(`vaccinations/${id}`);
+
+      await getPetVaccinations();
+
+      alert("Vacinação deletada com sucesso");
+    }
+  }
+
   if (loading) return <Loading />;
 
   return (
     <>
-      <Header titulo="Dashboard" />
+      <Header titulo="Pet" />
 
       <div id="page-pet-detail" className="container">
-        <h1>Detalhes do animal</h1>
+        <h1>Detalhes do Pet</h1>
 
         <div className="pet-info">
           <h2>Nome: {pet?.nome}</h2>
+          {user?.tipo_usuario === "SERVIDOR" && <p>Tutor: {tutor?.nome}</p>}
           <p>Espécie: {pet?.especie}</p>
           <p>Sexo: {pet?.sexo === "M" ? "Macho" : "Fêmea"}</p>
           <p>Raça: {pet?.raca}</p>
@@ -53,12 +88,19 @@ const PetDetail = () => {
         <div className="pet-vaccines">
           <h2>Vacinas</h2>
 
+          {user?.tipo_usuario === "SERVIDOR" && (
+            <Link to={`/pet/${pet?.id}/vaccinations`} className="new-vaccine">
+              Nova Vacina
+            </Link>
+          )}
+
           <table>
             <thead>
               <tr>
                 <th>Nome</th>
                 <th>Data</th>
                 <th>Observações</th>
+                {user?.tipo_usuario === "SERVIDOR" && <th>Ações</th>}
               </tr>
             </thead>
             <tbody>
@@ -68,6 +110,23 @@ const PetDetail = () => {
                     <td>{vaccine.nome}</td>
                     <td>{formatDate(vaccine.data)}</td>
                     <td>{vaccine.observacoes}</td>
+                    {user?.tipo_usuario === "SERVIDOR" && (
+                      <td className="buttons">
+                        <Link
+                          to={`/pet/${id}/vaccinations/${vaccine.id}`}
+                          className="edit"
+                        >
+                          <Edit />
+                        </Link>
+
+                        <button
+                          className="delete"
+                          onClick={() => handleDelete(vaccine.id)}
+                        >
+                          <Trash />
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
             </tbody>
