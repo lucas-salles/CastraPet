@@ -14,6 +14,8 @@ import api from "../../services/api";
 
 import "./dashboard.css";
 import Checkbox from "../../components/Forms/Checkbox";
+import Input from "../../components/Forms/Input";
+import Button from "../../components/Forms/Button";
 
 const Dashboard = () => {
   const { user: userLogged, login, loading } = useContext(UserContext);
@@ -21,7 +23,7 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
 
   const [filterByVaccinated, setFilterByVaccinated] = useState([]);
-  // const [filterByCpf, setFilterByCpf] = useState("");
+  const [filterByCpf, setFilterByCpf] = useState("");
 
   const [tab, setTab] = useState("pets");
 
@@ -82,26 +84,26 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
+  }, [getUsers, filterByCpf]);
 
-  // async function handleSubmitFilterByCpf(event) {
-  //   event.preventDefault();
+  async function handleFilterByCpf(event) {
+    event.preventDefault();
 
-  //   if (filterByCpf !== "") {
-  //     async function getUserByCpf() {
-  //       const response = await api.get("users/cpf", {
-  //         params: { cpf: filterByCpf },
-  //       });
-  //       const user = response.data.user;
-  //       const users = [];
-  //       users.push(user);
-  //       setUsers(users);
-  //     }
-  //     getUserByCpf();
-  //   } else {
-  //     getUsers();
-  //   }
-  // }
+    if (filterByCpf !== "") {
+      async function getUserByCpf() {
+        const response = await api.post("users/cpf", {
+          cpf: filterByCpf,
+        });
+        const user = response.data.user;
+        const users = [];
+        users.push(user);
+        setUsers(users);
+      }
+      getUserByCpf();
+    } else {
+      getUsers();
+    }
+  }
 
   async function handleDelete(id) {
     const confirm = window.confirm(
@@ -228,7 +230,7 @@ const Dashboard = () => {
           <div className="user-pets">
             <h2>Usuários Cadastrados</h2>
 
-            {/* <div className="filters">
+            <div className="filters">
               <div className="filter filterUser">
                 <h3>Filtrar por CPF</h3>
 
@@ -239,10 +241,10 @@ const Dashboard = () => {
                   value={filterByCpf}
                   onChange={({ target }) => setFilterByCpf(target.value)}
                 />
-                <Button onClick={handleSubmitFilterByCpf}>Filtrar</Button>
+                <Button onClick={handleFilterByCpf}>Filtrar</Button>
                 <Button onClick={() => setFilterByCpf("")}>Limpar</Button>
               </div>
-            </div> */}
+            </div>
 
             <table>
               <thead>

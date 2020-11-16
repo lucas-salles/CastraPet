@@ -91,6 +91,18 @@
 
 #page-dashboard .filterUser button {
   display: inline-block;
+  background: #ddd;
+  color: #000;
+}
+
+#page-dashboard .filterUser button:hover {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: none;
+}
+
+#page-dashboard .filterUser button:focus {
+  box-shadow: none;
 }
 
 #page-dashboard .filterUser button + button {
