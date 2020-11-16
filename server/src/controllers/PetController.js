@@ -1,5 +1,6 @@
 const Pet = require('../database/models/Pet');
 const Vaccination = require('../database/models/Vaccination');
+const User = require('../database/models/User');
 
 module.exports = {
 
@@ -155,9 +156,10 @@ module.exports = {
     
     try {
       await Pet.findAll({ 
-        include: { 
-          association: 'vaccinations' 
-        } 
+        include: [ 
+          {model: Vaccination, as: 'vaccinations'},
+          {model: User, as: 'tutor'},
+        ] 
       }).then(pets => {
         var pets_vaccinated = [];
         var pets_not_vaccinated = [];
