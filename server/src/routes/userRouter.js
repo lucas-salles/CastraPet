@@ -10,8 +10,14 @@ routes.post("/login", autenticacao, UserController.login);
 routes.post("/token-validate", UserController.tokenValidate); // ROTA PARA REVISÃO
 routes.post("/", /*role.is_server,*/ UserController.store);
 
+/**
+ * Alterei de GET para POST temporariamente porque
+ * método GET não aceita body na requisição.
+ * Revisar com o grupo como ficará essa rota.
+ */
+routes.post("/cpf", /*role.is_server,*/ UserController.findByCPF);
+
 // GET
-routes.get("/cpf", /*role.is_server,*/ UserController.findByCPF);
 routes.get("/:id", /*role.is_server,*/ UserController.find);
 routes.get("/", /*role.is_server,*/ UserController.index);
 
