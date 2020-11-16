@@ -2,10 +2,14 @@ import React from "react";
 
 import "./checkbox.css";
 
-const Checkbox = ({ options, value, name, setValue, ...props }) => {
+const Checkbox = ({ options, value, name, setValue, keep, ...props }) => {
   function handleChange({ target }) {
     if (target.checked) {
-      setValue([...value, target.value]);
+      if (keep) {
+        setValue([...value, target.value]);
+      } else {
+        setValue([target.value]);
+      }
     } else {
       setValue(value.filter((v) => v !== target.value));
     }

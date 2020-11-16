@@ -13,11 +13,19 @@ import { UserContext } from "../../UserContext";
 import api from "../../services/api";
 
 import "./dashboard.css";
+import Checkbox from "../../components/Forms/Checkbox";
 
 const Dashboard = () => {
   const { user: userLogged, login, loading } = useContext(UserContext);
   const [pets, setPets] = useState([]);
   const [user, setUser] = useState({});
+
+  const [filterByVaccinated, setFilterByVaccinated] = useState([]);
+  // const [filterByCpf, setFilterByCpf] = useState("");
+
+  const [tab, setTab] = useState("pets");
+
+  const [users, setUsers] = useState([]);
 
   const getTutorWithPets = useCallback(
     async function getTutorWithPets() {
@@ -47,6 +55,54 @@ const Dashboard = () => {
     else getFuncionarioAndAllPets();
   }, [getTutorWithPets, getFuncionarioAndAllPets, user.tipo_usuario]);
 
+  useEffect(() => {
+    if (filterByVaccinated.length > 0) {
+      async function getVaccinated() {
+        const response = await api.get(
+          `pets/vaccinated${
+            filterByVaccinated[0] === "Vacinados" ? "?has=true" : ""
+          }`
+        );
+        setPets(response.data.pets);
+      }
+      getVaccinated();
+    } else {
+      getFuncionarioAndAllPets();
+    }
+  }, [filterByVaccinated, getFuncionarioAndAllPets]);
+
+  const getUsers = useCallback(async function getUsers() {
+    const response = await api.get("users");
+    const users = response.data.users;
+    const filteredUsers = users.filter(
+      (user) => user.tipo_usuario === "USUARIO"
+    );
+    setUsers(filteredUsers);
+  }, []);
+
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
+
+  // async function handleSubmitFilterByCpf(event) {
+  //   event.preventDefault();
+
+  //   if (filterByCpf !== "") {
+  //     async function getUserByCpf() {
+  //       const response = await api.get("users/cpf", {
+  //         params: { cpf: filterByCpf },
+  //       });
+  //       const user = response.data.user;
+  //       const users = [];
+  //       users.push(user);
+  //       setUsers(users);
+  //     }
+  //     getUserByCpf();
+  //   } else {
+  //     getUsers();
+  //   }
+  // }
+
   async function handleDelete(id) {
     const confirm = window.confirm(
       "Essa operação não pode ser desfeita. Você realmente quer excluir?"
@@ -75,65 +131,140 @@ const Dashboard = () => {
         </h1>
 
         <div className="user-info">
-          <h2>{user?.nome}</h2>
+          <h3>{user?.nome}</h3>
           <p>{user?.email}</p>
           <p>{user?.telefone}</p>
         </div>
 
-        <div className="user-pets">
-          <h2>Pets Cadastrados</h2>
+        {user?.tipo_usuario === "SERVIDOR" && (
+          <ul className="tabs">
+            <li
+              className={tab === "pets" ? "active" : ""}
+              onClick={() => setTab("pets")}
+            >
+              Pets
+            </li>
+            <li
+              className={tab === "users" ? "active" : ""}
+              onClick={() => setTab("users")}
+            >
+              Usuários
+            </li>
+          </ul>
+        )}
 
-          {user?.tipo_usuario === "USUARIO" && (
-            <Link to="pets" className="new-pet">
-              Novo Pet
-            </Link>
-          )}
+        {tab === "pets" ? (
+          <div className="user-pets">
+            <h2>Pets Cadastrados</h2>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                {user?.tipo_usuario === "SERVIDOR" && <th>Tutor</th>}
-                <th>Espécie</th>
-                <th>Sexo</th>
-                <th>Porte</th>
-                <th>Idade</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pets &&
-                pets.map((pet) => (
-                  <tr key={pet.id}>
-                    <td>{pet.nome}</td>
-                    {user?.tipo_usuario === "SERVIDOR" && (
-                      <td>{pet.tutor.nome}</td>
-                    )}
-                    <td>{pet.especie}</td>
-                    <td>{pet.sexo}</td>
-                    <td>{pet.porte_fisico}</td>
-                    <td>{pet.idade}</td>
-                    <td className="buttons">
-                      <Link to={`/pet-detail/${pet.id}`} className="detail">
-                        <Search />
-                      </Link>
+            {user?.tipo_usuario === "USUARIO" && (
+              <Link to="pets" className="new-pet">
+                Novo Pet
+              </Link>
+            )}
 
-                      <Link to={`pets/${pet.id}`} className="edit">
-                        <Edit />
-                      </Link>
+            {user?.tipo_usuario === "SERVIDOR" && (
+              <div className="filters">
+                <div className="filter">
+                  <h3>Filtrar por vacina</h3>
 
-                      <button
-                        className="delete"
-                        onClick={() => handleDelete(pet.id)}
-                      >
-                        <Trash />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+                  <Checkbox
+                    keep={false}
+                    options={["Vacinados", "Não Vacinados"]}
+                    value={filterByVaccinated}
+                    name="vaccinated"
+                    setValue={setFilterByVaccinated}
+                  />
+                </div>
+              </div>
+            )}
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  {user?.tipo_usuario === "SERVIDOR" && <th>Tutor</th>}
+                  <th>Espécie</th>
+                  <th>Sexo</th>
+                  <th>Porte</th>
+                  <th>Idade</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pets &&
+                  pets.map((pet) => (
+                    <tr key={pet.id}>
+                      <td>{pet.nome}</td>
+                      {user?.tipo_usuario === "SERVIDOR" && (
+                        <td>{pet.tutor.nome}</td>
+                      )}
+                      <td>{pet.especie}</td>
+                      <td>{pet.sexo}</td>
+                      <td>{pet.porte_fisico}</td>
+                      <td>{pet.idade}</td>
+                      <td className="buttons">
+                        <Link to={`/pet-detail/${pet.id}`} className="detail">
+                          <Search />
+                        </Link>
+
+                        <Link to={`pets/${pet.id}`} className="edit">
+                          <Edit />
+                        </Link>
+
+                        <button
+                          className="delete"
+                          onClick={() => handleDelete(pet.id)}
+                        >
+                          <Trash />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="user-pets">
+            <h2>Usuários Cadastrados</h2>
+
+            {/* <div className="filters">
+              <div className="filter filterUser">
+                <h3>Filtrar por CPF</h3>
+
+                <Input
+                  label="Digite o CPF:"
+                  type="text"
+                  name="filterByCpf"
+                  value={filterByCpf}
+                  onChange={({ target }) => setFilterByCpf(target.value)}
+                />
+                <Button onClick={handleSubmitFilterByCpf}>Filtrar</Button>
+                <Button onClick={() => setFilterByCpf("")}>Limpar</Button>
+              </div>
+            </div> */}
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>E-mail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users &&
+                  users.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.nome}</td>
+                      <td>{user.cpf}</td>
+                      <td>{user.email}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );

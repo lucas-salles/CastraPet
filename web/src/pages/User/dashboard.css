@@ -20,6 +20,43 @@
   margin-top: 0.5rem;
 }
 
+#page-dashboard .tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#page-dashboard .tabs li {
+  font-size: 1rem;
+  font-family: var(--type-first);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background: #ddd;
+  color: #000;
+  min-width: 8rem;
+  padding: 0.8rem 4rem;
+  box-sizing: border-box;
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+#page-dashboard .tabs li:hover,
+#page-dashboard .tabs li:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
+#page-dashboard .tabs li + li {
+  margin-left: 1rem;
+}
+
+#page-dashboard .tabs li.active {
+  background: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
 #page-dashboard .user-pets h2 {
   margin-bottom: 2rem;
 }
@@ -42,6 +79,22 @@
 #page-dashboard .user-pets .new-pet:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
+#page-dashboard .filter h3 {
+  margin-bottom: 0.5rem;
+}
+
+#page-dashboard .filterUser {
+  max-width: 23rem;
+}
+
+#page-dashboard .filterUser button {
+  display: inline-block;
+}
+
+#page-dashboard .filterUser button + button {
+  margin-left: 1rem;
 }
 
 #page-dashboard table {
