@@ -75,6 +75,7 @@ const VaccinationCreate = () => {
             <TextArea
               label="Observações"
               name="observacoes"
+              rows="6"
               value={observacoes}
               onChange={({ target }) => setObservacoes(target.value)}
             />

@@ -81,6 +81,19 @@
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
 
+#page-dashboard .filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+#page-dashboard .filter-age {
+  max-width: 12rem;
+}
+
+#page-dashboard .filter-age label {
+  display: none;
+}
+
 #page-dashboard .filter h3 {
   margin-bottom: 0.5rem;
 }
@@ -140,11 +153,15 @@
 }
 
 #page-dashboard table .buttons {
-  max-width: 8rem;
   padding: 0.5rem 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#page-dashboard table .buttons a + a,
+#page-dashboard table .buttons button {
+  margin-left: 0.5rem;
 }
 
 #page-dashboard table .buttons a,
@@ -191,5 +208,26 @@
 @media (max-width: 1120px) {
   #page-dashboard {
     padding: 0 1rem;
+  }
+
+  #page-dashboard .filters {
+    flex-direction: column;
+  }
+
+  #page-dashboard .filter + .filter {
+    margin-top: 1rem;
+  }
+
+  #page-dashboard table {
+    display: block;
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  #page-dashboard table .buttons a + a,
+  #page-dashboard table .buttons button {
+    margin-left: 0;
   }
 }

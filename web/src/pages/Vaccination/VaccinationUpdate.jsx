@@ -89,6 +89,7 @@ const VaccinationUpdate = () => {
             <TextArea
               label="Observações"
               name="observacoes"
+              rows="6"
               value={vaccination.observacoes}
               onChange={onChange}
             />

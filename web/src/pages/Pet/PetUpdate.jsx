@@ -89,7 +89,7 @@ const PetUpdate = () => {
               <Input
                 label="Cor da pelagem"
                 type="text"
-                name="corPelagem"
+                name="cor_pelagem"
                 value={animal.cor_pelagem}
                 onChange={onChange}
               />
@@ -113,7 +113,7 @@ const PetUpdate = () => {
 
             <div className="double-input-row">
               <Select
-                options={["Macho", "Fêmea"]}
+                options={["M", "F"]}
                 value={animal.sexo}
                 label="Sexo"
                 name="sexo"
@@ -138,7 +138,7 @@ const PetUpdate = () => {
                 options={["Pequeno", "Médio", "Grande"]}
                 value={animal.porte_fisico}
                 label="Porte Físico"
-                name="porteFisico"
+                name="porte_fisico"
                 onChange={onChange}
               />
 
@@ -153,7 +153,8 @@ const PetUpdate = () => {
 
             <Textarea
               label="Estado de saúde do animal"
-              name="estadoSaude"
+              name="estado_saude"
+              rows="6"
               value={animal.estado_saude}
               onChange={onChange}
             />

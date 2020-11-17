@@ -22,7 +22,13 @@ const Dashboard = () => {
   const [pets, setPets] = useState([]);
   const [user, setUser] = useState({});
 
+  // Filtros Pet
   const [filterByVaccinated, setFilterByVaccinated] = useState([]);
+  const [filterByGender, setFilterByGender] = useState([]);
+  const [filterBySpecies, setFilterBySpecies] = useState([]);
+  const [filterByAge, setFilterByAge] = useState("");
+
+  // Filtro User
   const [filterByCpf, setFilterByCpf] = useState("");
 
   const [tab, setTab] = useState("pets");
@@ -72,6 +78,28 @@ const Dashboard = () => {
       getFuncionarioAndAllPets();
     }
   }, [filterByVaccinated, getFuncionarioAndAllPets]);
+
+  useEffect(() => {
+    if (
+      filterByGender.length > 0 ||
+      filterBySpecies > 0 ||
+      filterByAge !== ""
+    ) {
+      async function getPetsByProperties() {
+        const sexo = filterByGender.length > 0 ? `=${filterByGender[0]}` : "";
+        const idade = filterByAge !== "" ? `=${filterByAge}` : "";
+        const especie =
+          filterBySpecies.length > 0 ? `=${filterBySpecies[0]}` : "";
+        const response = await api.get(
+          `pets/search?idade${idade}&sexo${sexo}&especie${especie}`
+        );
+        setPets(response.data.pets);
+      }
+      getPetsByProperties();
+    } else {
+      getFuncionarioAndAllPets();
+    }
+  }, [filterByGender, filterBySpecies, filterByAge, getFuncionarioAndAllPets]);
 
   const getUsers = useCallback(async function getUsers() {
     const response = await api.get("users");
@@ -178,6 +206,40 @@ const Dashboard = () => {
                     setValue={setFilterByVaccinated}
                   />
                 </div>
+
+                <div className="filter">
+                  <h3>Filtrar por sexo</h3>
+
+                  <Checkbox
+                    keep={false}
+                    options={["M", "F"]}
+                    value={filterByGender}
+                    name="vaccinated"
+                    setValue={setFilterByGender}
+                  />
+                </div>
+
+                <div className="filter">
+                  <h3>Filtrar por espécie</h3>
+                  <Checkbox
+                    keep={false}
+                    options={["gato", "cachorro"]}
+                    value={filterBySpecies}
+                    name="vaccinated"
+                    setValue={setFilterBySpecies}
+                  />
+                </div>
+
+                <div className="filter filter-age">
+                  <h3>Filtrar por idade</h3>
+                  <Input
+                    label="idade"
+                    type="number"
+                    name="filterByAge"
+                    value={filterByAge}
+                    onChange={({ target }) => setFilterByAge(target.value)}
+                  />
+                </div>
               </div>
             )}
 
@@ -188,7 +250,6 @@ const Dashboard = () => {
                   {user?.tipo_usuario === "SERVIDOR" && <th>Tutor</th>}
                   <th>Espécie</th>
                   <th>Sexo</th>
-                  <th>Porte</th>
                   <th>Idade</th>
                   <th>Ações</th>
                 </tr>
@@ -203,7 +264,6 @@ const Dashboard = () => {
                       )}
                       <td>{pet.especie}</td>
                       <td>{pet.sexo}</td>
-                      <td>{pet.porte_fisico}</td>
                       <td>{pet.idade}</td>
                       <td className="buttons">
                         <Link to={`/pet-detail/${pet.id}`} className="detail">

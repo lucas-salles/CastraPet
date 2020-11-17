@@ -138,6 +138,7 @@ const PetCreate = () => {
             <Textarea
               label="Estado de saúde do animal"
               name="estadoSaude"
+              rows="6"
               value={estadoSaude}
               onChange={({ target }) => setEstadoSaude(target.value)}
             />
