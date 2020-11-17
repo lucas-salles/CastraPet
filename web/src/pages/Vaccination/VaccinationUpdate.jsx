@@ -41,9 +41,12 @@ const VaccinationUpdate = () => {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    const [ano, mes, dia] = vaccination.data.split("-");
+    const dataFormatada = new Date(ano, mes - 1, dia);
+
     await api.put(`vaccinations/${id}`, {
       nome: vaccination.nome,
-      data: vaccination.data,
+      data: dataFormatada,
       observacoes: vaccination.observacoes,
     });
 

@@ -26,9 +26,12 @@ const VaccinationCreate = () => {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    const [ano, mes, dia] = data.split("-");
+    const dataFormatada = new Date(ano, mes - 1, dia);
+
     await api.post("vaccinations", {
       nome,
-      data,
+      data: dataFormatada,
       observacoes,
       pet_id: id,
     });

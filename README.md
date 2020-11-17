@@ -2,7 +2,7 @@
 
 ## Front
 
-#### Acessar Pasta do Front-end:
+#### Acessar pasta do front-end:
 ~~~
 cd web
 ~~~
