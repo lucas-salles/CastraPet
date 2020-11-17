@@ -78,6 +78,12 @@ module.exports = {
         include: { association: "pets" },
       })
         .then((user) => {
+          if (!user) {
+            return res.status(400).json({ 
+              success: false, 
+              message: "Nenhum registro encontrado." 
+            })
+          }
           res.status(200).json({ success: true, user });
         })
         .catch((err) => {

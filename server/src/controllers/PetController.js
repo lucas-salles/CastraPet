@@ -6,7 +6,14 @@ module.exports = {
 
   async index(req, res, next) {
     try {
-      await Pet.findAll({ include: { association: 'tutor', exclude: ['senha'] } }).then(pets => {
+      await Pet.findAll({ 
+        include: { 
+          association: 'tutor', 
+          attributes: {
+            exclude: ['senha'] 
+          }
+        }
+      }).then(pets => {
         return res.status(200).json({ success: true, pets });
       }).catch(err => {
         res.status(400).json({
@@ -47,7 +54,14 @@ module.exports = {
     const { id } = req.params
 
     try {
-      await Pet.findByPk(id, { include: { association: 'tutor', exclude: ['senha'] } }).then(pet => {
+      await Pet.findByPk(id, { 
+        include: { 
+          association: 'tutor', 
+          attributes: {
+            exclude: ['senha'] 
+          } 
+        }
+      }).then(pet => {
         if(!pet) {
           return res.status(404).json({ success: false, message: 'O PET não foi encontrado no sistema.' });
         }
@@ -130,11 +144,11 @@ module.exports = {
     try {
       await Pet.findByPk(id, { 
         include: { 
-          all: true
-        }, 
-        attributes: {
-          exclude: ['senha'] 
-        } 
+          all: true,
+          attributes: {
+            exclude: ['senha'] 
+          } 
+        }
       }).then(pet => {
         res.status(200).json({ success: true, pet });
       }).catch(err => {
@@ -156,10 +170,12 @@ module.exports = {
     
     try {
       await Pet.findAll({ 
-        include: [ 
-          {model: Vaccination, as: 'vaccinations'},
-          {model: User, as: 'tutor'},
-        ] 
+        include: {
+          all: true,
+          attributes: {
+            exclude: ['senha'] 
+          } 
+        }
       }).then(pets => {
         var pets_vaccinated = [];
         var pets_not_vaccinated = [];
@@ -189,5 +205,46 @@ module.exports = {
       });
     }
   },
+
+  async findByProperties(req, res, next) {
+    const { idade, sexo, especie } = req.query;
+
+    var pesquisa = {}
+    idade ? pesquisa.idade = idade : ""
+    sexo ? pesquisa.sexo = sexo : ""
+    especie ? pesquisa.especie = especie : ""
+
+    try {
+      await Pet.findAll({ 
+        where: pesquisa, 
+        include: { 
+          all: true,
+          attributes: {
+            exclude: ["senha"]
+          }
+        } 
+      }).then(pets => {
+        if (pets == []) {
+          return res.status(400).json({
+            success: false,
+            message: "Nenhum registro foi encontrado com estes parâmetros."
+          })
+        }
+
+        res.status(200).json({ 
+          success: true, 
+          pets 
+        });
+      }).catch(err_find => {
+        console.log(err_find)
+        res.status(400).json({
+          success: false,
+          message: "Ocorreu um erro enquanto os dados eram recuperados."
+        });
+      });
+    } catch (error) {
+      
+    }
+  }
 
 };
