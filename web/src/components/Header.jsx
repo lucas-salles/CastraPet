@@ -32,17 +32,21 @@ const Header = ({ titulo }) => {
               </Link>
             </div>
 
-            <nav className="user-nav">
-              <Link to={`users/${user.id}`}>
-                <Edit />
-                Atualizar Dados
-              </Link>
+            <ul className="user-submenu">
+              <li>
+                <Link to={`users/${user.id}`}>
+                  <Edit />
+                  Atualizar Dados
+                </Link>
+              </li>
 
-              <button className="user-logout" onClick={userLogout}>
-                <LogOut />
-                Sair
-              </button>
-            </nav>
+              <li>
+                <button className="user-logout" onClick={userLogout}>
+                  <LogOut />
+                  Sair
+                </button>
+              </li>
+            </ul>
           </div>
         ) : (
           <div className="user-login">

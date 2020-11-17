@@ -44,7 +44,7 @@
   margin-left: 0.5rem;
 }
 
-#header .user .user-nav {
+#header .user .user-submenu {
   display: none;
   position: absolute;
   right: 0px;
@@ -56,17 +56,17 @@
   min-width: 11rem;
 }
 
-#header .user:hover .user-nav {
+#header .user:hover .user-submenu {
   display: block;
 }
 
-#header .user .user-nav svg {
+#header .user .user-submenu svg {
   width: 1.4rem;
   margin-right: 0.5rem;
 }
 
-#header .user .user-nav a,
-#header .user .user-nav button {
+#header .user .user-submenu a,
+#header .user .user-submenu button {
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -80,10 +80,10 @@
   transition: 0.1s;
 }
 
-#header .user .user-nav a:hover,
-#header .user .user-nav a:focus,
-#header .user .user-nav button:hover,
-#header .user .user-nav button:focus {
+#header .user .user-submenu a:hover,
+#header .user .user-submenu a:focus,
+#header .user .user-submenu button:hover,
+#header .user .user-submenu button:focus {
   color: var(--color-primary);
 }
 

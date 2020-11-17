@@ -64,42 +64,45 @@ const Dashboard = () => {
   }, [getTutorWithPets, getFuncionarioAndAllPets, user.tipo_usuario]);
 
   useEffect(() => {
-    if (filterByVaccinated.length > 0) {
-      async function getVaccinated() {
-        const response = await api.get(
-          `pets/vaccinated${
-            filterByVaccinated[0] === "Vacinados" ? "?has=true" : ""
-          }`
-        );
-        setPets(response.data.pets);
-      }
-      getVaccinated();
-    } else {
-      getFuncionarioAndAllPets();
-    }
-  }, [filterByVaccinated, getFuncionarioAndAllPets]);
-
-  useEffect(() => {
     if (
+      filterByVaccinated.length > 0 ||
       filterByGender.length > 0 ||
-      filterBySpecies > 0 ||
+      filterBySpecies.length > 0 ||
       filterByAge !== ""
     ) {
       async function getPetsByProperties() {
-        const sexo = filterByGender.length > 0 ? `=${filterByGender[0]}` : "";
-        const idade = filterByAge !== "" ? `=${filterByAge}` : "";
-        const especie =
-          filterBySpecies.length > 0 ? `=${filterBySpecies[0]}` : "";
-        const response = await api.get(
-          `pets/search?idade${idade}&sexo${sexo}&especie${especie}`
-        );
-        setPets(response.data.pets);
+        try {
+          let vacinado = "";
+          if (filterByVaccinated.length > 0)
+            vacinado = filterByVaccinated[0] === "Vacinados" ? "=true" : "";
+
+          const sexo = filterByGender.length > 0 ? `=${filterByGender[0]}` : "";
+
+          const idade = filterByAge !== "" ? `=${filterByAge}` : "";
+
+          const especie =
+            filterBySpecies.length > 0 ? `=${filterBySpecies[0]}` : "";
+
+          const response = await api.get(
+            `pets/search?idade${idade}&sexo${sexo}&especie${especie}&vaccinated${vacinado}`
+          );
+
+          setPets(response.data.pets);
+        } catch (error) {
+          setPets([]);
+        }
       }
       getPetsByProperties();
     } else {
       getFuncionarioAndAllPets();
     }
-  }, [filterByGender, filterBySpecies, filterByAge, getFuncionarioAndAllPets]);
+  }, [
+    filterByVaccinated,
+    filterByGender,
+    filterBySpecies,
+    filterByAge,
+    getFuncionarioAndAllPets,
+  ]);
 
   const getUsers = useCallback(async function getUsers() {
     const response = await api.get("users");
@@ -111,21 +114,25 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    getUsers();
+    if (filterByCpf === "") getUsers();
   }, [getUsers, filterByCpf]);
 
-  async function handleFilterByCpf(event) {
+  async function handleFilterUserByCpf(event) {
     event.preventDefault();
 
     if (filterByCpf !== "") {
       async function getUserByCpf() {
-        const response = await api.post("users/cpf", {
-          cpf: filterByCpf,
-        });
-        const user = response.data.user;
-        const users = [];
-        users.push(user);
-        setUsers(users);
+        try {
+          const response = await api.post("users/cpf", {
+            cpf: filterByCpf,
+          });
+          const user = response.data.user;
+          const users = [];
+          users.push(user);
+          setUsers(users);
+        } catch (error) {
+          setUsers([]);
+        }
       }
       getUserByCpf();
     } else {
@@ -133,7 +140,12 @@ const Dashboard = () => {
     }
   }
 
-  async function handleDelete(id) {
+  // async function handleCleanFilterUserByCpf() {
+  //   setFilterByCpf("");
+  //   getUsers();
+  // }
+
+  async function handleDeletePet(id) {
     const confirm = window.confirm(
       "Essa operação não pode ser desfeita. Você realmente quer excluir?"
     );
@@ -202,7 +214,7 @@ const Dashboard = () => {
                     keep={false}
                     options={["Vacinados", "Não Vacinados"]}
                     value={filterByVaccinated}
-                    name="vaccinated"
+                    name="filterByVaccinated"
                     setValue={setFilterByVaccinated}
                   />
                 </div>
@@ -214,7 +226,7 @@ const Dashboard = () => {
                     keep={false}
                     options={["M", "F"]}
                     value={filterByGender}
-                    name="vaccinated"
+                    name="filterByGender"
                     setValue={setFilterByGender}
                   />
                 </div>
@@ -225,7 +237,7 @@ const Dashboard = () => {
                     keep={false}
                     options={["gato", "cachorro"]}
                     value={filterBySpecies}
-                    name="vaccinated"
+                    name="filterBySpecies"
                     setValue={setFilterBySpecies}
                   />
                 </div>
@@ -276,7 +288,7 @@ const Dashboard = () => {
 
                         <button
                           className="delete"
-                          onClick={() => handleDelete(pet.id)}
+                          onClick={() => handleDeletePet(pet.id)}
                         >
                           <Trash />
                         </button>
@@ -301,7 +313,7 @@ const Dashboard = () => {
                   value={filterByCpf}
                   onChange={({ target }) => setFilterByCpf(target.value)}
                 />
-                <Button onClick={handleFilterByCpf}>Filtrar</Button>
+                <Button onClick={handleFilterUserByCpf}>Filtrar</Button>
                 <Button onClick={() => setFilterByCpf("")}>Limpar</Button>
               </div>
             </div>
