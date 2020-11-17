@@ -165,55 +165,55 @@ module.exports = {
     }
   },
 
-  async findVaccinated(req, res, next) {
-    const has = req.query.has === "true";
+  // async findVaccinated(req, res, next) {
+  //   const has = req.query.has === "true";
     
-    try {
-      await Pet.findAll({ 
-        include: {
-          all: true,
-          attributes: {
-            exclude: ['senha'] 
-          } 
-        }
-      }).then(pets => {
-        var pets_vaccinated = [];
-        var pets_not_vaccinated = [];
+  //   try {
+  //     await Pet.findAll({ 
+  //       include: {
+  //         all: true,
+  //         attributes: {
+  //           exclude: ['senha'] 
+  //         } 
+  //       }
+  //     }).then(pets => {
+  //       var pets_vaccinated = [];
+  //       var pets_not_vaccinated = [];
         
-        pets.forEach(pet => {
-          if (pet.vaccinations.length > 0) {
-            pets_vaccinated.push(pet);
-          } else {
-            pets_not_vaccinated.push(pet);
-          }
-        });
+  //       pets.forEach(pet => {
+  //         if (pet.vaccinations.length > 0) {
+  //           pets_vaccinated.push(pet);
+  //         } else {
+  //           pets_not_vaccinated.push(pet);
+  //         }
+  //       });
         
-        res.status(200).json({ 
-          success: true, 
-          pets: has ? pets_vaccinated : pets_not_vaccinated 
-        });
-      }).catch(err_find => {
-        res.status(400).json({
-          success: false,
-          message: "Ocorreu um erro enquanto os dados eram recuperados."
-        });
-      });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Ocorreu um erro desconhecido com o sistema.'
-      });
-    }
-  },
+  //       res.status(200).json({ 
+  //         success: true, 
+  //         pets: has ? pets_vaccinated : pets_not_vaccinated 
+  //       });
+  //     }).catch(err_find => {
+  //       res.status(400).json({
+  //         success: false,
+  //         message: "Ocorreu um erro enquanto os dados eram recuperados."
+  //       });
+  //     });
+  //   } catch (error) {
+  //     res.status(500).json({
+  //       success: false,
+  //       message: 'Ocorreu um erro desconhecido com o sistema.'
+  //     });
+  //   }
+  // },
 
   async findByProperties(req, res, next) {
-    const { idade, sexo, especie } = req.query;
+    const { idade, sexo, especie, vaccinated } = req.query;
 
     var pesquisa = {}
     idade ? pesquisa.idade = idade : ""
     sexo ? pesquisa.sexo = sexo : ""
     especie ? pesquisa.especie = especie : ""
-
+    
     try {
       await Pet.findAll({ 
         where: pesquisa, 
@@ -224,7 +224,32 @@ module.exports = {
           }
         } 
       }).then(pets => {
-        if (pets == []) {
+        if (pets.length == 0) {
+          return res.status(400).json({
+            success: false,
+            message: "Nenhum registro foi encontrado com estes parâmetros."
+          })
+        }
+
+        var pets_vaccinated = [];
+        var pets_not_vaccinated = [];
+        
+        pets.forEach(pet => {
+          if (pet.vaccinations.length > 0) {
+            pets_vaccinated.push(pet);
+          } else {
+            pets_not_vaccinated.push(pet);
+          }
+        });
+
+        var resultado
+        vaccinated === "true" 
+          ? resultado = pets_vaccinated 
+          : (vaccinated == null) 
+            ? resultado = pets 
+            : resultado = pets_not_vaccinated
+        
+        if (resultado.length == 0) {
           return res.status(400).json({
             success: false,
             message: "Nenhum registro foi encontrado com estes parâmetros."
@@ -233,7 +258,7 @@ module.exports = {
 
         res.status(200).json({ 
           success: true, 
-          pets 
+          pets: resultado
         });
       }).catch(err_find => {
         console.log(err_find)
@@ -243,7 +268,10 @@ module.exports = {
         });
       });
     } catch (error) {
-      
+      res.status(500).json({
+        success: false,
+        message: 'Ocorreu um erro desconhecido com o sistema.'
+      });
     }
   }
 
