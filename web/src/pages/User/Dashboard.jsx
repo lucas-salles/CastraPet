@@ -74,7 +74,8 @@ const Dashboard = () => {
         try {
           let vacinado = "";
           if (filterByVaccinated.length > 0)
-            vacinado = filterByVaccinated[0] === "Vacinados" ? "=true" : "";
+            vacinado =
+              filterByVaccinated[0] === "Vacinados" ? "=true" : "=false";
 
           const sexo = filterByGender.length > 0 ? `=${filterByGender[0]}` : "";
 
@@ -139,11 +140,6 @@ const Dashboard = () => {
       getUsers();
     }
   }
-
-  // async function handleCleanFilterUserByCpf() {
-  //   setFilterByCpf("");
-  //   getUsers();
-  // }
 
   async function handleDeletePet(id) {
     const confirm = window.confirm(
