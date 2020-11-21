@@ -15,6 +15,7 @@ Vacinacao.init(connection);
 
 Pet.associate(connection.models);
 User.associate(connection.models);
+Castracao.associate(connection.models);
 Vacinacao.associate(connection.models);
 
 module.exports = connection;

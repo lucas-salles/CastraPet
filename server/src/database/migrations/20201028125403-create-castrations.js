@@ -16,7 +16,14 @@ module.exports = {
       },
       periodo_castracao: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
+      },
+      pet_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'pets', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       created_at: {
         type: Sequelize.DATE,
