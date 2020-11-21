@@ -116,5 +116,36 @@ module.exports = {
         message: 'Ocorreu um erro desconhecido com o sistema.'
       });
     }
-  }
+  },
+
+  async delete(req, res, next) {
+    const { id } = req.params;
+
+    try {
+      await Castration.findByPk(id).then(castration => {
+        castration.destroy().then(castration2 => {
+          res.status(200).json({
+            success: true,
+            message: 'Registro removido com sucesso.'
+          });
+        }).catch(() => {
+          res.status(400).json({
+            success: false,
+            message: 'Ocorreu um erro enquanto os dados eram removidos.'
+          });
+        })
+      }).catch(() => {
+        res.status(400).json({
+          success: false,
+          message: 'Ocorreu um erro enquanto os dados eram recuperados.'
+        });
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Ocorreu um erro desconhecido com o sistema.'
+      });
+    }
+  },
+
 }

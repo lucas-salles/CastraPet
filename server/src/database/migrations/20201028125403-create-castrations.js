@@ -21,9 +21,7 @@ module.exports = {
       pet_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'pets', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        references: { model: 'pets', key: 'id' }
       },
       created_at: {
         type: Sequelize.DATE,
