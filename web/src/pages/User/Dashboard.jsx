@@ -174,6 +174,12 @@ const Dashboard = () => {
           <p>{user?.telefone}</p>
         </div>
 
+        {user?.tipo_usuario === "USUARIO" && (
+          <Link to="castrations" className="btn-tutor btn-castration">
+            Agendar Castração
+          </Link>
+        )}
+
         {user?.tipo_usuario === "SERVIDOR" && (
           <ul className="tabs">
             <li
@@ -196,7 +202,7 @@ const Dashboard = () => {
             <h2>Pets Cadastrados</h2>
 
             {user?.tipo_usuario === "USUARIO" && (
-              <Link to="pets" className="new-pet">
+              <Link to="pets" className="btn-tutor btn-castration">
                 Novo Pet
               </Link>
             )}

@@ -11,6 +11,7 @@ import PetDetail from "./pages/Pet/PetDetail";
 import NotFound from "./components/NotFound";
 import VaccinationCreate from "./pages/Vaccination/VaccinationCreate";
 import VaccinationUpdate from "./pages/Vaccination/VaccinationUpdate";
+import CastrationCreate from "./pages/Castration/CastrationCreate";
 
 const Routes = () => {
   return (
@@ -25,6 +26,7 @@ const Routes = () => {
       <Route component={PetDetail} path="/pet-detail/:id" />
       <Route component={VaccinationCreate} path="/pet/:id/vaccinations" exact />
       <Route component={VaccinationUpdate} path="/pet/:id/vaccinations/:id" />
+      <Route component={CastrationCreate} path="/castrations" />
       <Route component={NotFound} path="*" />
     </Switch>
   );

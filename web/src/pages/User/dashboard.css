@@ -59,9 +59,10 @@
 
 #page-dashboard .user-pets h2 {
   margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
-#page-dashboard .user-pets .new-pet {
+#page-dashboard .btn-tutor {
   font-size: 1rem;
   font-family: var(--type-first);
   cursor: pointer;
@@ -75,8 +76,8 @@
   transition: 0.1s;
 }
 
-#page-dashboard .user-pets .new-pet:hover,
-#page-dashboard .user-pets .new-pet:focus {
+#page-dashboard .btn-tutor:hover,
+#page-dashboard .btn-tutor:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
