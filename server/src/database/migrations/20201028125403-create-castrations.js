@@ -18,6 +18,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      atendimento: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       pet_id: {
         type: Sequelize.INTEGER,
         allowNull: true,

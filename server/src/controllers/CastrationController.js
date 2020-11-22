@@ -1,42 +1,6 @@
 const Castration = require("../database/models/Castration");
 const { Op } = require("sequelize");
-
-const define_hour = (periodo_castracao, quant) => {
-  var result = ""
-  switch (quant) {
-    case 0:
-      result = periodo_castracao == "manhã" ? "08:00:00" : "13:00:00"
-      break;
-    case 1:
-      result = periodo_castracao == "manhã" ? "08:20:00" : "13:20:00"
-      break;
-    case 2:
-      result = periodo_castracao == "manhã" ? "08:40:00" : "13:40:00"
-      break;
-    case 3:
-      result = periodo_castracao == "manhã" ? "09:00:00" : "14:00:00"
-      break;
-    case 4:
-      result = periodo_castracao == "manhã" ? "09:20:00" : "14:20:00"
-      break;
-    case 5:
-      result = periodo_castracao == "manhã" ? "09:40:00" : "14:40:00"
-      break;
-    case 6:
-      result = periodo_castracao == "manhã" ? "10:00:00" : "15:00:00"
-      break;
-    case 7:
-      result = periodo_castracao == "manhã" ? "10:20:00" : "15:20:00"
-      break;
-    case 8:
-      result = periodo_castracao == "manhã" ? "10:40:00" : "15:40:00"
-      break;
-    case 9:
-      result = periodo_castracao == "manhã" ? "11:00:00" : "16:00:00"
-      break;
-  }
-  return result;
-}
+const { get_new_castration } = require("../service/utilService");
 
 module.exports = {
 
@@ -56,7 +20,6 @@ module.exports = {
           });
         });
       }).catch(err => {
-        console.log(err)
         res.status(400).json({
           success: false,
           message: 'Ocorreu um erro enquanto os dados eram inseridos.'
@@ -74,23 +37,22 @@ module.exports = {
     const { data, periodo_castracao } = req.body
 
     try {
-      await Castration.findAndCountAll({ 
+      await Castration.findAll({ 
         where: { 
           data: { 
             [Op.gt]: `${data} 00:00:00`,
             [Op.lt]: `${data} 23:59:59`
           },
           periodo_castracao
-        } 
+        },
+        order: [
+          ["atendimento", "ASC"]
+        ]
       }).then(response => {
-        console.log(response.count)
-        if (response.count < 10) {
-          let horario = define_hour(periodo_castracao, response.count)
+        if (response.length < 10) {
+          let new_castration = get_new_castration(periodo_castracao, data, response)
 
-          Castration.create({ 
-            data: `${data} ${horario}`, 
-            periodo_castracao 
-          }).then(castration => {
+          Castration.create(new_castration).then(castration => {
             res.status(200).json({ success: true, castration });
           }).catch(err_create => {
             res.status(400).json({
