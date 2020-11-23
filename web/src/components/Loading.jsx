@@ -1,15 +1,20 @@
 import React from "react";
+import Header from "./Header";
 
 import "./loading.css";
 
 const Loading = () => {
   return (
-    <div id="loading">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <>
+      <Header titulo="" />
+
+      <div id="loading">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </>
   );
 };
 

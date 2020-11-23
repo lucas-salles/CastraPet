@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 
+import { ReactComponent as ArrowRight } from "../../images/arrow-right.svg";
 import { ReactComponent as Search } from "../../images/search.svg";
 import { ReactComponent as Edit } from "../../images/edit.svg";
 import { ReactComponent as Trash } from "../../images/trash.svg";
@@ -175,8 +176,8 @@ const Dashboard = () => {
         </div>
 
         {user?.tipo_usuario === "USUARIO" && (
-          <Link to="castrations" className="btn-tutor btn-castration">
-            Agendar Castração
+          <Link to="castrations" className="btn-cad-castration">
+            Agendar Castração <ArrowRight />
           </Link>
         )}
 
@@ -202,8 +203,8 @@ const Dashboard = () => {
             <h2>Pets Cadastrados</h2>
 
             {user?.tipo_usuario === "USUARIO" && (
-              <Link to="pets" className="btn-tutor btn-castration">
-                Novo Pet
+              <Link to="pets" className="btn-cad-pet">
+                Cadastrar Pet
               </Link>
             )}
 

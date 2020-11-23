@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import UserCreate from "./pages/User/UserCreate";
 import UserUpdate from "./pages/User/UserUpdate";
-import Dashboard from "./pages/User/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import PetCreate from "./pages/Pet/PetCreate";
 import PetUpdate from "./pages/Pet/PetUpdate";
 import PetDetail from "./pages/Pet/PetDetail";

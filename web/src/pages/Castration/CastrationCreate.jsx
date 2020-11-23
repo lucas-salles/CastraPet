@@ -36,23 +36,23 @@ const CastrationCreate = () => {
   }, [userLogged]);
 
   async function handleCreateCastration() {
-    const confirm = window.confirm(
-      "Você realmente deseja agendar para esssa data?"
-    );
+    const formatedDate = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
 
-    if (confirm) {
-      const formatedDate = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}`;
+    const response = await api.post("castrations/reserve", {
+      data: formatedDate,
+      periodo_castracao,
+    });
+    const castration = response.data.castration;
+    setCastracaoId(castration.id);
+    setConfirmedCastration(true);
+  }
 
-      const response = await api.post("castrations/reserve", {
-        data: formatedDate,
-        periodo_castracao,
-      });
-      const castration = response.data.castration;
-      setCastracaoId(castration.id);
-      setConfirmedCastration(true);
-    }
+  async function handleCancelToCastration() {
+    await api.delete(`/castrations/${castrationId}`);
+
+    history.push("/dashboard");
   }
 
   async function handleAddPetToCastration() {
@@ -71,7 +71,7 @@ const CastrationCreate = () => {
 
   return (
     <>
-      <Header titulo="Cadastrar Castração" />
+      <Header titulo="Agendar Castração" />
 
       <div id="page-castration-register" className="container">
         <h2>Escolhendo uma data</h2>
@@ -80,7 +80,7 @@ const CastrationCreate = () => {
           <div className="instructions">
             <h3>Orientações</h3>
 
-            <div className={`${confirmedCastration && "hidden"}`}>
+            <div className={`${confirmedCastration ? "hidden" : ""}`}>
               <h4>1º Passo</h4>
               <p>Escolha uma data.</p>
 
@@ -94,7 +94,7 @@ const CastrationCreate = () => {
               <p>Clique no botão “Confirmar”.</p>
             </div>
 
-            <div className={`${!confirmedCastration && "hidden"}`}>
+            <div className={`${!confirmedCastration ? "hidden" : ""}`}>
               <h4>4º Passo</h4>
               <p>Na caixa ao lado, selecione o pet.</p>
 
@@ -103,7 +103,7 @@ const CastrationCreate = () => {
             </div>
           </div>
 
-          <div className={`choose-pet ${!confirmedCastration && "hidden"}`}>
+          <div className={`choose-pet ${!confirmedCastration ? "hidden" : ""}`}>
             <Select
               options={pets.map((pet) => pet.nome)}
               label="Selecione o pet"
@@ -112,14 +112,26 @@ const CastrationCreate = () => {
               onChange={({ target }) => setPet(target.value)}
             />
 
-            <Button onClick={handleAddPetToCastration}>Confirmar</Button>
+            <div className="btns">
+              <Button
+                className="btn btn-cancel"
+                onClick={handleCancelToCastration}
+              >
+                Cancelar
+              </Button>
+              <Button className="btn" onClick={handleAddPetToCastration}>
+                Confirmar
+              </Button>
+            </div>
           </div>
 
-          <div className={`calendar ${confirmedCastration && "hidden"}`}>
+          <div className={`calendar ${confirmedCastration ? "hidden" : ""}`}>
             <Calendar value={date} onChange={setDate} locale="pt-BR" />
           </div>
 
-          <div className={`confirmation ${confirmedCastration && "hidden"}`}>
+          <div
+            className={`confirmation ${confirmedCastration ? "hidden" : ""}`}
+          >
             <h3>12 de Outubro de 2020</h3>
 
             <div className="schedule">
@@ -133,10 +145,14 @@ const CastrationCreate = () => {
               />
             </div>
 
-            <Link to="/" className="cancel">
-              Cancelar
-            </Link>
-            <Button onClick={handleCreateCastration}>Confirmar</Button>
+            <div className="btns">
+              <Link to="/dashboard" className="btn btn-cancel">
+                Cancelar
+              </Link>
+              <Button className="btn" onClick={handleCreateCastration}>
+                Confirmar
+              </Button>
+            </div>
           </div>
         </div>
       </div>
