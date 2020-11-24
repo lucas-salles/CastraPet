@@ -24,8 +24,6 @@ const CastrationCreate = () => {
   const [pet, setPet] = useState("");
   const [periodo_castracao, setPeriodoCastracao] = useState("manhã");
   const [date, setDate] = useState(new Date());
-  const [castrationId, setCastracaoId] = useState("");
-  const [confirmedCastration, setConfirmedCastration] = useState(false);
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
@@ -46,21 +44,12 @@ const CastrationCreate = () => {
       data: formatedDate,
       periodo_castracao,
     });
+
     const castration = response.data.castration;
-    setCastracaoId(castration.id);
-    setConfirmedCastration(true);
-  }
 
-  async function handleCancelToCastration() {
-    await api.delete(`/castrations/${castrationId}`);
-
-    history.push("/dashboard");
-  }
-
-  async function handleAddPetToCastration() {
     const [petSelected] = pets.filter((p) => p.nome === pet);
 
-    await api.put(`castrations/${castrationId}`, {
+    await api.put(`castrations/${castration.id}`, {
       pet_id: petSelected.id,
     });
 
@@ -82,59 +71,40 @@ const CastrationCreate = () => {
           <div className="instructions">
             <h3>Orientações</h3>
 
-            <div className={`${confirmedCastration ? "hidden" : ""}`}>
-              <h4>1º Passo</h4>
-              <p>Escolha uma data.</p>
+            <h4>1º Passo</h4>
+            <p>Escolha uma data disponível.</p>
 
-              <h4>2º Passo</h4>
-              <p>
-                Na caixa à direita do calendário, selecione o horário de
-                atendimento.
-              </p>
+            <h4>2º Passo</h4>
+            <p>Na caixa à direita do calendário, selecione o pet.</p>
 
-              <h4>3º Passo</h4>
-              <p>Clique no botão “Confirmar”.</p>
-            </div>
+            <h4>3º Passo</h4>
+            <p>Selecione o horário de atendimento.</p>
 
-            <div className={`${!confirmedCastration ? "hidden" : ""}`}>
-              <h4>4º Passo</h4>
-              <p>Na caixa ao lado, selecione o pet.</p>
-
-              <h4>5º Passo</h4>
-              <p>Clique no botão “Confirmar”.</p>
-            </div>
+            <h4>4º Passo</h4>
+            <p>Clique no botão “Confirmar”.</p>
           </div>
 
-          <div className={`choose-pet ${!confirmedCastration ? "hidden" : ""}`}>
+          <div className="calendar">
+            <Calendar
+              showNeighboringMonth={false}
+              showNavigation={true}
+              minDate={new Date()}
+              value={date}
+              onChange={setDate}
+              locale="pt-BR"
+            />
+          </div>
+
+          <div className="confirmation">
+            <h3>{format(date, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}</h3>
+
             <Select
               options={pets.map((pet) => pet.nome)}
-              label="Selecione o pet"
+              messageDisabled="Selecione o pet"
               value={pet}
               name="pet"
               onChange={({ target }) => setPet(target.value)}
             />
-
-            <div className="btns">
-              <Button
-                className="btn btn-cancel"
-                onClick={handleCancelToCastration}
-              >
-                Cancelar
-              </Button>
-              <Button className="btn" onClick={handleAddPetToCastration}>
-                Confirmar
-              </Button>
-            </div>
-          </div>
-
-          <div className={`calendar ${confirmedCastration ? "hidden" : ""}`}>
-            <Calendar value={date} onChange={setDate} locale="pt-BR" />
-          </div>
-
-          <div
-            className={`confirmation ${confirmedCastration ? "hidden" : ""}`}
-          >
-            <h3>{format(date, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}</h3>
 
             <div className="schedule">
               <h4>Selecione um horário:</h4>

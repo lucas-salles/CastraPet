@@ -33,16 +33,6 @@
   margin-bottom: 1rem;
 }
 
-#page-castration-register .choose-pet .btns {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#page-castration-register .choose-pet .btns button + button {
-  margin-left: 2rem;
-}
-
 #page-castration-register .react-calendar {
   width: 100%;
   border: none;
@@ -89,7 +79,7 @@
   justify-content: space-between;
 }
 
-#page-castration-register .btn-cancel {
+#page-castration-register .confirmation .btn-cancel {
   font-size: 1rem;
   font-family: var(--type-first);
   cursor: pointer;
@@ -102,13 +92,13 @@
   display: inline-block;
 }
 
-#page-castration-register .btn-cancel:hover,
-#page-castration-register .btn-cancel:focus {
+#page-castration-register .confirmation .btn-cancel:hover,
+#page-castration-register .confirmation .btn-cancel:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
 
-#page-castration-register .btn {
+#page-castration-register .confirmation .btn {
   width: 6rem;
   min-width: 0;
   padding: 0.8rem;

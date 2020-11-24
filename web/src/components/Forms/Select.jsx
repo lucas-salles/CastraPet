@@ -2,10 +2,18 @@ import React from "react";
 
 import "./select.css";
 
-const Select = ({ options, value, label, name, onChange, ...props }) => {
+const Select = ({
+  options,
+  value,
+  messageDisabled,
+  label,
+  name,
+  onChange,
+  ...props
+}) => {
   return (
     <div id="select">
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <select
         id={name}
         name={name}
@@ -14,7 +22,7 @@ const Select = ({ options, value, label, name, onChange, ...props }) => {
         {...props}
       >
         <option value="" disabled>
-          Selecione
+          {messageDisabled ? messageDisabled : "Selecione"}
         </option>
         {options.map((option) => (
           <option key={option} value={option}>
