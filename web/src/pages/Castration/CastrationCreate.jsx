@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 import Button from "../../components/Forms/Button";
 import Radio from "../../components/Forms/Radio";
@@ -132,7 +134,7 @@ const CastrationCreate = () => {
           <div
             className={`confirmation ${confirmedCastration ? "hidden" : ""}`}
           >
-            <h3>12 de Outubro de 2020</h3>
+            <h3>{format(date, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}</h3>
 
             <div className="schedule">
               <h4>Selecione um horário:</h4>
