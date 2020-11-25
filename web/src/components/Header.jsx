@@ -34,7 +34,7 @@ const Header = ({ titulo }) => {
 
             <ul className="user-submenu">
               <li>
-                <Link to={`users/${user.id}`}>
+                <Link to={`users/${user?.id}`}>
                   <Edit />
                   Atualizar Dados
                 </Link>

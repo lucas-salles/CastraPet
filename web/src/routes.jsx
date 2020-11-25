@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import UserCreate from "./pages/User/UserCreate";
@@ -12,22 +12,32 @@ import NotFound from "./components/NotFound";
 import VaccinationCreate from "./pages/Vaccination/VaccinationCreate";
 import VaccinationUpdate from "./pages/Vaccination/VaccinationUpdate";
 import CastrationCreate from "./pages/Castration/CastrationCreate";
+import CustomRoute from "./components/Helper/CustomRoute";
 
 const Routes = () => {
   return (
     <Switch>
-      <Route component={Home} path="/" exact />
-      <Route component={Dashboard} path="/dashboard" />
-      <Route component={Login} path="/login" />
-      <Route component={UserCreate} path="/register" />
-      <Route component={UserUpdate} path="/users/:id" />
-      <Route component={PetCreate} path="/pets" exact />
-      <Route component={PetUpdate} path="/pets/:id" />
-      <Route component={PetDetail} path="/pet-detail/:id" />
-      <Route component={VaccinationCreate} path="/pet/:id/vaccinations" exact />
-      <Route component={VaccinationUpdate} path="/pet/:id/vaccinations/:id" />
-      <Route component={CastrationCreate} path="/castrations" />
-      <Route component={NotFound} path="*" />
+      <CustomRoute component={Home} path="/" exact />
+      <CustomRoute component={Login} path="/login" />
+      <CustomRoute component={UserCreate} path="/register" />
+      <CustomRoute isPrivate component={Dashboard} path="/dashboard" />
+      <CustomRoute isPrivate component={UserUpdate} path="/users/:id" />
+      <CustomRoute isPrivate component={PetCreate} path="/pets" exact />
+      <CustomRoute isPrivate component={PetUpdate} path="/pets/:id" />
+      <CustomRoute isPrivate component={PetDetail} path="/pet-detail/:id" />
+      <CustomRoute
+        isPrivate
+        component={VaccinationCreate}
+        path="/pet/:id/vaccinations"
+        exact
+      />
+      <CustomRoute
+        isPrivate
+        component={VaccinationUpdate}
+        path="/pet/:id/vaccinations/:id"
+      />
+      <CustomRoute isPrivate component={CastrationCreate} path="/castrations" />
+      <CustomRoute component={NotFound} path="*" />
     </Switch>
   );
 };

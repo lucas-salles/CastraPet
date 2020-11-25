@@ -5,13 +5,14 @@ import { Link, Redirect } from "react-router-dom";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
 import "./login.css";
 
 const Login = () => {
-  const { userLogin, loading, login } = useContext(UserContext);
+  const { userLogin, loading, login, error } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -55,6 +56,7 @@ const Login = () => {
           ) : (
             <Button>Entrar</Button>
           )}
+          <Error error={error && "Dados incorretos."} />
         </form>
 
         <div className="register">

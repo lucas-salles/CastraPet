@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -14,6 +15,8 @@ import "./user-update.css";
 
 const UserUpdate = () => {
   const { loading, user: userLogged } = useContext(UserContext);
+
+  const [error, setError] = useState(null);
 
   const [user, setUser] = useState({
     nome: "",
@@ -41,22 +44,30 @@ const UserUpdate = () => {
     setUser({ ...user, [name]: value });
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    await api.put(`users/${userLogged?.id}`, {
-      nome: user.nome,
-      cpf: user.cpf,
-      telefone: user.telefone,
-      endereco: user.endereco,
-      bairro: user.bairro,
-      cep: user.cep,
-      email: user.email,
-    });
+    api
+      .put(`users/${userLogged?.id}`, {
+        nome: user.nome,
+        cpf: user.cpf,
+        telefone: user.telefone,
+        endereco: user.endereco,
+        bairro: user.bairro,
+        cep: user.cep,
+        email: user.email,
+      })
+      .then((response) => {
+        alert("Dados atualizados com sucesso");
 
-    alert("Dados atualizados com sucesso");
-
-    history.push("/dashboard");
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -141,6 +152,7 @@ const UserUpdate = () => {
           </fieldset>
 
           <Button>Atualizar</Button>
+          <Error error={error} />
         </form>
       </div>
     </>

@@ -4,6 +4,7 @@ import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -16,6 +17,8 @@ import { Redirect } from "react-router-dom";
 const Register = () => {
   const { loading, login } = useContext(UserContext);
 
+  const [error, setError] = useState(null);
+
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -25,24 +28,32 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    await api.post("users", {
-      nome,
-      cpf,
-      email,
-      senha,
-      telefone,
-      cep,
-      endereco,
-      bairro,
-      tipo_usuario: "USUARIO",
-    });
+    api
+      .post("users", {
+        nome,
+        cpf,
+        email,
+        senha,
+        telefone,
+        cep,
+        endereco,
+        bairro,
+        tipo_usuario: "USUARIO",
+      })
+      .then((response) => {
+        alert("Cadastro realizado com sucesso");
 
-    alert("Cadastro realizado com sucesso");
-
-    history.push("/login");
+        history.push("/login");
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -138,6 +149,7 @@ const Register = () => {
           </fieldset>
 
           <Button>Cadastrar</Button>
+          <Error error={error} />
         </form>
       </div>
     </>

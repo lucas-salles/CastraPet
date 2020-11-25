@@ -2,6 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../components/Header";
+import Checkbox from "../../components/Forms/Checkbox";
+import Input from "../../components/Forms/Input";
+import Button from "../../components/Forms/Button";
 import Loading from "../../components/Helper/Loading";
 
 import { ReactComponent as ArrowRight } from "../../images/arrow-right.svg";
@@ -14,9 +17,6 @@ import { UserContext } from "../../UserContext";
 import api from "../../services/api";
 
 import "./dashboard.css";
-import Checkbox from "../../components/Forms/Checkbox";
-import Input from "../../components/Forms/Input";
-import Button from "../../components/Forms/Button";
 
 const Dashboard = () => {
   const { user: userLogged, login, loading } = useContext(UserContext);
@@ -50,10 +50,10 @@ const Dashboard = () => {
   const getFuncionarioAndAllPets = useCallback(
     async function getFuncionarioAndAllPets() {
       if (login) {
-        const responsePet = await api.get("/pets");
-        setPets(responsePet.data.pets);
         const responseUser = await api.get(`users/${userLogged?.id}`);
         setUser(responseUser.data.user);
+        const responsePet = await api.get("/pets");
+        setPets(responsePet.data.pets);
       }
     },
     [login, userLogged]

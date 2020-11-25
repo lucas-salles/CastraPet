@@ -97,7 +97,7 @@
     margin-left: 1rem;
   }
 
-  #header .logo img {
-    width: 2.4rem;
+  #header .logo svg {
+    width: 6rem;
   }
 }

@@ -17,9 +17,12 @@ import api from "../../services/api";
 
 import "react-calendar/dist/Calendar.css";
 import "./castration-create.css";
+import Error from "../../components/Helper/Error";
 
 const CastrationCreate = () => {
   const { user: userLogged, loading } = useContext(UserContext);
+
+  const [error, setError] = useState(null);
 
   const [pet, setPet] = useState("");
   const [periodo_castracao, setPeriodoCastracao] = useState("manhã");
@@ -38,26 +41,45 @@ const CastrationCreate = () => {
   async function handleCreateCastration(event) {
     event.preventDefault();
 
+    let castration;
+    let petSelected;
+
     const formatedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
 
-    const response = await api.post("castrations/reserve", {
-      data: formatedDate,
-      periodo_castracao,
-    });
+    await api
+      .post("castrations/reserve", {
+        data: formatedDate,
+        periodo_castracao,
+      })
+      .then((response) => {
+        castration = response.data.castration;
 
-    const castration = response.data.castration;
+        [petSelected] = pets.filter((p) => p.nome === pet);
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
 
-    const [petSelected] = pets.filter((p) => p.nome === pet);
+    await api
+      .put(`castrations/${castration.id}`, {
+        pet_id: petSelected.id,
+      })
+      .then((response) => {
+        alert("Castração agendada com sucesso");
 
-    await api.put(`castrations/${castration.id}`, {
-      pet_id: petSelected.id,
-    });
-
-    alert("Castração agendada com sucesso");
-
-    history.push("/dashboard");
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -126,6 +148,7 @@ const CastrationCreate = () => {
               </Link>
               <Button className="btn">Confirmar</Button>
             </div>
+            <Error error={error} />
           </div>
         </form>
       </div>

@@ -7,6 +7,7 @@ import Select from "../../components/Forms/Select";
 import Textarea from "../../components/Forms/Textarea";
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -16,8 +17,11 @@ import history from "../../history";
 import "./pet-update.css";
 
 const PetUpdate = () => {
-  const { id } = useParams();
   const { user, loading } = useContext(UserContext);
+
+  const [error, setError] = useState(null);
+
+  const { id } = useParams();
 
   const [animal, setAnimal] = useState({
     nome: "",
@@ -43,25 +47,33 @@ const PetUpdate = () => {
     setAnimal({ ...animal, [name]: value });
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    await api.put(`pets/${id}`, {
-      nome: animal.nome,
-      cor_pelagem: animal.cor_pelagem,
-      especie: animal.especie,
-      raca: animal.raca,
-      sexo: animal.sexo,
-      idade: animal.idade,
-      porte_fisico: animal.porte_fisico,
-      comportamento: animal.comportamento,
-      estado_saude: animal.estado_saude,
-      usuario_id: user.id,
-    });
+    api
+      .put(`pets/${id}`, {
+        nome: animal.nome,
+        cor_pelagem: animal.cor_pelagem,
+        especie: animal.especie,
+        raca: animal.raca,
+        sexo: animal.sexo,
+        idade: animal.idade,
+        porte_fisico: animal.porte_fisico,
+        comportamento: animal.comportamento,
+        estado_saude: animal.estado_saude,
+        usuario_id: user.id,
+      })
+      .then((response) => {
+        alert("Animal atualizado com sucesso");
 
-    alert("Animal atualizado com sucesso");
-
-    history.push("/dashboard");
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -169,6 +181,7 @@ const PetUpdate = () => {
           </fieldset>
 
           <Button>Atualizar</Button>
+          <Error error={error} />
         </form>
       </div>
     </>

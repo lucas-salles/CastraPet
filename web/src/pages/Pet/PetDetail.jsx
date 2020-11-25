@@ -94,7 +94,7 @@ const PetDetail = () => {
             </Link>
           )}
 
-          <table>
+          <table className="table-responsive">
             <thead>
               <tr>
                 <th>Nome</th>

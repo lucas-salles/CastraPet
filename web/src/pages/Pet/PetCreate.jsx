@@ -6,6 +6,7 @@ import Button from "../../components/Forms/Button";
 import Textarea from "../../components/Forms/Textarea";
 import Select from "../../components/Forms/Select";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -17,6 +18,8 @@ import "./pet-create.css";
 const PetCreate = () => {
   const { user, loading } = useContext(UserContext);
 
+  const [error, setError] = useState(null);
+
   const [nome, setNome] = useState("");
   const [corPelagem, setCorPelagem] = useState("");
   const [especie, setEspecie] = useState("");
@@ -27,25 +30,33 @@ const PetCreate = () => {
   const [comportamento, setComportamento] = useState("");
   const [estadoSaude, setEstadoSaude] = useState("");
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    await api.post("pets", {
-      nome,
-      cor_pelagem: corPelagem,
-      especie,
-      raca,
-      sexo,
-      idade,
-      porte_fisico: porteFisico,
-      comportamento,
-      estado_saude: estadoSaude,
-      usuario_id: user.id,
-    });
+    api
+      .post("pets", {
+        nome,
+        cor_pelagem: corPelagem,
+        especie,
+        raca,
+        sexo,
+        idade,
+        porte_fisico: porteFisico,
+        comportamento,
+        estado_saude: estadoSaude,
+        usuario_id: user.id,
+      })
+      .then((response) => {
+        alert("Animal cadastrado com sucesso");
 
-    alert("Animal cadastrado com sucesso");
-
-    history.push("/dashboard");
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -153,6 +164,7 @@ const PetCreate = () => {
           </fieldset>
 
           <Button>Cadastrar</Button>
+          <Error error={error} />
         </form>
       </div>
     </>

@@ -6,6 +6,7 @@ import Input from "../../components/Forms/Input";
 import TextArea from "../../components/Forms/Textarea";
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -17,28 +18,38 @@ import "./vaccination-create.css";
 const VaccinationCreate = () => {
   const { loading } = useContext(UserContext);
 
+  const [error, setError] = useState(null);
+
   const { id } = useParams();
 
   const [nome, setNome] = useState("");
   const [data, setData] = useState("");
   const [observacoes, setObservacoes] = useState("");
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
     const [ano, mes, dia] = data.split("-");
     const dataFormatada = new Date(ano, mes - 1, dia);
 
-    await api.post("vaccinations", {
-      nome,
-      data: dataFormatada,
-      observacoes,
-      pet_id: id,
-    });
+    api
+      .post("vaccinations", {
+        nome,
+        data: dataFormatada,
+        observacoes,
+        pet_id: id,
+      })
+      .then((response) => {
+        alert("Vacinação cadastrada com sucesso");
 
-    alert("Vacinação cadastrada com sucesso");
-
-    history.push(`/pet-detail/${id}`);
+        history.push(`/pet-detail/${id}`);
+      })
+      .catch((error) => {
+        setError("Ocorreu um erro.");
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+      });
   }
 
   if (loading) return <Loading />;
@@ -84,6 +95,7 @@ const VaccinationCreate = () => {
           </fieldset>
 
           <Button>Cadastrar</Button>
+          <Error error={error} />
         </form>
       </div>
     </>
