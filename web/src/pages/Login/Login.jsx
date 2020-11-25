@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
@@ -11,7 +11,7 @@ import { UserContext } from "../../UserContext";
 import "./login.css";
 
 const Login = () => {
-  const { userLogin, loading } = useContext(UserContext);
+  const { userLogin, loading, login } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -22,6 +22,8 @@ const Login = () => {
     await userLogin(email, senha);
   }
 
+  if (login) return <Redirect to="/dashboard" />;
+
   return (
     <>
       <Header titulo="Login" />
@@ -31,6 +33,7 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <Input
+            required
             label="Email"
             type="email"
             name="email"
@@ -39,6 +42,7 @@ const Login = () => {
           />
 
           <Input
+            required
             label="Senha"
             type="password"
             name="senha"

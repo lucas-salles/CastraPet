@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -73,6 +73,7 @@ const UserUpdate = () => {
             <legend>Dados do Tutor</legend>
 
             <Input
+              required
               label="Nome"
               type="text"
               name="nome"
@@ -82,6 +83,7 @@ const UserUpdate = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="CPF"
                 type="text"
                 name="cpf"
@@ -90,6 +92,7 @@ const UserUpdate = () => {
               />
 
               <Input
+                required
                 label="Telefone"
                 type="tel"
                 name="telefone"
@@ -99,6 +102,7 @@ const UserUpdate = () => {
             </div>
 
             <Input
+              required
               label="Endereço"
               type="text"
               name="endereco"
@@ -108,6 +112,7 @@ const UserUpdate = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="Bairro"
                 type="text"
                 name="bairro"
@@ -116,6 +121,7 @@ const UserUpdate = () => {
               />
 
               <Input
+                required
                 label="CEP"
                 type="text"
                 name="cep"
@@ -125,6 +131,7 @@ const UserUpdate = () => {
             </div>
 
             <Input
+              required
               label="Email"
               type="email"
               name="email"

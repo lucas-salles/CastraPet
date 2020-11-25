@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { ReactComponent as ArrowRight } from "../../images/arrow-right.svg";
 import { ReactComponent as Search } from "../../images/search.svg";

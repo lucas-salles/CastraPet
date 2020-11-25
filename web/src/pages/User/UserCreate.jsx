@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -11,9 +11,10 @@ import api from "../../services/api";
 import history from "../../history";
 
 import "./user-create.css";
+import { Redirect } from "react-router-dom";
 
 const Register = () => {
-  const { loading } = useContext(UserContext);
+  const { loading, login } = useContext(UserContext);
 
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -46,6 +47,8 @@ const Register = () => {
 
   if (loading) return <Loading />;
 
+  if (login) return <Redirect to="/dashboard" />;
+
   return (
     <>
       <Header titulo="Cadastrar Tutor" />
@@ -58,6 +61,7 @@ const Register = () => {
             <legend>Dados do Tutor</legend>
 
             <Input
+              required
               label="Nome"
               type="text"
               name="nome"
@@ -67,6 +71,7 @@ const Register = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="CPF"
                 type="text"
                 name="cpf"
@@ -75,6 +80,7 @@ const Register = () => {
               />
 
               <Input
+                required
                 label="Telefone"
                 type="tel"
                 name="telefone"
@@ -84,6 +90,7 @@ const Register = () => {
             </div>
 
             <Input
+              required
               label="Endereço"
               type="text"
               name="endereco"
@@ -93,6 +100,7 @@ const Register = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="Bairro"
                 type="text"
                 name="bairro"
@@ -101,6 +109,7 @@ const Register = () => {
               />
 
               <Input
+                required
                 label="CEP"
                 type="text"
                 name="cep"
@@ -110,6 +119,7 @@ const Register = () => {
             </div>
 
             <Input
+              required
               label="Email"
               type="email"
               name="email"
@@ -118,6 +128,7 @@ const Register = () => {
             />
 
             <Input
+              required
               label="Senha"
               type="password"
               name="senha"

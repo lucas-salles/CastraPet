@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Button from "../../components/Forms/Button";
 import Textarea from "../../components/Forms/Textarea";
 import Select from "../../components/Forms/Select";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -62,6 +62,7 @@ const PetCreate = () => {
             <legend>Dados do Animal</legend>
 
             <Input
+              required
               label="Nome"
               type="text"
               name="nome"
@@ -71,6 +72,7 @@ const PetCreate = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="Cor da pelagem"
                 type="text"
                 name="corPelagem"
@@ -79,6 +81,7 @@ const PetCreate = () => {
               />
 
               <Input
+                required
                 label="Espécie"
                 type="text"
                 name="especie"
@@ -88,6 +91,7 @@ const PetCreate = () => {
             </div>
 
             <Input
+              required
               label="Raça"
               type="text"
               name="raca"
@@ -97,6 +101,7 @@ const PetCreate = () => {
 
             <div className="double-input-row">
               <Select
+                required
                 options={["M", "F"]}
                 value={sexo}
                 label="Sexo"
@@ -105,6 +110,7 @@ const PetCreate = () => {
               />
 
               <Input
+                required
                 label="Idade"
                 type="number"
                 name="idade"
@@ -119,6 +125,7 @@ const PetCreate = () => {
 
             <div className="double-input-row">
               <Select
+                required
                 options={["Pequeno", "Médio", "Grande"]}
                 value={porteFisico}
                 label="Porte Físico"
@@ -127,6 +134,7 @@ const PetCreate = () => {
               />
 
               <Select
+                required
                 options={["Dócil", "Agressivo", "Reservado", "Seletivo"]}
                 value={comportamento}
                 label="Comportamento"

@@ -5,7 +5,7 @@ import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
 import TextArea from "../../components/Forms/Textarea";
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -70,6 +70,7 @@ const VaccinationUpdate = () => {
 
             <div className="double-input-row">
               <Input
+                required
                 label="Nome da vacina"
                 type="text"
                 name="nome"
@@ -78,6 +79,7 @@ const VaccinationUpdate = () => {
               />
 
               <Input
+                required
                 label="Data"
                 type="date"
                 name="data"

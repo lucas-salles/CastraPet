@@ -8,7 +8,7 @@ import Button from "../../components/Forms/Button";
 import Radio from "../../components/Forms/Radio";
 import Select from "../../components/Forms/Select";
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { UserContext } from "../../UserContext";
 
@@ -35,7 +35,9 @@ const CastrationCreate = () => {
     if (userLogged?.id) getUserWithPets();
   }, [userLogged]);
 
-  async function handleCreateCastration() {
+  async function handleCreateCastration(event) {
+    event.preventDefault();
+
     const formatedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
@@ -67,7 +69,7 @@ const CastrationCreate = () => {
       <div id="page-castration-register" className="container">
         <h2>Escolhendo uma data</h2>
 
-        <div className="castration-form">
+        <form className="castration-form" onSubmit={handleCreateCastration}>
           <div className="instructions">
             <h3>Orientações</h3>
 
@@ -99,6 +101,7 @@ const CastrationCreate = () => {
             <h3>{format(date, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}</h3>
 
             <Select
+              required
               options={pets.map((pet) => pet.nome)}
               messageDisabled="Selecione o pet"
               value={pet}
@@ -121,12 +124,10 @@ const CastrationCreate = () => {
               <Link to="/dashboard" className="btn btn-cancel">
                 Cancelar
               </Link>
-              <Button className="btn" onClick={handleCreateCastration}>
-                Confirmar
-              </Button>
+              <Button className="btn">Confirmar</Button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

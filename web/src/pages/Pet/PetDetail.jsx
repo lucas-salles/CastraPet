@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helper/Loading";
 
 import { ReactComponent as Edit } from "../../images/edit.svg";
 import { ReactComponent as Trash } from "../../images/trash.svg";
