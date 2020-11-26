@@ -20,7 +20,7 @@ class Pet extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'usuario_id', as: 'tutor' })
     this.hasMany(models.Vaccination, { foreignKey: 'pet_id', as: 'vaccinations' })
-    this.hasOne(models.Castration, { foreignKey: 'pet_id', as: 'castrations' })
+    this.hasOne(models.Castration, { foreignKey: 'pet_id', as: 'castration' })
   }
 }
 
