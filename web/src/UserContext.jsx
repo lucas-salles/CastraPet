@@ -22,29 +22,31 @@ const UserStorage = ({ children }) => {
   }, []);
 
   function userLogin(email, senha) {
-    setError(null);
-    setLoading(true);
-    api
-      .post("users/login", {
-        email,
-        senha,
-      })
-      .then((response) => {
-        const { usuario, token } = response.data;
-        setUser(usuario);
-        window.localStorage.setItem("token", token);
-        setLogin(true);
-        setLoading(false);
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        setLogin(false);
-        setLoading(false);
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+    try {
+      setError(null);
+      setLoading(true);
+      api
+        .post("users/login", {
+          email,
+          senha,
+        })
+        .then((response) => {
+          const { usuario, token } = response.data;
+          setUser(usuario);
+          window.localStorage.setItem("token", token);
+          setLogin(true);
+          history.push("/dashboard");
+        })
+        .catch((error) => {
+          setLogin(false);
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const userLogout = useCallback(async function () {

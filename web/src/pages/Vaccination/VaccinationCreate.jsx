@@ -29,13 +29,13 @@ const VaccinationCreate = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const [ano, mes, dia] = data.split("-");
-    const dataFormatada = new Date(ano, mes - 1, dia);
+    const [year, month, day] = data.split("-");
+    const formattedDate = new Date(year, month - 1, day);
 
     api
       .post("vaccinations", {
         nome,
-        data: dataFormatada,
+        data: formattedDate,
         observacoes,
         pet_id: id,
       })

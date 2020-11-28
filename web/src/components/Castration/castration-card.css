@@ -1,0 +1,55 @@
+#castration-card {
+  margin-top: 2rem;
+  border-radius: 14px;
+  padding: 2rem;
+  border: 2px solid #c8c6c6;
+  box-shadow: 0 5px 10px 0 rgba(16, 36, 94, 0.2);
+}
+
+#castration-card .castration-short-description {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#castration-card .castration-date {
+  color: #606060;
+  margin-bottom: 2rem;
+}
+
+#castration-card .castration-short-details {
+  color: #7b7676;
+}
+
+#castration-card .castration-period {
+  color: var(--color-primary);
+}
+
+#castration-card .btn-details {
+  font-size: 1rem;
+  font-family: var(--type-first);
+  border: none;
+  border-radius: 4rem;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.6rem 2.8rem;
+  box-sizing: border-box;
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+#castration-card .btn-details:hover,
+#castration-card .btn-details:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
+}
+
+#castration-card .castration-long-description h4 {
+  color: #7b7676;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+#castration-card .castration-long-description p {
+  color: #7b7676;
+}

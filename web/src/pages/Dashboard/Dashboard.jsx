@@ -7,7 +7,6 @@ import Input from "../../components/Forms/Input";
 import Button from "../../components/Forms/Button";
 import Loading from "../../components/Helper/Loading";
 
-import { ReactComponent as ArrowRight } from "../../images/arrow-right.svg";
 import { ReactComponent as Search } from "../../images/search.svg";
 import { ReactComponent as Edit } from "../../images/edit.svg";
 import { ReactComponent as Trash } from "../../images/trash.svg";
@@ -17,24 +16,41 @@ import { UserContext } from "../../UserContext";
 import api from "../../services/api";
 
 import "./dashboard.css";
+import { formatDate } from "../../utils/formatDate";
 
 const Dashboard = () => {
   const { user: userLogged, login, loading } = useContext(UserContext);
   const [pets, setPets] = useState([]);
   const [user, setUser] = useState({});
 
-  // Filtros Pet
   const [filterByVaccinated, setFilterByVaccinated] = useState([]);
   const [filterByGender, setFilterByGender] = useState([]);
   const [filterBySpecies, setFilterBySpecies] = useState([]);
   const [filterByAge, setFilterByAge] = useState("");
 
-  // Filtro User
   const [filterByCpf, setFilterByCpf] = useState("");
 
   const [tab, setTab] = useState("pets");
 
   const [users, setUsers] = useState([]);
+
+  const [castrations, setCastrations] = useState([]);
+
+  useEffect(() => {
+    async function getCastrations() {
+      const response = await api.get("castrations");
+
+      const castrations = response.data.castrations;
+      castrations.sort((a, b) => {
+        if (a.data > b.data) return 1;
+        if (a.data < b.data) return -1;
+        return 0;
+      });
+
+      setCastrations(castrations);
+    }
+    getCastrations();
+  }, []);
 
   const getTutorWithPets = useCallback(
     async function getTutorWithPets() {
@@ -175,12 +191,6 @@ const Dashboard = () => {
           <p>{user?.telefone}</p>
         </div>
 
-        {user?.tipo_usuario === "USUARIO" && (
-          <Link to="castrations" className="btn-cad-castration">
-            Agendar Castração <ArrowRight />
-          </Link>
-        )}
-
         {user?.tipo_usuario === "SERVIDOR" && (
           <ul className="tabs">
             <li
@@ -195,10 +205,16 @@ const Dashboard = () => {
             >
               Usuários
             </li>
+            <li
+              className={tab === "castrations" ? "active" : ""}
+              onClick={() => setTab("castrations")}
+            >
+              Castrações
+            </li>
           </ul>
         )}
 
-        {tab === "pets" ? (
+        {tab === "pets" && (
           <div className="user-pets">
             <h2>Pets Cadastrados</h2>
 
@@ -301,7 +317,9 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
-        ) : (
+        )}
+
+        {tab === "users" && (
           <div className="user-pets">
             <h2>Usuários Cadastrados</h2>
 
@@ -336,6 +354,36 @@ const Dashboard = () => {
                       <td>{user.nome}</td>
                       <td>{user.cpf}</td>
                       <td>{user.email}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {tab === "castrations" && (
+          <div>
+            <h2>Castrações</h2>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Período</th>
+                  <th>Atendimento</th>
+                  <th>Pet</th>
+                  <th>Tutor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {castrations &&
+                  castrations.map((castration) => (
+                    <tr key={castration.id}>
+                      <td>{formatDate(castration.data)}</td>
+                      <td>{castration.periodo_castracao}</td>
+                      <td>{castration.atendimento}</td>
+                      <td>{castration.pet.nome}</td>
+                      <td>{castration.pet.tutor.nome}</td>
                     </tr>
                   ))}
               </tbody>

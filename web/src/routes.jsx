@@ -12,6 +12,7 @@ import NotFound from "./components/NotFound";
 import VaccinationCreate from "./pages/Vaccination/VaccinationCreate";
 import VaccinationUpdate from "./pages/Vaccination/VaccinationUpdate";
 import CastrationCreate from "./pages/Castration/CastrationCreate";
+import Castrations from "./pages/Castration/Castrations";
 import CustomRoute from "./components/Helper/CustomRoute";
 
 const Routes = () => {
@@ -36,7 +37,12 @@ const Routes = () => {
         component={VaccinationUpdate}
         path="/pet/:id/vaccinations/:id"
       />
-      <CustomRoute isPrivate component={CastrationCreate} path="/castrations" />
+      <CustomRoute
+        isPrivate
+        component={CastrationCreate}
+        path="/castrations-create"
+      />
+      <CustomRoute isPrivate component={Castrations} path="/castrations" />
       <CustomRoute component={NotFound} path="*" />
     </Switch>
   );

@@ -10,6 +10,7 @@ import { ReactComponent as Trash } from "../../images/trash.svg";
 import { UserContext } from "../../UserContext";
 
 import api from "../../services/api";
+import { formatDate } from "../../utils/formatDate";
 
 import "./pet-detail.css";
 
@@ -42,13 +43,6 @@ const PetDetail = () => {
       getTutor();
     }
   }, [pet.usuario_id]);
-
-  function formatDate(date) {
-    let data = new Date(date);
-    let dataFormatada =
-      data.getDate() + "/" + (data.getMonth() + 1) + "/" + data.getFullYear();
-    return dataFormatada;
-  }
 
   async function handleDelete(id) {
     const confirm = window.confirm(

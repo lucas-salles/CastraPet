@@ -48,38 +48,38 @@ const CastrationCreate = () => {
       date.getMonth() + 1
     }-${date.getDate()}`;
 
-    await api
-      .post("castrations/reserve", {
-        data: formatedDate,
-        periodo_castracao,
-      })
-      .then((response) => {
-        castration = response.data.castration;
+    try {
+      await api
+        .post("castrations/reserve", {
+          data: formatedDate,
+          periodo_castracao,
+        })
+        .then((response) => {
+          castration = response.data.castration;
 
-        [petSelected] = pets.filter((p) => p.nome === pet);
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          [petSelected] = pets.filter((p) => p.nome === pet);
 
-    await api
-      .put(`castrations/${castration.id}`, {
-        pet_id: petSelected.id,
-      })
-      .then((response) => {
-        alert("Castração agendada com sucesso");
+          api
+            .put(`castrations/${castration.id}`, {
+              pet_id: petSelected.id,
+            })
+            .then((response) => {
+              alert("Castração agendada com sucesso");
 
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+              history.push("/castrations");
+            })
+            .catch((error) => {
+              if (error.response) setError(error.response.data.message);
+              else setError("Ocorreu um erro desconhecido.");
+            });
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;
