@@ -19,7 +19,7 @@ import "./dashboard.css";
 import { formatDate } from "../../utils/formatDate";
 
 const Dashboard = () => {
-  const { user: userLogged, login, loading } = useContext(UserContext);
+  const { user: userLogged, loading } = useContext(UserContext);
   const [pets, setPets] = useState([]);
   const [user, setUser] = useState({});
 
@@ -52,33 +52,19 @@ const Dashboard = () => {
     getCastrations();
   }, []);
 
-  const getTutorWithPets = useCallback(
-    async function getTutorWithPets() {
-      if (login) {
-        const response = await api.get(`users/${userLogged?.id}`);
-        setUser(response.data.user);
-        setPets(response.data.user.pets);
-      }
-    },
-    [login, userLogged]
-  );
-
-  const getFuncionarioAndAllPets = useCallback(
-    async function getFuncionarioAndAllPets() {
-      if (login) {
-        const responseUser = await api.get(`users/${userLogged?.id}`);
-        setUser(responseUser.data.user);
+  const getUserAndPets = useCallback(
+    async function getUserAndPets() {
+      const responseUser = await api.get(`users/${userLogged?.id}`);
+      setUser(responseUser.data.user);
+      if (userLogged?.tipo_usuario === "USUARIO") {
+        setPets(responseUser.data.user.pets);
+      } else {
         const responsePet = await api.get("/pets");
         setPets(responsePet.data.pets);
       }
     },
-    [login, userLogged]
+    [userLogged]
   );
-
-  useEffect(() => {
-    if (user.tipo_usuario === "USUARIO") getTutorWithPets();
-    else getFuncionarioAndAllPets();
-  }, [getTutorWithPets, getFuncionarioAndAllPets, user.tipo_usuario]);
 
   useEffect(() => {
     if (
@@ -112,14 +98,14 @@ const Dashboard = () => {
       }
       getPetsByProperties();
     } else {
-      getFuncionarioAndAllPets();
+      getUserAndPets();
     }
   }, [
     filterByVaccinated,
     filterByGender,
     filterBySpecies,
     filterByAge,
-    getFuncionarioAndAllPets,
+    getUserAndPets,
   ]);
 
   const getUsers = useCallback(async function getUsers() {
@@ -135,9 +121,7 @@ const Dashboard = () => {
     if (filterByCpf === "") getUsers();
   }, [getUsers, filterByCpf]);
 
-  async function handleFilterUserByCpf(event) {
-    event.preventDefault();
-
+  async function handleFilterUserByCpf() {
     if (filterByCpf !== "") {
       async function getUserByCpf() {
         try {
@@ -166,8 +150,7 @@ const Dashboard = () => {
     if (confirm) {
       await api.delete(`pets/${id}`);
 
-      if (user.tipo_usuario === "USUARIO") await getTutorWithPets();
-      else getFuncionarioAndAllPets();
+      await getUserAndPets();
 
       alert("Pet deletado com sucesso");
     }

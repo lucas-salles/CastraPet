@@ -33,5 +33,7 @@
 @media (max-width: 1120px) {
   #page-castrations {
     padding: 0 1rem;
+    grid-template-columns: 1fr;
+    gap: 6rem;
   }
 }

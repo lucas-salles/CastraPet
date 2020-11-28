@@ -57,10 +57,13 @@ const Castrations = () => {
           <h2>Agendamentos</h2>
 
           <div className="castrations-list">
-            {openCastrations &&
-              openCastrations.map((castration) => (
-                <CastrationCard key={castration.id} castration={castration} />
-              ))}
+            {openCastrations.length === 0 && (
+              <p className="without-castration">Sem Agendamentos</p>
+            )}
+
+            {openCastrations.map((castration) => (
+              <CastrationCard key={castration.id} castration={castration} />
+            ))}
           </div>
         </div>
 
@@ -68,29 +71,32 @@ const Castrations = () => {
           <h2>Agendamentos Anteriores</h2>
 
           <div className="castrations-list">
-            {prevCastrations &&
-              prevCastrations.map((castration) => (
-                <div key={castration.id} className="castration">
-                  <div className="castration-description">
-                    <h3 className="castration-date">
-                      {format(
-                        formatDateFromServer(castration.data),
-                        "dd 'de' MMMM 'de' yyyy",
-                        { locale: ptBR }
-                      )}
-                    </h3>
+            {openCastrations.length === 0 && (
+              <p className="without-castration">Sem Agendamentos Anteriores</p>
+            )}
 
-                    <div className="castration-short-details">
-                      <span className="castration-period">
-                        {castration.periodo_castracao}
-                      </span>{" "}
-                      | {castration.pet.especie} |{" "}
-                      {castration.pet.sexo === "M" ? "macho" : "fêmea"} |{" "}
-                      {castration.pet.nome}
-                    </div>
+            {prevCastrations.map((castration) => (
+              <div key={castration.id} className="castration">
+                <div className="castration-description">
+                  <h3 className="castration-date">
+                    {format(
+                      formatDateFromServer(castration.data),
+                      "dd 'de' MMMM 'de' yyyy",
+                      { locale: ptBR }
+                    )}
+                  </h3>
+
+                  <div className="castration-short-details">
+                    <span className="castration-period">
+                      {castration.periodo_castracao}
+                    </span>{" "}
+                    | {castration.pet.especie} |{" "}
+                    {castration.pet.sexo === "M" ? "macho" : "fêmea"} |{" "}
+                    {castration.pet.nome}
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

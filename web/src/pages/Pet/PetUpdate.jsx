@@ -17,7 +17,7 @@ import history from "../../history";
 import "./pet-update.css";
 
 const PetUpdate = () => {
-  const { user, loading } = useContext(UserContext);
+  const { loading } = useContext(UserContext);
 
   const [error, setError] = useState(null);
 
@@ -61,7 +61,6 @@ const PetUpdate = () => {
         porte_fisico: animal.porte_fisico,
         comportamento: animal.comportamento,
         estado_saude: animal.estado_saude,
-        usuario_id: user.id,
       })
       .then((response) => {
         alert("Animal atualizado com sucesso");
