@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 import Header from "../../components/Header";
 import Checkbox from "../../components/Forms/Checkbox";
@@ -16,7 +17,6 @@ import { UserContext } from "../../UserContext";
 import api from "../../services/api";
 
 import "./dashboard.css";
-import { formatDate } from "../../utils/formatDate";
 
 const Dashboard = () => {
   const { user: userLogged, loading } = useContext(UserContext);
@@ -362,7 +362,7 @@ const Dashboard = () => {
                 {castrations &&
                   castrations.map((castration) => (
                     <tr key={castration.id}>
-                      <td>{formatDate(castration.data)}</td>
+                      <td>{format(new Date(castration.data), "dd/MM/yyyy")}</td>
                       <td>{castration.periodo_castracao}</td>
                       <td>{castration.atendimento}</td>
                       <td>{castration.pet.nome}</td>

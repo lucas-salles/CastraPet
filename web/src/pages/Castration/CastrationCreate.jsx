@@ -70,42 +70,46 @@ const CastrationCreate = () => {
     let castration;
     let petSelected;
 
-    const formatedDate = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
+    if (
+      daysWithoutVacancies.includes(date.getDate()) ||
+      date.getDay() === 0 ||
+      date.getDay() === 6
+    ) {
+      setError("Dia indisponível. Tente Outro");
+    } else {
+      try {
+        await api
+          .post("castrations/reserve", {
+            data: format(date, "yyyy-MM-dd"),
+            periodo_castracao,
+          })
+          .then((response) => {
+            castration = response.data.castration;
 
-    try {
-      await api
-        .post("castrations/reserve", {
-          data: formatedDate,
-          periodo_castracao,
-        })
-        .then((response) => {
-          castration = response.data.castration;
+            [petSelected] = pets.filter((p) => p.nome === pet);
 
-          [petSelected] = pets.filter((p) => p.nome === pet);
+            api
+              .put(`castrations/${castration.id}`, {
+                pet_id: petSelected.id,
+              })
+              .then((response) => {
+                alert("Castração agendada com sucesso");
 
-          api
-            .put(`castrations/${castration.id}`, {
-              pet_id: petSelected.id,
-            })
-            .then((response) => {
-              alert("Castração agendada com sucesso");
-
-              history.push("/castrations");
-            })
-            .catch((error) => {
-              if (error.response) setError(error.response.data.message);
-              else setError("Ocorreu um erro desconhecido.");
-            });
-        })
-        .catch((error) => {
-          if (error.response)
-            setError("Não há vagas nesse horário. Tente outro.");
-          else setError("Ocorreu um erro desconhecido.");
-        });
-    } catch (err) {
-      setError("Ocorreu um erro desconhecido.");
+                history.push("/castrations");
+              })
+              .catch((error) => {
+                if (error.response) setError(error.response.data.message);
+                else setError("Ocorreu um erro desconhecido.");
+              });
+          })
+          .catch((error) => {
+            if (error.response)
+              setError(`Não há vagas no horário da ${periodo_castracao}.`);
+            else setError("Ocorreu um erro desconhecido.");
+          });
+      } catch (err) {
+        setError("Ocorreu um erro desconhecido.");
+      }
     }
   }
 

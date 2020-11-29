@@ -4,11 +4,6 @@ import { ptBR } from "date-fns/locale";
 
 import Button from "../Forms/Button";
 
-import {
-  formatDateFromServer,
-  formatTimeFromServer,
-} from "../../utils/formatDate";
-
 import "./castration-card.css";
 
 const CastrationCard = ({ castration }) => {
@@ -23,11 +18,9 @@ const CastrationCard = ({ castration }) => {
       <div className="castration-short-description">
         <div>
           <h3 className="castration-date">
-            {format(
-              formatDateFromServer(castration.data),
-              "dd 'de' MMMM 'de' yyyy",
-              { locale: ptBR }
-            )}
+            {format(new Date(castration.data), "dd 'de' MMMM 'de' yyyy", {
+              locale: ptBR,
+            })}
           </h3>
 
           <div className="castration-short-details">
@@ -48,16 +41,12 @@ const CastrationCard = ({ castration }) => {
         style={{ display: active ? "block" : "none" }}
       >
         <h4>Data</h4>
-        <p>
-          {format(formatDateFromServer(castration.data), "dd/MM/yyyy", {
-            locale: ptBR,
-          })}
-        </p>
+        <p>{format(new Date(castration.data), "dd/MM/yyyy")}</p>
 
         <h4>Horário</h4>
         <p>
           {castration.periodo_castracao} |{" "}
-          {formatTimeFromServer(castration.data)}
+          {format(new Date(castration.data), "HH:mm")}
         </p>
 
         <h4>Nº Atendimento</h4>

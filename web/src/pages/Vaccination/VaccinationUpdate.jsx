@@ -31,7 +31,15 @@ const VaccinationUpdate = () => {
 
   useEffect(() => {
     api.get(`vaccinations/${id}`).then((response) => {
-      setVaccination(response.data.vaccination);
+      const vaccination = response.data.vaccination;
+
+      const [date] = vaccination.data.split("T");
+      const vaccinationWithDateFormatted = {
+        ...vaccination,
+        data: date,
+      };
+
+      setVaccination(vaccinationWithDateFormatted);
     });
   }, [id]);
 

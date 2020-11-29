@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
@@ -23,7 +24,7 @@ const VaccinationCreate = () => {
   const { id } = useParams();
 
   const [nome, setNome] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
   const [observacoes, setObservacoes] = useState("");
 
   function handleSubmit(event) {

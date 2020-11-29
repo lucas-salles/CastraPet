@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
@@ -10,7 +11,6 @@ import { ReactComponent as Trash } from "../../images/trash.svg";
 import { UserContext } from "../../UserContext";
 
 import api from "../../services/api";
-import { formatDate } from "../../utils/formatDate";
 
 import "./pet-detail.css";
 
@@ -102,7 +102,7 @@ const PetDetail = () => {
                 vaccines.map((vaccine) => (
                   <tr key={vaccine.id}>
                     <td>{vaccine.nome}</td>
-                    <td>{formatDate(vaccine.data)}</td>
+                    <td>{format(new Date(vaccine.data), "dd/MM/yyyy")}</td>
                     <td>{vaccine.observacoes}</td>
                     {user?.tipo_usuario === "SERVIDOR" && (
                       <td className="buttons">

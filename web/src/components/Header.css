@@ -34,10 +34,13 @@
   color: #fff;
 }
 
-#header .username a {
+#header .username button {
   color: #fff;
   display: flex;
   align-items: center;
+  border: none;
+  outline: none;
+  background: transparent;
 }
 
 #header .username svg {

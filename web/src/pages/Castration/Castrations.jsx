@@ -4,14 +4,13 @@ import { ptBR } from "date-fns/locale";
 
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
+import CastrationCard from "../../components/Castration/CastrationCard";
 
 import { UserContext } from "../../UserContext";
 
-import { formatDateFromServer } from "../../utils/formatDate";
 import api from "../../services/api";
 
 import "./castrations.css";
-import CastrationCard from "../../components/Castration/CastrationCard";
 
 const Castrations = () => {
   const { user, loading } = useContext(UserContext);
@@ -80,7 +79,7 @@ const Castrations = () => {
                 <div className="castration-description">
                   <h3 className="castration-date">
                     {format(
-                      formatDateFromServer(castration.data),
+                      new Date(castration.data),
                       "dd 'de' MMMM 'de' yyyy",
                       { locale: ptBR }
                     )}
