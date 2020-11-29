@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
+import { endOfYear } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 import Button from "../../components/Forms/Button";
@@ -9,6 +10,7 @@ import Radio from "../../components/Forms/Radio";
 import Select from "../../components/Forms/Select";
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
+import Error from "../../components/Helper/Error";
 
 import { UserContext } from "../../UserContext";
 
@@ -17,10 +19,9 @@ import api from "../../services/api";
 
 import "react-calendar/dist/Calendar.css";
 import "./castration-create.css";
-import Error from "../../components/Helper/Error";
 
 const CastrationCreate = () => {
-  const { user: userLogged, loading } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   const [error, setError] = useState(null);
 
@@ -28,15 +29,40 @@ const CastrationCreate = () => {
   const [periodo_castracao, setPeriodoCastracao] = useState("manhã");
   const [date, setDate] = useState(new Date());
   const [pets, setPets] = useState([]);
+  const [daysWithoutVacancies, setDaysWithoutVacancies] = useState([]);
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth() + 1);
+
+  useEffect(() => {
+    async function getDaysWithoutVacancies() {
+      const response = await api.get(
+        `castrations/not-available?mes=${activeMonth}`
+      );
+
+      const daysNotAvailable = response.data.datas;
+
+      const fullDaysInTheMorningAndAfternoon = [];
+      for (const day of daysNotAvailable) {
+        const dayFilter = daysNotAvailable.filter((d) => d.data === day.data);
+        if (
+          dayFilter.length > 1 &&
+          !fullDaysInTheMorningAndAfternoon.includes(day.data)
+        )
+          fullDaysInTheMorningAndAfternoon.push(day.data);
+      }
+
+      setDaysWithoutVacancies(fullDaysInTheMorningAndAfternoon);
+    }
+    getDaysWithoutVacancies();
+  }, [activeMonth]);
 
   useEffect(() => {
     async function getUserWithPets() {
-      const response = await api.get(`users/${userLogged?.id}`);
+      const response = await api.get(`users/${user?.id}`);
       setPets(response.data.user.pets);
     }
 
-    if (userLogged?.id) getUserWithPets();
-  }, [userLogged]);
+    if (user?.id) getUserWithPets();
+  }, [user]);
 
   async function handleCreateCastration(event) {
     event.preventDefault();
@@ -74,7 +100,8 @@ const CastrationCreate = () => {
             });
         })
         .catch((error) => {
-          if (error.response) setError(error.response.data.message);
+          if (error.response)
+            setError("Não há vagas nesse horário. Tente outro.");
           else setError("Ocorreu um erro desconhecido.");
         });
     } catch (err) {
@@ -110,8 +137,16 @@ const CastrationCreate = () => {
 
           <div className="calendar">
             <Calendar
+              onActiveStartDateChange={({ activeStartDate, value, view }) =>
+                setActiveMonth(activeStartDate.getMonth() + 1)
+              }
+              tileDisabled={({ activeStartDate, date, view }) =>
+                daysWithoutVacancies.includes(date.getDate()) ||
+                date.getDay() === 0 ||
+                date.getDay() === 6
+              }
               showNeighboringMonth={false}
-              showNavigation={true}
+              maxDate={endOfYear(new Date())}
               minDate={new Date()}
               value={date}
               onChange={setDate}
