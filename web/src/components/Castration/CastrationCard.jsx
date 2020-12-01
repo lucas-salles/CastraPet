@@ -4,13 +4,29 @@ import { ptBR } from "date-fns/locale";
 
 import Button from "../Forms/Button";
 
+import api from "../../services/api";
+
 import "./castration-card.css";
 
-const CastrationCard = ({ castration }) => {
+const CastrationCard = ({ castration, getCastrations }) => {
   const [active, setActive] = useState(false);
 
   function handleClick() {
     setActive(!active);
+  }
+
+  async function handleDeleteCastration(id) {
+    const confirm = window.confirm(
+      "Essa operação não pode ser desfeita. Você realmente quer cancelar a castração?"
+    );
+
+    if (confirm) {
+      await api.delete(`castrations/${id}`);
+
+      getCastrations();
+
+      alert("Castração cancelada com sucesso");
+    }
   }
 
   return (
@@ -31,7 +47,7 @@ const CastrationCard = ({ castration }) => {
           </div>
         </div>
 
-        <Button className="btn-details" onClick={handleClick}>
+        <Button className="btn-castration-card" onClick={handleClick}>
           Detalhes
         </Button>
       </div>
@@ -60,6 +76,13 @@ const CastrationCard = ({ castration }) => {
 
         <h4>Sexo</h4>
         <p>{castration.pet.sexo === "M" ? "macho" : "fêmea"}</p>
+
+        <Button
+          className="btn-castration-card"
+          onClick={() => handleDeleteCastration(castration.id)}
+        >
+          Cancelar Castração
+        </Button>
       </div>
     </div>
   );

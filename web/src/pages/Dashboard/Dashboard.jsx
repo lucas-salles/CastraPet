@@ -36,21 +36,22 @@ const Dashboard = () => {
 
   const [castrations, setCastrations] = useState([]);
 
-  useEffect(() => {
-    async function getCastrations() {
-      const response = await api.get("castrations");
+  const getCastrations = useCallback(async function getCastrations() {
+    const response = await api.get("castrations");
 
-      const castrations = response.data.castrations;
-      castrations.sort((a, b) => {
-        if (a.data > b.data) return 1;
-        if (a.data < b.data) return -1;
-        return 0;
-      });
+    const castrations = response.data.castrations;
+    castrations.sort((a, b) => {
+      if (a.data > b.data) return 1;
+      if (a.data < b.data) return -1;
+      return 0;
+    });
 
-      setCastrations(castrations);
-    }
-    getCastrations();
+    setCastrations(castrations);
   }, []);
+
+  useEffect(() => {
+    getCastrations();
+  }, [getCastrations]);
 
   const getUserAndPets = useCallback(
     async function getUserAndPets() {
@@ -153,6 +154,20 @@ const Dashboard = () => {
       await getUserAndPets();
 
       alert("Pet deletado com sucesso");
+    }
+  }
+
+  async function handleDeleteCastration(id) {
+    const confirm = window.confirm(
+      "Essa operação não pode ser desfeita. Você realmente quer cancelar a castração?"
+    );
+
+    if (confirm) {
+      await api.delete(`castrations/${id}`);
+
+      await getCastrations();
+
+      alert("Castração deletada com sucesso");
     }
   }
 
@@ -269,34 +284,33 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {pets &&
-                  pets.map((pet) => (
-                    <tr key={pet.id}>
-                      <td>{pet.nome}</td>
-                      {user?.tipo_usuario === "SERVIDOR" && (
-                        <td>{pet.tutor.nome}</td>
-                      )}
-                      <td>{pet.especie}</td>
-                      <td>{pet.sexo}</td>
-                      <td>{pet.idade}</td>
-                      <td className="buttons">
-                        <Link to={`/pet-detail/${pet.id}`} className="detail">
-                          <Search />
-                        </Link>
+                {pets.map((pet) => (
+                  <tr key={pet.id}>
+                    <td>{pet.nome}</td>
+                    {user?.tipo_usuario === "SERVIDOR" && (
+                      <td>{pet.tutor.nome}</td>
+                    )}
+                    <td>{pet.especie}</td>
+                    <td>{pet.sexo}</td>
+                    <td>{pet.idade}</td>
+                    <td className="buttons">
+                      <Link to={`/pet-detail/${pet.id}`} className="detail">
+                        <Search />
+                      </Link>
 
-                        <Link to={`pets/${pet.id}`} className="edit">
-                          <Edit />
-                        </Link>
+                      <Link to={`pets/${pet.id}`} className="edit">
+                        <Edit />
+                      </Link>
 
-                        <button
-                          className="delete"
-                          onClick={() => handleDeletePet(pet.id)}
-                        >
-                          <Trash />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                      <button
+                        className="delete"
+                        onClick={() => handleDeletePet(pet.id)}
+                      >
+                        <Trash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -331,14 +345,13 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {users &&
-                  users.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.nome}</td>
-                      <td>{user.cpf}</td>
-                      <td>{user.email}</td>
-                    </tr>
-                  ))}
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.nome}</td>
+                    <td>{user.cpf}</td>
+                    <td>{user.email}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -356,19 +369,27 @@ const Dashboard = () => {
                   <th>Atendimento</th>
                   <th>Pet</th>
                   <th>Tutor</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {castrations &&
-                  castrations.map((castration) => (
-                    <tr key={castration.id}>
-                      <td>{format(new Date(castration.data), "dd/MM/yyyy")}</td>
-                      <td>{castration.periodo_castracao}</td>
-                      <td>{castration.atendimento}</td>
-                      <td>{castration.pet.nome}</td>
-                      <td>{castration.pet.tutor.nome}</td>
-                    </tr>
-                  ))}
+                {castrations.map((castration) => (
+                  <tr key={castration.id}>
+                    <td>{format(new Date(castration.data), "dd/MM/yyyy")}</td>
+                    <td>{castration.periodo_castracao}</td>
+                    <td>{castration.atendimento}</td>
+                    <td>{castration.pet.nome}</td>
+                    <td>{castration.pet.tutor.nome}</td>
+                    <td className="buttons">
+                      <button
+                        className="delete"
+                        onClick={() => handleDeleteCastration(castration.id)}
+                      >
+                        <Trash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

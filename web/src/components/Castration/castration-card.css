@@ -25,7 +25,7 @@
   color: var(--color-primary);
 }
 
-#castration-card .btn-details {
+#castration-card .btn-castration-card {
   font-size: 1rem;
   font-family: var(--type-first);
   border: none;
@@ -38,8 +38,8 @@
   cursor: pointer;
 }
 
-#castration-card .btn-details:hover,
-#castration-card .btn-details:focus {
+#castration-card .btn-castration-card:hover,
+#castration-card .btn-castration-card:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 85, 0.25);
 }
@@ -57,4 +57,8 @@
 
 #castration-card .castration-long-description p {
   color: #7b7676;
+}
+
+#castration-card .castration-long-description button {
+  margin-top: 2rem;
 }

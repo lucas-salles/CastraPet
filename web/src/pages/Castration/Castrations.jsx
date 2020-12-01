@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -18,7 +18,7 @@ const Castrations = () => {
   const [openCastrations, setOpenCastrations] = useState([]);
   const [prevCastrations, setPrevCastrations] = useState([]);
 
-  useEffect(() => {
+  const getCastrations = useCallback(
     async function getCastrations() {
       const response = await api.get(`castrations/${user?.id}/tutor`);
 
@@ -41,9 +41,13 @@ const Castrations = () => {
 
       setOpenCastrations(openCastrations);
       setPrevCastrations(prevCastrations);
-    }
+    },
+    [user.id]
+  );
+
+  useEffect(() => {
     getCastrations();
-  }, [user.id]);
+  }, [getCastrations]);
 
   if (loading) return <Loading />;
 
@@ -53,7 +57,7 @@ const Castrations = () => {
 
       <div id="page-castrations" className="container">
         <div className="open-castrations">
-          <h2>Agendamentos</h2>
+          <h2>Meus Agendamentos</h2>
 
           <div className="castrations-list">
             {openCastrations.length === 0 && (
@@ -61,7 +65,11 @@ const Castrations = () => {
             )}
 
             {openCastrations.map((castration) => (
-              <CastrationCard key={castration.id} castration={castration} />
+              <CastrationCard
+                key={castration.id}
+                castration={castration}
+                getCastrations={getCastrations}
+              />
             ))}
           </div>
         </div>
