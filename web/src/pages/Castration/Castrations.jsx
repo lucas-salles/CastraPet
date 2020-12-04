@@ -18,8 +18,8 @@ const Castrations = () => {
   const [openCastrations, setOpenCastrations] = useState([]);
   const [prevCastrations, setPrevCastrations] = useState([]);
 
-  const getCastrations = useCallback(
-    async function getCastrations() {
+  const getCastrations = useCallback(async () => {
+    try {
       const response = await api.get(`castrations/${user?.id}/tutor`);
 
       const castrations = response.data.castrations;
@@ -41,9 +41,8 @@ const Castrations = () => {
 
       setOpenCastrations(openCastrations);
       setPrevCastrations(prevCastrations);
-    },
-    [user.id]
-  );
+    } catch (error) {}
+  }, [user.id]);
 
   useEffect(() => {
     getCastrations();
@@ -78,7 +77,7 @@ const Castrations = () => {
           <h2>Agendamentos Anteriores</h2>
 
           <div className="castrations-list">
-            {openCastrations.length === 0 && (
+            {prevCastrations.length === 0 && (
               <p className="without-castration">Sem Agendamentos Anteriores</p>
             )}
 

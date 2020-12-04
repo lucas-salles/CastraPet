@@ -36,25 +36,27 @@ const Dashboard = () => {
 
   const [castrations, setCastrations] = useState([]);
 
-  const getCastrations = useCallback(async function getCastrations() {
-    const response = await api.get("castrations");
+  const getCastrations = useCallback(async () => {
+    try {
+      const response = await api.get("castrations");
 
-    const castrations = response.data.castrations;
-    castrations.sort((a, b) => {
-      if (a.data > b.data) return 1;
-      if (a.data < b.data) return -1;
-      return 0;
-    });
+      const castrations = response.data.castrations;
+      castrations.sort((a, b) => {
+        if (a.data > b.data) return 1;
+        if (a.data < b.data) return -1;
+        return 0;
+      });
 
-    setCastrations(castrations);
+      setCastrations(castrations);
+    } catch (error) {}
   }, []);
 
   useEffect(() => {
     getCastrations();
   }, [getCastrations]);
 
-  const getUserAndPets = useCallback(
-    async function getUserAndPets() {
+  const getUserAndPets = useCallback(async () => {
+    try {
       const responseUser = await api.get(`users/${userLogged?.id}`);
       setUser(responseUser.data.user);
       if (userLogged?.tipo_usuario === "USUARIO") {
@@ -63,9 +65,8 @@ const Dashboard = () => {
         const responsePet = await api.get("/pets");
         setPets(responsePet.data.pets);
       }
-    },
-    [userLogged]
-  );
+    } catch (error) {}
+  }, [userLogged]);
 
   useEffect(() => {
     if (
@@ -109,13 +110,15 @@ const Dashboard = () => {
     getUserAndPets,
   ]);
 
-  const getUsers = useCallback(async function getUsers() {
-    const response = await api.get("users");
-    const users = response.data.users;
-    const filteredUsers = users.filter(
-      (user) => user.tipo_usuario === "USUARIO"
-    );
-    setUsers(filteredUsers);
+  const getUsers = useCallback(async () => {
+    try {
+      const response = await api.get("users");
+      const users = response.data.users;
+      const filteredUsers = users.filter(
+        (user) => user.tipo_usuario === "USUARIO"
+      );
+      setUsers(filteredUsers);
+    } catch (error) {}
   }, []);
 
   useEffect(() => {
@@ -144,31 +147,35 @@ const Dashboard = () => {
   }
 
   async function handleDeletePet(id) {
-    const confirm = window.confirm(
-      "Essa operação não pode ser desfeita. Você realmente quer excluir?"
-    );
+    try {
+      const confirm = window.confirm(
+        "Essa operação não pode ser desfeita. Você realmente quer excluir?"
+      );
 
-    if (confirm) {
-      await api.delete(`pets/${id}`);
+      if (confirm) {
+        await api.delete(`pets/${id}`);
 
-      await getUserAndPets();
+        await getUserAndPets();
 
-      alert("Pet deletado com sucesso");
-    }
+        alert("Pet deletado com sucesso");
+      }
+    } catch (error) {}
   }
 
   async function handleDeleteCastration(id) {
-    const confirm = window.confirm(
-      "Essa operação não pode ser desfeita. Você realmente quer cancelar a castração?"
-    );
+    try {
+      const confirm = window.confirm(
+        "Essa operação não pode ser desfeita. Você realmente quer cancelar a castração?"
+      );
 
-    if (confirm) {
-      await api.delete(`castrations/${id}`);
+      if (confirm) {
+        await api.delete(`castrations/${id}`);
 
-      await getCastrations();
+        await getCastrations();
 
-      alert("Castração deletada com sucesso");
-    }
+        alert("Castração deletada com sucesso");
+      }
+    } catch (error) {}
   }
 
   if (loading) return <Loading />;

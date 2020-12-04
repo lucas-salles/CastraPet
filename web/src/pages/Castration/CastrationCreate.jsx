@@ -34,23 +34,25 @@ const CastrationCreate = () => {
 
   useEffect(() => {
     async function getDaysWithoutVacancies() {
-      const response = await api.get(
-        `castrations/not-available?mes=${activeMonth}`
-      );
+      try {
+        const response = await api.get(
+          `castrations/not-available?mes=${activeMonth}`
+        );
 
-      const daysNotAvailable = response.data.datas;
+        const daysNotAvailable = response.data.datas;
 
-      const fullDaysInTheMorningAndAfternoon = [];
-      for (const day of daysNotAvailable) {
-        const dayFilter = daysNotAvailable.filter((d) => d.data === day.data);
-        if (
-          dayFilter.length > 1 &&
-          !fullDaysInTheMorningAndAfternoon.includes(day.data)
-        )
-          fullDaysInTheMorningAndAfternoon.push(day.data);
-      }
+        const fullDaysInTheMorningAndAfternoon = [];
+        for (const day of daysNotAvailable) {
+          const dayFilter = daysNotAvailable.filter((d) => d.data === day.data);
+          if (
+            dayFilter.length > 1 &&
+            !fullDaysInTheMorningAndAfternoon.includes(day.data)
+          )
+            fullDaysInTheMorningAndAfternoon.push(day.data);
+        }
 
-      setDaysWithoutVacancies(fullDaysInTheMorningAndAfternoon);
+        setDaysWithoutVacancies(fullDaysInTheMorningAndAfternoon);
+      } catch (error) {}
     }
     getDaysWithoutVacancies();
   }, [activeMonth]);

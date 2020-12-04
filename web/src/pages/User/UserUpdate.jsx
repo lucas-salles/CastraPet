@@ -31,10 +31,14 @@ const UserUpdate = () => {
   });
 
   useEffect(() => {
-    if (userLogged) {
-      api.get(`users/${userLogged.id}`).then((response) => {
-        setUser(response.data.user);
-      });
+    try {
+      if (userLogged) {
+        api.get(`users/${userLogged.id}`).then((response) => {
+          setUser(response.data.user);
+        });
+      }
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
     }
   }, [userLogged]);
 
@@ -47,27 +51,29 @@ const UserUpdate = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api
-      .put(`users/${userLogged?.id}`, {
-        nome: user.nome,
-        cpf: user.cpf,
-        telefone: user.telefone,
-        endereco: user.endereco,
-        bairro: user.bairro,
-        cep: user.cep,
-        email: user.email,
-      })
-      .then((response) => {
-        alert("Dados atualizados com sucesso");
+    try {
+      api
+        .put(`users/${userLogged?.id}`, {
+          nome: user.nome,
+          cpf: user.cpf,
+          telefone: user.telefone,
+          endereco: user.endereco,
+          bairro: user.bairro,
+          cep: user.cep,
+          email: user.email,
+        })
+        .then((response) => {
+          alert("Dados atualizados com sucesso");
 
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push("/dashboard");
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;

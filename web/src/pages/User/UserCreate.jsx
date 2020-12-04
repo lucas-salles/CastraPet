@@ -31,29 +31,31 @@ const Register = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api
-      .post("users", {
-        nome,
-        cpf,
-        email,
-        senha,
-        telefone,
-        cep,
-        endereco,
-        bairro,
-        tipo_usuario: "USUARIO",
-      })
-      .then((response) => {
-        alert("Cadastro realizado com sucesso");
+    try {
+      api
+        .post("users", {
+          nome,
+          cpf,
+          email,
+          senha,
+          telefone,
+          cep,
+          endereco,
+          bairro,
+          tipo_usuario: "USUARIO",
+        })
+        .then((response) => {
+          alert("Cadastro realizado com sucesso");
 
-        history.push("/login");
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push("/login");
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;

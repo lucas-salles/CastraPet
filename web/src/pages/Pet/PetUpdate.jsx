@@ -36,9 +36,13 @@ const PetUpdate = () => {
   });
 
   useEffect(() => {
-    api.get(`pets/${id}`).then((response) => {
-      setAnimal(response.data.pet);
-    });
+    try {
+      api.get(`pets/${id}`).then((response) => {
+        setAnimal(response.data.pet);
+      });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }, [id]);
 
   function onChange(event) {
@@ -50,29 +54,31 @@ const PetUpdate = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api
-      .put(`pets/${id}`, {
-        nome: animal.nome,
-        cor_pelagem: animal.cor_pelagem,
-        especie: animal.especie,
-        raca: animal.raca,
-        sexo: animal.sexo,
-        idade: animal.idade,
-        porte_fisico: animal.porte_fisico,
-        comportamento: animal.comportamento,
-        estado_saude: animal.estado_saude,
-      })
-      .then((response) => {
-        alert("Animal atualizado com sucesso");
+    try {
+      api
+        .put(`pets/${id}`, {
+          nome: animal.nome,
+          cor_pelagem: animal.cor_pelagem,
+          especie: animal.especie,
+          raca: animal.raca,
+          sexo: animal.sexo,
+          idade: animal.idade,
+          porte_fisico: animal.porte_fisico,
+          comportamento: animal.comportamento,
+          estado_saude: animal.estado_saude,
+        })
+        .then((response) => {
+          alert("Animal atualizado com sucesso");
 
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push("/dashboard");
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;
