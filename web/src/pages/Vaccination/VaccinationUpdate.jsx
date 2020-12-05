@@ -30,17 +30,21 @@ const VaccinationUpdate = () => {
   });
 
   useEffect(() => {
-    api.get(`vaccinations/${id}`).then((response) => {
-      const vaccination = response.data.vaccination;
+    try {
+      api.get(`vaccinations/${id}`).then((response) => {
+        const vaccination = response.data.vaccination;
 
-      const [date] = vaccination.data.split("T");
-      const vaccinationWithDateFormatted = {
-        ...vaccination,
-        data: date,
-      };
+        const [date] = vaccination.data.split("T");
+        const vaccinationWithDateFormatted = {
+          ...vaccination,
+          data: date,
+        };
 
-      setVaccination(vaccinationWithDateFormatted);
-    });
+        setVaccination(vaccinationWithDateFormatted);
+      });
+    } catch (error) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }, [id]);
 
   function onChange(event) {
@@ -55,23 +59,25 @@ const VaccinationUpdate = () => {
     const [year, month, day] = vaccination.data.split("-");
     const formattedDate = new Date(year, month - 1, day);
 
-    api
-      .put(`vaccinations/${id}`, {
-        nome: vaccination.nome,
-        data: formattedDate,
-        observacoes: vaccination.observacoes,
-      })
-      .then((response) => {
-        alert("Vacinação atualizada com sucesso");
+    try {
+      api
+        .put(`vaccinations/${id}`, {
+          nome: vaccination.nome,
+          data: formattedDate,
+          observacoes: vaccination.observacoes,
+        })
+        .then((response) => {
+          alert("Vacinação atualizada com sucesso");
 
-        history.push(`/pet-detail/${vaccination.pet_id}`);
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push(`/pet-detail/${vaccination.pet_id}`);
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;

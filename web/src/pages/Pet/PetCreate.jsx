@@ -33,30 +33,32 @@ const PetCreate = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api
-      .post("pets", {
-        nome,
-        cor_pelagem: corPelagem,
-        especie,
-        raca,
-        sexo,
-        idade,
-        porte_fisico: porteFisico,
-        comportamento,
-        estado_saude: estadoSaude,
-        usuario_id: user.id,
-      })
-      .then((response) => {
-        alert("Animal cadastrado com sucesso");
+    try {
+      api
+        .post("pets", {
+          nome,
+          cor_pelagem: corPelagem,
+          especie,
+          raca,
+          sexo,
+          idade,
+          porte_fisico: porteFisico,
+          comportamento,
+          estado_saude: estadoSaude,
+          usuario_id: user.id,
+        })
+        .then((response) => {
+          alert("Animal cadastrado com sucesso");
 
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push("/dashboard");
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;

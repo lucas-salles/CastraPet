@@ -21,40 +21,44 @@ const PetDetail = () => {
   const [vaccines, setVaccines] = useState([]);
   const [tutor, setTutor] = useState({});
 
-  const getPetVaccinations = useCallback(
-    async function getPetVaccinations() {
+  const getPetVaccinations = useCallback(async () => {
+    try {
       const response = await api.get(`pets/${id}/vaccinations`);
       setPet(response.data.pet);
       setVaccines(response.data.pet.vaccinations);
-    },
-    [id]
-  );
+    } catch (error) {}
+  }, [id]);
 
   useEffect(() => {
     getPetVaccinations();
   }, [getPetVaccinations]);
 
   useEffect(() => {
-    if (pet.usuario_id) {
-      async function getTutor() {
-        const response = await api.get(`users/${pet.usuario_id}`);
-        setTutor(response.data.user);
+    try {
+      if (pet.usuario_id) {
+        async function getTutor() {
+          const response = await api.get(`users/${pet.usuario_id}`);
+          setTutor(response.data.user);
+        }
+        getTutor();
       }
-      getTutor();
-    }
+    } catch (error) {}
   }, [pet.usuario_id]);
 
   async function handleDelete(id) {
-    const confirm = window.confirm(
-      "Essa operação não pode ser desfeita. Você realmente quer excluir?"
-    );
-    if (confirm) {
-      await api.delete(`vaccinations/${id}`);
+    try {
+      const confirm = window.confirm(
+        "Essa operação não pode ser desfeita. Você realmente quer excluir?"
+      );
 
-      await getPetVaccinations();
+      if (confirm) {
+        await api.delete(`vaccinations/${id}`);
 
-      alert("Vacinação deletada com sucesso");
-    }
+        await getPetVaccinations();
+
+        alert("Vacinação deletada com sucesso");
+      }
+    } catch (err) {}
   }
 
   if (loading) return <Loading />;

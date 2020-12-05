@@ -33,24 +33,26 @@ const VaccinationCreate = () => {
     const [year, month, day] = data.split("-");
     const formattedDate = new Date(year, month - 1, day);
 
-    api
-      .post("vaccinations", {
-        nome,
-        data: formattedDate,
-        observacoes,
-        pet_id: id,
-      })
-      .then((response) => {
-        alert("Vacinação cadastrada com sucesso");
+    try {
+      api
+        .post("vaccinations", {
+          nome,
+          data: formattedDate,
+          observacoes,
+          pet_id: id,
+        })
+        .then((response) => {
+          alert("Vacinação cadastrada com sucesso");
 
-        history.push(`/pet-detail/${id}`);
-      })
-      .catch((error) => {
-        setError("Ocorreu um erro.");
-        if (error.response) {
-          setError(error.response.data.message);
-        }
-      });
+          history.push(`/pet-detail/${id}`);
+        })
+        .catch((error) => {
+          if (error.response) setError(error.response.data.message);
+          else setError("Ocorreu um erro desconhecido.");
+        });
+    } catch (err) {
+      setError("Ocorreu um erro desconhecido.");
+    }
   }
 
   if (loading) return <Loading />;

@@ -49,7 +49,7 @@ const UserStorage = ({ children }) => {
     }
   }
 
-  const userLogout = useCallback(async function () {
+  const userLogout = useCallback(async () => {
     setUser(null);
     setError(null);
     setLogin(false);
