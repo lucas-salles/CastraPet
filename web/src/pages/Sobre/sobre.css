@@ -1,0 +1,52 @@
+.quem-somos {
+    margin: 0.3rem;
+    text-align: left;
+}
+.quem-somos h1{
+    margin: 1rem auto 1rem auto;
+    text-align: center;
+}
+.atividades {
+    margin: 0.3rem;
+}
+.atividades h1 {
+    text-align: center;
+}
+.atividades .container-atividades div {
+    margin: 2rem auto 2rem auto;
+}
+.atividades .container-atividades div p{
+    text-align: center;
+    font-size: 20px;
+}
+.atividades .container-atividades div img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.clientes .container-clientes div img{
+    display: block;
+    margin: 2rem auto 2rem auto;
+    width: 50%;
+}
+
+@media only screen and (min-width: 562px) {
+    .clientes .container-clientes{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .clientes .container-clientes{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .atividades .container-atividades {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .atividades .container-atividades div:nth-child(1) img{
+        width: 100%;
+    }
+}

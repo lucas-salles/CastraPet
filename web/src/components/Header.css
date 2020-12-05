@@ -104,3 +104,12 @@
     width: 6rem;
   }
 }
+.static-pages {
+  display: flex;
+}
+.static-pages .pages {
+  margin-right: 0.5rem;  
+}
+.static-pages .pages a{
+  color: white;
+}

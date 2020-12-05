@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import PetCreate from "./pages/Pet/PetCreate";
 import PetUpdate from "./pages/Pet/PetUpdate";
 import PetDetail from "./pages/Pet/PetDetail";
+import Sobre from "./pages/Sobre/Sobre";
+import Faqs from "./pages/Faqs/Faqs";
 import NotFound from "./components/NotFound";
 import VaccinationCreate from "./pages/Vaccination/VaccinationCreate";
 import VaccinationUpdate from "./pages/Vaccination/VaccinationUpdate";
@@ -20,6 +22,8 @@ const Routes = () => {
     <Switch>
       <CustomRoute component={Home} path="/" exact />
       <CustomRoute component={Login} path="/login" />
+      <CustomRoute component={Sobre} path="/sobre" />
+      <CustomRoute component={Faqs} path="/faqs" />
       <CustomRoute component={UserCreate} path="/register" />
       <CustomRoute isPrivate component={Dashboard} path="/dashboard" />
       <CustomRoute isPrivate component={UserUpdate} path="/users/:id" />

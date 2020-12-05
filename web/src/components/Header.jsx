@@ -25,7 +25,10 @@ const Header = ({ titulo }) => {
 
           <h1>{titulo}</h1>
         </div>
-
+        <div className="static-pages">
+          <div className="pages"><Link to="/sobre">Sobre</Link></div>
+          <div className="pages"><Link to="/faqs">Faqs</Link></div>
+        </div>
         {login ? (
           <div className="user">
             <div className="username">
