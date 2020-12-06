@@ -5,8 +5,8 @@ import { format } from "date-fns";
 import Header from "../../components/Header";
 import Loading from "../../components/Helper/Loading";
 
-import { ReactComponent as Edit } from "../../images/edit.svg";
-import { ReactComponent as Trash } from "../../images/trash.svg";
+import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import { ReactComponent as Trash } from "../../images/icons/trash.svg";
 
 import { UserContext } from "../../UserContext";
 

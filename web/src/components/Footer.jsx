@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./Footer.css";
+import logoPrefeitura from "../images/icons/logo-pmjp-branco.svg";
 
-import logoPrefeitura from "../images/logo-prefeitura.svg";
+import "./Footer.css";
 
 const Footer = () => {
   return (
@@ -15,6 +15,19 @@ const Footer = () => {
             <br />
             Telefone: (83) 3214-3459
           </p>
+          <div className="footer-nav">
+            <nav>
+              <h3>Acesse</h3>
+              <ul>
+                <li>
+                  <a href="/sobre">Sobre</a>
+                </li>
+                <li>
+                  <a href="/faqs">Faqs</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
         <p className="county-name">Prefeitura de João Pessoa</p>
       </div>

@@ -4,19 +4,33 @@
 }
 
 #footer .logo-contact {
-  display: flex;
+  display: grid;
+  grid-template-columns: 14rem 1fr 1fr;
+  gap: 2rem;
   align-items: center;
-  margin-top: 1rem;
-}
-
-#footer .logo-contact img {
-  width: 6rem;
+  margin-top: 2rem;
 }
 
 #footer .contact {
-  margin-left: 6rem;
   font-weight: 300;
+  font-size: 1.125rem;
+}
+
+#footer .footer-nav h3 {
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+#footer .footer-nav li a:hover {
+  color: #ddd;
+}
+
+#footer .footer-nav li + li {
+  margin-top: 0.2rem;
+}
+
+#footer .footer-nav a {
+  color: #fff;
 }
 
 #footer .county-name {
@@ -24,11 +38,16 @@
   font-weight: bold;
   font-size: 1.4rem;
   padding-bottom: 1rem;
+  margin-top: 2rem;
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 800px) {
   #footer .logo-contact {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column-reverse;
+    padding: 0 1rem;
   }
 
   #footer .logo-contact img {

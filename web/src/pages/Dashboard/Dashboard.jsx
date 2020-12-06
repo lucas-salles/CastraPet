@@ -8,9 +8,9 @@ import Input from "../../components/Forms/Input";
 import Button from "../../components/Forms/Button";
 import Loading from "../../components/Helper/Loading";
 
-import { ReactComponent as Search } from "../../images/search.svg";
-import { ReactComponent as Edit } from "../../images/edit.svg";
-import { ReactComponent as Trash } from "../../images/trash.svg";
+import { ReactComponent as Search } from "../../images/icons/search.svg";
+import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import { ReactComponent as Trash } from "../../images/icons/trash.svg";
 
 import { UserContext } from "../../UserContext";
 

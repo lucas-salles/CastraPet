@@ -15,7 +15,7 @@
 }
 
 #header .logo h1 {
-  font-size: 2.6rem;
+  font-size: 2rem;
   margin-left: 2rem;
 }
 
@@ -90,26 +90,18 @@
   color: var(--color-primary);
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1000px) {
   #header {
     padding: 0 2rem 0 1rem;
   }
 
   #header .logo h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-left: 1rem;
+    display: none;
   }
 
   #header .logo svg {
     width: 6rem;
   }
-}
-.static-pages {
-  display: flex;
-}
-.static-pages .pages {
-  margin-right: 0.5rem;  
-}
-.static-pages .pages a{
-  color: white;
 }

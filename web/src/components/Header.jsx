@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as Activity } from "../images/activity.svg";
-import { ReactComponent as FilePlus } from "../images/file-plus.svg";
-import { ReactComponent as CastraPet } from "../images/castra-pet.svg";
-import { ReactComponent as Edit } from "../images/edit.svg";
-import { ReactComponent as LogOut } from "../images/log-out.svg";
-import { ReactComponent as User } from "../images/user.svg";
+import { ReactComponent as Activity } from "../images/icons/activity.svg";
+import { ReactComponent as FilePlus } from "../images/icons/file-plus.svg";
+import { ReactComponent as CastraPet } from "../images/icons/castra-pet.svg";
+import { ReactComponent as Edit } from "../images/icons/edit.svg";
+import { ReactComponent as LogOut } from "../images/icons/log-out.svg";
+import { ReactComponent as User } from "../images/icons/user.svg";
 
 import { UserContext } from "../UserContext";
 
@@ -24,10 +24,6 @@ const Header = ({ titulo }) => {
           </Link>
 
           <h1>{titulo}</h1>
-        </div>
-        <div className="static-pages">
-          <div className="pages"><Link to="/sobre">Sobre</Link></div>
-          <div className="pages"><Link to="/faqs">Faqs</Link></div>
         </div>
         {login ? (
           <div className="user">
